@@ -1,4 +1,4 @@
-package com.veronica.myjournal.helpers;
+package com.veronica.myjournal.toberemoved;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.telephony.TelephonyManager;
 /**
  * Created by Veronica on 10/2/2016.
  */
-public final class SmsSender{
+public final class SMSSender {
 
     public static void SendSms(Context context,String phone, String content) {
         SmsManager sms = SmsManager.getDefault();

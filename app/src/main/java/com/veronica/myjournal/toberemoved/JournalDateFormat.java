@@ -1,4 +1,4 @@
-package com.veronica.myjournal.models;
+package com.veronica.myjournal.toberemoved;
 
 /**
  * Created by Veronica on 9/28/2016.

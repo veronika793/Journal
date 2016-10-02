@@ -1,4 +1,4 @@
-package com.veronica.myjournal.partialfragments;
+package com.veronica.myjournal.toberemoved;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -10,8 +10,8 @@ import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 
 
-import com.veronica.myjournal.interfaces.IDatePicker;
-import com.veronica.myjournal.models.JournalDateFormat;
+import com.veronica.myjournal.toberemoved.IDatePicker;
+import com.veronica.myjournal.toberemoved.JournalDateFormat;
 
 import java.util.Calendar;
 

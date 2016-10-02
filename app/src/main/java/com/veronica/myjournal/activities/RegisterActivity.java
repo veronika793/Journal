@@ -74,4 +74,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        // leaves  back stack as it is, just all activities in background
+        moveTaskToBack(true);
+    }
 }

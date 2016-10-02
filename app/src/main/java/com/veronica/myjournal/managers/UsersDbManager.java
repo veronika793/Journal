@@ -42,6 +42,8 @@ public class UsersDbManager {
         AuthorizationManager.getInstance(mContext).setLogin(true);
     }
 
+    public void changeUserPassword(String email){
 
+    }
 
 }

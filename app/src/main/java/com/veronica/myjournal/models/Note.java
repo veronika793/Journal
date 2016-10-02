@@ -2,6 +2,8 @@ package com.veronica.myjournal.models;
 
 import android.graphics.Bitmap;
 
+import com.veronica.myjournal.toberemoved.JournalDateFormat;
+
 /**
  * Created by Veronica on 9/30/2016.
  */

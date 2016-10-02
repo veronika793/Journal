@@ -2,6 +2,8 @@ package com.veronica.myjournal.managers;
 
 import android.content.Context;
 
+import com.veronica.myjournal.models.Note;
+
 /**
  * Created by Veronica on 10/2/2016.
  */
@@ -19,4 +21,18 @@ public class DiaryDbManager {
     private DiaryDbManager(Context context) {
         mContext = context;
     }
+
+
+    public void addNewNote(Note note){
+
+    }
+
+    public void deleteNote(Note note){
+
+    }
+
+    public void getNote(Integer id){
+
+    }
+
 }

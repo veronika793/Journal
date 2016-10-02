@@ -92,12 +92,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 // profile2 is the new profile
                                 profile2.getProfilePictureUri(200,200);
 
-                                Log.d("DEBUG", profile2.getName());
-                                Log.d("DEBUG", profile2.getProfilePictureUri(150,150).toString());
-                                String userName = profile2.getName();
                                 String userFirstName = profile2.getFirstName();
                                 String userId = profile2.getId();
-                                Uri userPhotori  = profile2.getProfilePictureUri(100,100);
+                                Uri userPhotoUri  = profile2.getProfilePictureUri(100,100);
                                 mProfileTracker.stopTracking();
                             }
                         };
@@ -122,5 +119,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 }
