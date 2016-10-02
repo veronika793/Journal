@@ -14,12 +14,18 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.veronica.myjournal.R;
 import com.veronica.myjournal.app.MyJournalApplication;
+import com.veronica.myjournal.models.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -47,10 +53,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         //facebook login ..
-//        callbackManager = CallbackManager.Factory.create();
-//        fbLoginButton = (LoginButton) findViewById(R.id.btn_login_fb);
-//        fbLoginButton.setReadPermissions(Arrays.asList("public_profile","email"));
-//        fbLoginButton.setOnClickListener(this);
+        callbackManager = CallbackManager.Factory.create();
+        fbLoginButton = (LoginButton) findViewById(R.id.btn_login_fb);
+        fbLoginButton.setReadPermissions(Arrays.asList(
+                "public_profile", "email"));
+        fbLoginButton.setOnClickListener(this);
 
         //users login..
         mEditTxtUserEmail = (EditText) findViewById(R.id.edit_txt_login_email);
@@ -84,25 +91,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 private ProfileTracker mProfileTracker;
                 @Override
-                public void onSuccess(LoginResult loginResult) {
-                    if(Profile.getCurrentProfile() == null) {
-                        mProfileTracker = new ProfileTracker() {
-                            @Override
-                            protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
-                                // profile2 is the new profile
-                                profile2.getProfilePictureUri(200,200);
+                public void onSuccess(final LoginResult loginResult) {
+                    GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
 
-                                String userFirstName = profile2.getFirstName();
-                                String userId = profile2.getId();
-                                Uri userPhotoUri  = profile2.getProfilePictureUri(100,100);
-                                mProfileTracker.stopTracking();
+                        @Override
+                        public void onCompleted(JSONObject object, GraphResponse response) {
+                            Log.i("LoginActivity", response.toString());
+                            try {
+                                String userId = object.getString("id");
+                                String userEmail = object.getString("email");
+                                String userName = object.getString("first_name");
+                                String userPicUri = "http://graph.facebook.com/"+userId+"/picture?width=150&height=150";
+
+                                User userData = new User(userEmail,userName,userPicUri,"",true);
+                                Log.d("DEBUG", "da");
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        };
-                    }
-                    else {
-                        Profile profile = Profile.getCurrentProfile();
-                        Log.d("DEBUG", profile.getFirstName());
-                    }
+                            // Get facebook data from login
+//                                Bundle bFacebookData = getFacebookData(object);
+                        }
+                    });
+                    Bundle parameters = new Bundle();
+                    parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location"); // Parámetros que pedimos a facebook
+                    request.setParameters(parameters);
+                    request.executeAsync();
+
                 }
 
                 @Override
@@ -120,6 +135,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
     }
+
+
 
     @Override
     public void onBackPressed() {

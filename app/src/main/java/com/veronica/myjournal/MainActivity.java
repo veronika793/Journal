@@ -10,8 +10,7 @@ import com.veronica.myjournal.app.MyJournalApplication;
 import com.veronica.myjournal.fragments.ContainerFragment;
 import com.veronica.myjournal.managers.AuthorizationManager;
 import com.veronica.myjournal.managers.DialogManager;
-import com.veronica.myjournal.managers.DiaryDbManager;
-import com.veronica.myjournal.managers.UsersDbManager;
+import com.veronica.myjournal.managers.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,11 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
         this.journalApp = (MyJournalApplication) this.getApplication();
         this.journalApp.setDialogManager(new DialogManager(this));
-        UsersDbManager.getInstance(this);
-        DiaryDbManager.getInstance(this);
+        DatabaseHelper.getInstance(this);
         AuthorizationManager.getInstance(this);
 
-//        SMSSender.SendSms(this,"+359876407847","posleden sms :D da proverq dali taksuva");
+
         startActivity(new Intent(this, RegisterActivity.class));
 //        if(!AuthorizationManager.getInstance(this).isLoggedIn()){
 //            startActivity(new Intent(this, RegisterActivity.class));

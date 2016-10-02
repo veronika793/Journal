@@ -13,6 +13,7 @@
     style="@style/EditTxtFormsStyles"
     android:hint="@string/email"
     android:id="@+id/edit_txt_reg_email"
+    android:inputType="textEmailAddress"
     android:layout_alignParentTop="true"
     android:layout_alignParentStart="true"
     android:layout_marginTop="40dp" />
@@ -21,6 +22,7 @@
     <EditText
         style="@style/EditTxtFormsStyles"
         android:hint="@string/password"
+        android:inputType="textPassword"
         android:id="@+id/edit_txt_reg_password"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/edit_txt_reg_email" />
@@ -30,14 +32,6 @@
         android:id="@+id/edit_txt_reg_name"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/edit_txt_reg_password" />
-
-    <EditText
-        style="@style/EditTxtFormsStyles"
-        android:inputType="phone"
-        android:hint="@string/phone_number"
-        android:id="@+id/edit_txt_reg_phone_numb"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/edit_txt_reg_name" />
 
     <Button
         android:id="@+id/btn_select_photo"
@@ -49,7 +43,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/edit_txt_reg_phone_numb" />
+        android:layout_below="@+id/edit_txt_reg_name" />
 
     <Button
         android:layout_marginTop="25dp"

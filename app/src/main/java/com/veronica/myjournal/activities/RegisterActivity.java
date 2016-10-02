@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.veronica.myjournal.Constants;
 import com.veronica.myjournal.R;
@@ -20,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText mEditTxtPassword;
     private EditText mEditTxtName;
     private String imageUrl;
+
     private Button mBtnSelectPhoto;
     private Button mBtnRegister;
     private Button mBtnOpenLoginForm;
@@ -68,11 +70,34 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             openGallery();
         }else if(v.getId()==R.id.btn_register){
             // check if all fields are not empty and add user to database..
-            //login user..
+
+            String email = mEditTxtEmail.getText().toString().trim();
+            String password = mEditTxtPassword.getText().toString().trim();
+            String name = mEditTxtName.getText().toString().trim();
+            String selectedPhotoTxt = mBtnSelectPhoto.getText().toString();
+            boolean isDataValid = false;
+            //validation for all fields --> not empty fields,email validation, min lenght and selected photo required
+            if(!isEmailValid(email)){
+                Toast.makeText(getApplicationContext(), "invalid email", Toast.LENGTH_SHORT).show();
+            }else if(password.length()<Constants.PASSWORD_MIN_LENGHT){
+                Toast.makeText(getApplicationContext(), "invalid password", Toast.LENGTH_SHORT).show();
+            }else if(name.length()<Constants.NAME_MIN_LENGHT){
+                Toast.makeText(getApplicationContext(), "invalid name", Toast.LENGTH_SHORT).show();
+            }else if(selectedPhotoTxt.equals(Constants.SELECT_PHOTO)){
+                Toast.makeText(getApplicationContext(), "No photo selected", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getApplicationContext(), "Valid", Toast.LENGTH_SHORT).show();
+
+            }
+
 
         }else if(v.getId()==R.id.btn_open_login_form){
             startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
         }
+    }
+
+    boolean isEmailValid(String email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     @Override

@@ -16,7 +16,7 @@
     <string name="select_profile_pic">Please select you profile photo</string>
     <string name="facebook_app_id">1790966477854610</string>
     <string name="fb_login_protocol_scheme">fbAPP_ID</string>
-    <string name="select_a_photo">Select a photo</string>
+    <string name="select_a_photo">SELECT PHOTO</string>
     <string name="name">Name</string>
     <string name="phone_number">Phone number: +359...</string>
     <string name="enter">Enter</string>
