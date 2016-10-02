@@ -18,5 +18,7 @@
     <string name="fb_login_protocol_scheme">fbAPP_ID</string>
     <string name="select_a_photo">Select a photo</string>
     <string name="name">Name</string>
+    <string name="phone_number">Phone number: +359...</string>
+    <string name="enter">Enter</string>
 
 </resources>

@@ -6,4 +6,5 @@ package com.veronica.myjournal;
 public final class Constants {
 
     public static int PICK_IMAGE_REQ_CODE = 1;
+    public static String PHOTO_SELECTED = "PHOTO SELECTED";
 }

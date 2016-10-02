@@ -28,10 +28,13 @@ public class DialogManager implements DialogInterface.OnCancelListener{
             }
         });
         final AlertDialog alertDialog = builder.create();
-        alertDialog.setTitle(title);
+        if(title!=null) {
+            alertDialog.setTitle(title);
+        }
         alertDialog.setMessage(msg);
-        alertDialog.setIcon(icon);
-
+        if(icon!=null) {
+            alertDialog.setIcon(icon);
+        }
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {

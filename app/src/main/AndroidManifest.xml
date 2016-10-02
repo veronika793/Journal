@@ -2,7 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.veronica.myjournal">
 
+    <!--//facebook login-->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--send confirm sms with temp password-->
+    <uses-permission android:name="android.permission.WRITE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+
+    <!--not sure anymore-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".app.MyJournalApplication"
@@ -36,7 +43,7 @@
         </activity>
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.JournalActivity"></activity>
+        <activity android:name=".activities.JournalActivity" />
     </application>
 
 </manifest>

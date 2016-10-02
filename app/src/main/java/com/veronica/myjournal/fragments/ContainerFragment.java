@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.veronica.myjournal.R;
-import com.veronica.myjournal.managers.LoginManager;
 
 /**
  * Created by Veronica on 9/30/2016.

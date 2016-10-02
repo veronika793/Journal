@@ -11,19 +11,12 @@
 
     <EditText
     style="@style/EditTxtFormsStyles"
-    android:hint="@string/username"
-    android:id="@+id/edit_txt_reg_username"
+    android:hint="@string/email"
+    android:id="@+id/edit_txt_reg_email"
     android:layout_alignParentTop="true"
     android:layout_alignParentStart="true"
     android:layout_marginTop="40dp" />
 
-    <EditText
-        style="@style/EditTxtFormsStyles"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        android:id="@+id/edit_txt_reg_email"
-        android:layout_below="@+id/edit_txt_reg_username"
-        android:layout_marginTop="20dp" />
 
     <EditText
         style="@style/EditTxtFormsStyles"
@@ -38,6 +31,14 @@
         android:layout_marginTop="20dp"
         android:layout_below="@+id/edit_txt_reg_password" />
 
+    <EditText
+        style="@style/EditTxtFormsStyles"
+        android:inputType="phone"
+        android:hint="@string/phone_number"
+        android:id="@+id/edit_txt_reg_phone_numb"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/edit_txt_reg_name" />
+
     <Button
         android:id="@+id/btn_select_photo"
         android:onClick="selectUserPhoto"
@@ -48,7 +49,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/edit_txt_reg_name" />
+        android:layout_below="@+id/edit_txt_reg_phone_numb" />
 
     <Button
         android:layout_marginTop="25dp"
@@ -65,23 +66,22 @@
         android:paddingLeft="3dp"
         android:onClick="registerUser"
         android:layout_marginTop="15dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/have_account"
         android:id="@+id/textView"
-        android:layout_alignStart="@+id/edit_txt_reg_username"
-        android:layout_alignEnd="@+id/edit_txt_reg_username"
+        android:layout_alignStart="@+id/edit_txt_reg_email"
         android:layout_below="@+id/btn_register" />
     <Button
         style="@android:style/Widget.Holo.Button.Borderless.Small"
-        android:id="@+id/btn_login_from_reg_form"
+        android:layout_toRightOf="@+id/textView"
+        android:id="@+id/btn_open_login_form"
         android:onClick="openLoginForm"
         android:layout_width="wrap_content"
-        android:textColor="@color/colorAccent"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/cardview_dark_background"
         android:text="@string/login"
-        android:layout_marginEnd="10dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_register"
-        android:layout_alignEnd="@+id/btn_register" />
+        android:layout_below="@+id/btn_register" />
 
 </RelativeLayout>
