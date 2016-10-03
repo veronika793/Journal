@@ -118,7 +118,6 @@ public class JournalActivity extends AppCompatActivity{
         } else if (itemName.equals(Constants.JOURNALS)) {
         } else if (itemName.equals(Constants.EXIT)) {
             app.getAuthorizationManager().logoutUser();
-            boolean isUserLogged = app.getAuthorizationManager().isLoggedIn();
             startActivity(new Intent(JournalActivity.this,LoginActivity.class));
             finish();
         }
