@@ -18,10 +18,9 @@ import java.util.List;
  * Created by Veronica on 10/2/2016.
  */
 public class DatabaseHelper extends SQLiteOpenHelper{
-    private static DatabaseHelper mInstance;
     private Context mContext;
 
-    private static final String DATABASE_NAME = "MyJournal";
+    private static final String DATABASE_NAME = "journal_db";
 
     private static final int DATABASE_VERSION =1;
 
@@ -45,21 +44,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     // Database creation sql statement
     public static final String create_users_table= "CREATE TABLE "+ USERS_TABLE + " ( "+USER_KEY_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+USER_EMAIL+" TEXT NOT NULL UNIQUE, "+USER_PASSWORD+ " TEXT, "+USER_NAME+ " TEXT NOT NULL, "+USER_PHOTO_URI+ " TEXT NOT NULL, "+ USER_IS_FACEBOOK+ " BOOLEAN NOT NULL);";
-    public static final String create_notes_table = "CREATE TABLE "+ NOTES_TABLE + " ( "+NOTE_KEY_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+NOTE_USER_ID+" INTEGER, "+ "FOREIGN KEY ( "+NOTE_USER_ID+" ) REFERENCES "+USERS_TABLE +"("+USER_KEY_ID+"), "+NOTE_TITLE+ " TEXT NOT NULL, "+ NOTE_CONTENT + " TEXT NOT NULL, "+NOTE_PHOTO_URI+ " TEXT, "+ NOTE_LOCATION+ " TEXT, "+ NOTE_CREATED_ON+ " TEXT NOT NULL);";
+    public static final String create_notes_table = "CREATE TABLE "+ NOTES_TABLE + " ( "+NOTE_KEY_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+NOTE_USER_ID+" INTEGER, "+NOTE_TITLE+ " TEXT NOT NULL, "+ NOTE_CONTENT + " TEXT NOT NULL, "+NOTE_PHOTO_URI+ " TEXT, "+ NOTE_LOCATION+ " TEXT, "+ NOTE_CREATED_ON+ " TEXT NOT NULL, "+"FOREIGN KEY "+"("+NOTE_USER_ID+")"+" REFERENCES "+USERS_TABLE+"("+USER_KEY_ID+"));";
 
 
-
-    public static DatabaseHelper getInstance(Context context){
-        if(mInstance==null){
-            return new DatabaseHelper(context);
-        }
-        return mInstance;
+    public DatabaseHelper(Context ctx) {
+        super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
+        this.mContext = ctx;
     }
 
-    private DatabaseHelper(Context context){
-        super(context,DATABASE_NAME,null,DATABASE_VERSION);
-        mContext = context;
-    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -93,20 +85,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
         long response = db.insert(USERS_TABLE,null,insertValues);
         db.close();
-        if(response>0){
-            return true;
-        }
-        return false;
+        return response > 0;
     }
 
     public boolean deleteUser(String email){
         SQLiteDatabase db = this.getWritableDatabase();
         long response = db.delete(USERS_TABLE,USER_EMAIL+" =? ",new String[]{email});
         db.close();
-        if(response>0){
-            return true;
-        }
-        return false;
+        return response > 0;
     }
 
     public void updateUser(User user){
@@ -164,7 +150,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public boolean checkIfUserExists(String email){
         SQLiteDatabase db = this.getWritableDatabase();
         String Query = "SELECT * FROM " + USERS_TABLE + " WHERE " + USER_EMAIL + " = " + email;
-        Cursor cursor = db.rawQuery(Query, null);
+        Cursor cursor = db.query(USERS_TABLE,new String[]{USER_EMAIL},USER_EMAIL+" =? ",new String[]{email},null,null,null);
         if(cursor.getCount() <= 0){
             cursor.close();
             return false;
@@ -196,6 +182,19 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return null;
     }
 
+   public boolean checkIfUserExist(String email,String password){
+       SQLiteDatabase db = this.getWritableDatabase();
+//       String rawQuery = "SELECT * FROM " + USERS_TABLE + " WHERE " + USER_EMAIL + " = " + email + " AND " + USER_PASSWORD + " = "+password;
+//       Cursor cursor = db.rawQuery(rawQuery, null);
+       Cursor cursor = db.query(USERS_TABLE,new String[]{USER_EMAIL,USER_PASSWORD},USER_EMAIL+" =? AND "+USER_PASSWORD+" =? ",new String[]{email,password},null,null,null);
+       if(cursor.getCount() <= 0){
+           cursor.close();
+           return false;
+       }
+       cursor.close();
+       return true;
+   }
+
     public long getUsersCount(){
         SQLiteDatabase db = this.getReadableDatabase();
         long itemsCount= DatabaseUtils.queryNumEntries(db, USERS_TABLE);
@@ -216,20 +215,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         long response = db.insert(NOTES_TABLE,null,insertValues);
         db.close();
-        if(response>0){
-            return true;
-        }
-        return false;
+        return response > 0;
     }
 
     public boolean deleteNote(Integer noteId){
         SQLiteDatabase db = this.getWritableDatabase();
         long response = db.delete(NOTES_TABLE,NOTE_KEY_ID+" =? ",new String[]{String.valueOf(noteId)});
         db.close();
-        if(response>0){
-            return true;
-        }
-        return false;
+        return response > 0;
     }
 
     public void updateNote(Note note){

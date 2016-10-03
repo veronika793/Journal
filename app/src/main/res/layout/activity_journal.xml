@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Journal Activity"
-        android:id="@+id/textView4"
+        android:id="@+id/txt_journal"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="164dp" />

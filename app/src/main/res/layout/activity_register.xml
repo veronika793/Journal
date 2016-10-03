@@ -58,7 +58,6 @@
 
     <TextView
         android:paddingLeft="3dp"
-        android:onClick="registerUser"
         android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,7 +69,6 @@
         style="@android:style/Widget.Holo.Button.Borderless.Small"
         android:layout_toRightOf="@+id/textView"
         android:id="@+id/btn_open_login_form"
-        android:onClick="openLoginForm"
         android:layout_width="wrap_content"
         android:layout_marginStart="10dp"
         android:textColor="@color/cardview_dark_background"

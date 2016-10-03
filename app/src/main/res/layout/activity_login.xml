@@ -27,7 +27,6 @@
         android:layout_below="@+id/edit_txt_login_email" />
     <Button
         android:layout_marginTop="25dp"
-        android:onClick="loginUser"
         android:layout_width="match_parent"
         android:text="@string/login"
         android:layout_height="wrap_content"
@@ -59,7 +58,6 @@
 
     <TextView
         android:paddingLeft="3dp"
-        android:onClick="registerUser"
         android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,7 +68,7 @@
     <Button
         android:layout_toRightOf="@+id/textView"
         style="@android:style/Widget.Holo.Button.Borderless.Small"
-        android:id="@+id/btn_open_login_form"
+        android:id="@+id/btn_open_register_form"
         android:layout_width="wrap_content"
         android:textColor="@color/cardview_dark_background"
         android:text="@string/register"

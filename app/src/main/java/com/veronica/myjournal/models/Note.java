@@ -1,9 +1,12 @@
 package com.veronica.myjournal.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Veronica on 9/30/2016.
  */
-public class Note {
+public class Note implements Parcelable {
 
     private Integer _id;
     private Integer _user_id;
@@ -83,4 +86,55 @@ public class Note {
     public void set_location(String _location) {
         this._location = _location;
     }
+
+
+
+    protected Note(Parcel in) {
+        _id = in.readByte() == 0x00 ? null : in.readInt();
+        _user_id = in.readByte() == 0x00 ? null : in.readInt();
+        _title = in.readString();
+        _content = in.readString();
+        _created_on = in.readString();
+        _photo = in.readString();
+        _location = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (_id == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeInt(_id);
+        }
+        if (_user_id == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeInt(_user_id);
+        }
+        dest.writeString(_title);
+        dest.writeString(_content);
+        dest.writeString(_created_on);
+        dest.writeString(_photo);
+        dest.writeString(_location);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Note> CREATOR = new Parcelable.Creator<Note>() {
+        @Override
+        public Note createFromParcel(Parcel in) {
+            return new Note(in);
+        }
+
+        @Override
+        public Note[] newArray(int size) {
+            return new Note[size];
+        }
+    };
 }

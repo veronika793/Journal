@@ -2,8 +2,11 @@ package com.veronica.myjournal.managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 
 /**
  * Created by Veronica on 10/1/2016.
@@ -12,13 +15,14 @@ public class AuthorizationManager
 {
     private static AuthorizationManager mInstance;
 
+
     public static AuthorizationManager getInstance(Context context){
         if(mInstance==null){
             return new AuthorizationManager(context);
         }
         return mInstance;
     }
-    private static String TAG = AuthorizationManager.class.getSimpleName();
+
 
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
@@ -37,13 +41,23 @@ public class AuthorizationManager
         this._context = context;
         mSharedPreferences = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         mEditor = mSharedPreferences.edit();
+
     }
 
-    public void setLogin(boolean isLoggedIn)
+    public void logoutUser(){
+        mEditor.putBoolean(KEY_IS_LOGGED_IN, false);
+        if(AccessToken.getCurrentAccessToken()!=null) {
+            LoginManager.getInstance().logOut();
+        }
+    }
+
+    public void loginUser()
     {
-        mEditor.putBoolean(KEY_IS_LOGGED_IN, isLoggedIn);
-        // commit changes
-        mEditor.commit();
+        if(AccessToken.getCurrentAccessToken()==null) {
+            mEditor.putBoolean(KEY_IS_LOGGED_IN, true);
+            mEditor.commit();
+        }
+
     }
 
     public boolean isLoggedIn()

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -20,8 +21,10 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.veronica.myjournal.Constants;
 import com.veronica.myjournal.R;
 import com.veronica.myjournal.app.MyJournalApplication;
+import com.veronica.myjournal.helpers.Validator;
 import com.veronica.myjournal.models.User;
 
 import org.json.JSONException;
@@ -31,27 +34,30 @@ import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private MyJournalApplication journalApp = (MyJournalApplication)this.getApplication();
+    private MyJournalApplication appJournal;
 
     //facebook login props
     private CallbackManager callbackManager = null;
     private AccessTokenTracker accessTokenTracker = null;
-    private ProfileTracker profileTracker;
-    public static final String PARCEL_KEY = "parcel_key";
     private LoginButton fbLoginButton;
 
     //users login props
     private EditText mEditTxtUserEmail;
     private EditText mEditTxtUserPassword;
     private Button mBtnOpenRegisterForm;
-
-
+    private Button mBtnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         FacebookSdk.sdkInitialize(getApplicationContext());
         super.onCreate(savedInstanceState);
+        appJournal = (MyJournalApplication)this.getApplication();
+        if(appJournal.getAuthorizationManager().isLoggedIn()){
+            startActivity(new Intent(LoginActivity.this,JournalActivity.class));
+        }
+
         setContentView(R.layout.activity_login);
+
         //facebook login ..
         callbackManager = CallbackManager.Factory.create();
         fbLoginButton = (LoginButton) findViewById(R.id.btn_login_fb);
@@ -62,17 +68,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //users login..
         mEditTxtUserEmail = (EditText) findViewById(R.id.edit_txt_login_email);
         mEditTxtUserPassword = (EditText) findViewById(R.id.edit_txt_login_password);
-        mBtnOpenRegisterForm = (Button) findViewById(R.id.btn_open_login_form);
+        mBtnOpenRegisterForm = (Button) findViewById(R.id.btn_open_register_form);
+        mBtnLogin = (Button) findViewById(R.id.btn_login);
 
         mBtnOpenRegisterForm.setOnClickListener(this);
-    }
-
-    public void loginUser(View view){
-
-        if(mEditTxtUserPassword.getText().toString().trim()!="" &&
-                mEditTxtUserEmail.getText().toString().trim()!=""){
-
-        }
+        mBtnLogin.setOnClickListener(this);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -80,16 +80,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         callbackManager.onActivityResult(requestCode,resultCode,data);
     }
 
-    private void showErrorMsg(){
-        journalApp.getDialogManager().showDialog(null,"Oops something went wrong, please try again later","");
-    }
 
     @Override
     public void onClick(View v) {
 
+        //facebook login
         if(v.getId()==R.id.btn_login_fb){
             fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                private ProfileTracker mProfileTracker;
                 @Override
                 public void onSuccess(final LoginResult loginResult) {
                     GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
@@ -103,40 +100,77 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 String userName = object.getString("first_name");
                                 String userPicUri = "http://graph.facebook.com/"+userId+"/picture?width=150&height=150";
 
-                                User userData = new User(userEmail,userName,userPicUri,"",true);
-                                Log.d("DEBUG", "da");
+                                User userData = new User(null,userEmail,userName,userPicUri,true);
+                                boolean userAlreadyExists = appJournal.getDbManager().checkIfUserExists(userEmail);
+                                if(!userAlreadyExists){
+                                    appJournal.getDbManager().addUser(userData);
+                                }
+                                appJournal.getAuthorizationManager().loginUser();
+                                Toast.makeText(getApplicationContext(), "Fb user logged in", Toast.LENGTH_SHORT).show();
+
+                                if(appJournal.getAuthorizationManager().isLoggedIn()){
+                                    startActivity(new Intent(LoginActivity.this,JournalActivity.class));
+                                }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            // Get facebook data from login
-//                                Bundle bFacebookData = getFacebookData(object);
                         }
                     });
-                    Bundle parameters = new Bundle();
-                    parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location"); // Parámetros que pedimos a facebook
-                    request.setParameters(parameters);
                     request.executeAsync();
 
                 }
-
                 @Override
                 public void onCancel() {
-                    showErrorMsg();
+                    Toast.makeText(getApplicationContext(), "Something went wrong with the login", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onError(FacebookException error) {
-                    showErrorMsg();
+                    Toast.makeText(getApplicationContext(), "User logged in", Toast.LENGTH_SHORT).show();
                 }
             });
-        }else if(v.getId()==R.id.btn_open_login_form){
+
+        }else if(v.getId()==R.id.btn_open_register_form){
             startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+        }else if(v.getId()==R.id.btn_login){
+            String userEmail = mEditTxtUserEmail.getText().toString();
+            String userPassword = mEditTxtUserPassword.getText().toString();
+            if(Validator.validateLoginUserFields(userEmail,userPassword)){
+
+                    if(appJournal.getDbManager().checkIfUserExist(userEmail,userPassword)){
+                        appJournal.getAuthorizationManager().loginUser();
+                        Toast.makeText(getApplicationContext(), "User logged in", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Invalid username or password", Toast.LENGTH_SHORT).show();
+                    }
+            }else{
+                Toast.makeText(getApplicationContext(),"Invalid input" , Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if(appJournal.getAuthorizationManager().isLoggedIn()){
+            startActivity(new Intent(LoginActivity.this,JournalActivity.class));
         }
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(appJournal.getAuthorizationManager().isLoggedIn()){
+            startActivity(new Intent(LoginActivity.this,JournalActivity.class));
+        }
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(appJournal.getAuthorizationManager().isLoggedIn()){
+            startActivity(new Intent(LoginActivity.this,JournalActivity.class));
+        }
+
+    }
 
     @Override
     public void onBackPressed() {

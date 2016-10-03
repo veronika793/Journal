@@ -13,9 +13,13 @@ import android.widget.Toast;
 
 import com.veronica.myjournal.Constants;
 import com.veronica.myjournal.R;
+import com.veronica.myjournal.app.MyJournalApplication;
+import com.veronica.myjournal.helpers.Validator;
 import com.veronica.myjournal.models.User;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
+
+    private MyJournalApplication appJournal;
 
     private EditText mEditTxtEmail;
     private EditText mEditTxtPassword;
@@ -29,6 +33,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.appJournal = (MyJournalApplication) this.getApplication();
+        if(appJournal.getAuthorizationManager().isLoggedIn()){
+            startActivity(new Intent(RegisterActivity.this,JournalActivity.class));
+        }
+
         setContentView(R.layout.activity_register);
 
         mEditTxtEmail = (EditText) findViewById(R.id.edit_txt_reg_email);
@@ -60,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         if(resultCode==RESULT_OK && requestCode == Constants.PICK_IMAGE_REQ_CODE ){
             imageUrl = data.getData().toString();
-            mBtnSelectPhoto.setText(Constants.PHOTO_SELECTED);
+            mBtnSelectPhoto.setText(imageUrl);
         }
     }
 
@@ -69,27 +78,28 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if(v.getId()==R.id.btn_select_photo){
             openGallery();
         }else if(v.getId()==R.id.btn_register){
-            // check if all fields are not empty and add user to database..
 
             String email = mEditTxtEmail.getText().toString().trim();
             String password = mEditTxtPassword.getText().toString().trim();
             String name = mEditTxtName.getText().toString().trim();
-            String selectedPhotoTxt = mBtnSelectPhoto.getText().toString();
-            boolean isDataValid = false;
-            //validation for all fields --> not empty fields,email validation, min lenght and selected photo required
-            if(!isEmailValid(email)){
-                Toast.makeText(getApplicationContext(), "invalid email", Toast.LENGTH_SHORT).show();
-            }else if(password.length()<Constants.PASSWORD_MIN_LENGHT){
-                Toast.makeText(getApplicationContext(), "invalid password", Toast.LENGTH_SHORT).show();
-            }else if(name.length()<Constants.NAME_MIN_LENGHT){
-                Toast.makeText(getApplicationContext(), "invalid name", Toast.LENGTH_SHORT).show();
-            }else if(selectedPhotoTxt.equals(Constants.SELECT_PHOTO)){
-                Toast.makeText(getApplicationContext(), "No photo selected", Toast.LENGTH_SHORT).show();
+
+            //TODO : only for debug purposes - must be changed
+            String selectedPhotoUri = mBtnSelectPhoto.getText().toString();
+            //String selectedPhotoUri = Constants.TEST_PHOTO_URL;
+
+            if(Validator.validateRegisterUserField(email,password,name,selectedPhotoUri)) {
+                User user = new User(null, email, password, name, selectedPhotoUri, false);
+
+                if (!this.appJournal.getDbManager().checkIfUserExists(email)) {
+                    this.appJournal.getDbManager().addUser(user);
+                    this.appJournal.getAuthorizationManager().loginUser();
+                    Toast.makeText(getApplicationContext(), "User registered", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "User already exists", Toast.LENGTH_SHORT).show();
+                }
             }else{
-                Toast.makeText(getApplicationContext(), "Valid", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getApplicationContext(), "Invalid fields", Toast.LENGTH_SHORT).show();
             }
-
 
         }else if(v.getId()==R.id.btn_open_login_form){
             startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
@@ -104,5 +114,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onBackPressed() {
         // leaves  back stack as it is, just all activities in background
         moveTaskToBack(true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(appJournal.getAuthorizationManager().isLoggedIn()){
+            startActivity(new Intent(RegisterActivity.this,JournalActivity.class));
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(appJournal.getAuthorizationManager().isLoggedIn()){
+            startActivity(new Intent(RegisterActivity.this,JournalActivity.class));
+        }
     }
 }
