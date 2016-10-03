@@ -3,6 +3,7 @@ package com.veronica.myjournal.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,8 @@ import com.veronica.myjournal.adapters.DrawerItemCustomAdapter;
 import com.veronica.myjournal.app.MyJournalApplication;
 import com.veronica.myjournal.fragments.ContainerFragment;
 import com.veronica.myjournal.objects.ObjectDrawerItem;
+
+import java.util.List;
 
 public class JournalActivity extends AppCompatActivity{
 
@@ -104,7 +107,21 @@ public class JournalActivity extends AppCompatActivity{
         mDrawerLayout.closeDrawer(mDrawerList);
 
         ObjectDrawerItem itemClicked = mDrawerItems[position];
-        Toast.makeText(getApplicationContext(), itemClicked.name, Toast.LENGTH_SHORT).show();
+
+        String itemName = itemClicked.name.toString();
+        if (itemName.equals(Constants.HOME)) {
+
+        } else if (itemName.equals(Constants.EDIT_PROFILE)) {
+
+        } else if (itemName.equals(Constants.PROFILE)) {
+
+        } else if (itemName.equals(Constants.JOURNALS)) {
+        } else if (itemName.equals(Constants.EXIT)) {
+            app.getAuthorizationManager().logoutUser();
+            boolean isUserLogged = app.getAuthorizationManager().isLoggedIn();
+            startActivity(new Intent(JournalActivity.this,LoginActivity.class));
+            finish();
+        }
     }
 
     private void initializeDrawerItems() {
@@ -146,5 +163,19 @@ public class JournalActivity extends AppCompatActivity{
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public Fragment getVisibleFragment(){
+        FragmentManager fragmentManager = JournalActivity.this.getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if(fragments != null){
+            for(Fragment fragment : fragments){
+                if(fragment != null && fragment.isVisible())
+                {
+                    return fragment;
+                }
+            }
+        }
+        return null;
     }
 }

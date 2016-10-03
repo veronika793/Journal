@@ -45,6 +45,7 @@ public class AuthorizationManager
 
     public void logoutUser(){
         mEditor.putBoolean(KEY_IS_LOGGED_IN, false);
+        mEditor.commit();
         if(AccessToken.getCurrentAccessToken()!=null) {
             LoginManager.getInstance().logOut();
         }
