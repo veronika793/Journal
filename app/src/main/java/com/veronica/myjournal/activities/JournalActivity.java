@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -101,6 +102,9 @@ public class JournalActivity extends AppCompatActivity{
         mDrawerList.setItemChecked(position, true);
         mToolbar.setTitle(mDrawerItems[position].name);
         mDrawerLayout.closeDrawer(mDrawerList);
+
+        ObjectDrawerItem itemClicked = mDrawerItems[position];
+        Toast.makeText(getApplicationContext(), itemClicked.name, Toast.LENGTH_SHORT).show();
     }
 
     private void initializeDrawerItems() {
