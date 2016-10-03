@@ -2,7 +2,6 @@ package com.veronica.myjournal.helpers;
 
 import android.webkit.URLUtil;
 
-import com.facebook.internal.Validate;
 import com.veronica.myjournal.Constants;
 
 /**

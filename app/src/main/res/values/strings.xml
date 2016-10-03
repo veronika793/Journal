@@ -7,7 +7,7 @@
     <string name="email">Email</string>
     <string name="pick_date">pick_date</string>
     <string name="select_birth_date">Select birth date</string>
-    <string name="first_name">First name...</string>
+    <string name="first_name">First name…</string>
     <string name="password">Password</string>
     <string name="last_name">Last Name</string>
     <string name="have_account">Already have an account?</string>
@@ -18,7 +18,14 @@
     <string name="fb_login_protocol_scheme">fbAPP_ID</string>
     <string name="select_a_photo">SELECT PHOTO</string>
     <string name="name">Name</string>
-    <string name="phone_number">Phone number: +359...</string>
+    <string name="phone_number">Phone number: +359…</string>
     <string name="enter">Enter</string>
+    <string name="menu_item_add_note">menu_item_add_note</string>
 
+    <string-array name="navigation_drawer_items_array">
+        <item>Profile</item>
+        <item>Edit Profile</item>
+        <item>Notes</item>
+        <item>Exit</item>
+    </string-array>
 </resources>

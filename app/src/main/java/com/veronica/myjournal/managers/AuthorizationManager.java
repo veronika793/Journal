@@ -23,7 +23,6 @@ public class AuthorizationManager
         return mInstance;
     }
 
-
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
     private Context _context;

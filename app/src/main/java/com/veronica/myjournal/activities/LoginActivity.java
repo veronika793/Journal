@@ -1,7 +1,6 @@
 package com.veronica.myjournal.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,11 +16,8 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
-import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.veronica.myjournal.Constants;
 import com.veronica.myjournal.R;
 import com.veronica.myjournal.app.MyJournalApplication;
 import com.veronica.myjournal.helpers.Validator;
@@ -54,6 +50,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         appJournal = (MyJournalApplication)this.getApplication();
         if(appJournal.getAuthorizationManager().isLoggedIn()){
             startActivity(new Intent(LoginActivity.this,JournalActivity.class));
+            finish();
         }
 
         setContentView(R.layout.activity_login);
@@ -110,6 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                 if(appJournal.getAuthorizationManager().isLoggedIn()){
                                     startActivity(new Intent(LoginActivity.this,JournalActivity.class));
+                                    finish();
                                 }
 
                             } catch (JSONException e) {
@@ -147,10 +145,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }else{
                 Toast.makeText(getApplicationContext(),"Invalid input" , Toast.LENGTH_SHORT).show();
             }
+            if(appJournal.getAuthorizationManager().isLoggedIn()){
+                startActivity(new Intent(LoginActivity.this,JournalActivity.class));
+                finish();
+            }
+
         }
 
         if(appJournal.getAuthorizationManager().isLoggedIn()){
             startActivity(new Intent(LoginActivity.this,JournalActivity.class));
+            finish();
         }
 
     }
@@ -160,6 +164,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onRestart();
         if(appJournal.getAuthorizationManager().isLoggedIn()){
             startActivity(new Intent(LoginActivity.this,JournalActivity.class));
+            finish();
         }
     }
 
@@ -168,6 +173,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onResume();
         if(appJournal.getAuthorizationManager().isLoggedIn()){
             startActivity(new Intent(LoginActivity.this,JournalActivity.class));
+            finish();
         }
 
     }

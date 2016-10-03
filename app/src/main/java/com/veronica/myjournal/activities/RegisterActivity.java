@@ -1,14 +1,12 @@
 package com.veronica.myjournal.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.veronica.myjournal.Constants;
@@ -84,8 +82,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             String name = mEditTxtName.getText().toString().trim();
 
             //TODO : only for debug purposes - must be changed
-            String selectedPhotoUri = mBtnSelectPhoto.getText().toString();
-            //String selectedPhotoUri = Constants.TEST_PHOTO_URL;
+            //String selectedPhotoUri = mBtnSelectPhoto.getText().toString();
+            String selectedPhotoUri = Constants.TEST_PHOTO_URL;
 
             if(Validator.validateRegisterUserField(email,password,name,selectedPhotoUri)) {
                 User user = new User(null, email, password, name, selectedPhotoUri, false);
@@ -99,6 +97,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 }
             }else{
                 Toast.makeText(getApplicationContext(), "Invalid fields", Toast.LENGTH_SHORT).show();
+            }
+            if(appJournal.getAuthorizationManager().isLoggedIn()){
+                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                finish();
             }
 
         }else if(v.getId()==R.id.btn_open_login_form){

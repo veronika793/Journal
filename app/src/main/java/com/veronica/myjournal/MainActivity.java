@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         this.journalApp = (MyJournalApplication) this.getApplication();
@@ -29,34 +29,17 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, RegisterActivity.class));
         if(!AuthorizationManager.getInstance(this).isLoggedIn()){
             startActivity(new Intent(this, RegisterActivity.class));
+            finish();
         }else{
             startActivity(new Intent(this, JournalActivity.class));
+            finish();
+
         }
 
 
 
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        if(!AuthorizationManager.getInstance(this).isLoggedIn()){
-            startActivity(new Intent(this, RegisterActivity.class));
-        }else{
-            startActivity(new Intent(this, JournalActivity.class));
-        }
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(!AuthorizationManager.getInstance(this).isLoggedIn()){
-            startActivity(new Intent(this, RegisterActivity.class));
-        }else{
-            startActivity(new Intent(this, JournalActivity.class));
-        }
-    }
 
     //        this.containerFragment = new ContainerFragment();
 //        getSupportFragmentManager()
