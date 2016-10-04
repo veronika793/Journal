@@ -3,13 +3,11 @@ package com.veronica.myjournal.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -21,22 +19,22 @@ import com.facebook.login.widget.LoginButton;
 import com.veronica.myjournal.Constants;
 import com.veronica.myjournal.R;
 import com.veronica.myjournal.app.MyJournalApplication;
+import com.veronica.myjournal.bindingmodels.LoginUserBindingModel;
+import com.veronica.myjournal.bindingmodels.UserBindingModel;
+import com.veronica.myjournal.helpers.CipherHelper;
 import com.veronica.myjournal.helpers.InputValidator;
 import com.veronica.myjournal.helpers.NotificationHandler;
-import com.veronica.myjournal.models.User;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.InvalidPropertiesFormatException;
 
-import se.simbio.encryption.Encryption;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private MyJournalApplication appJournal;
     private NotificationHandler notificationHandler;
-    private InputValidator inputValidator;
 
     //facebook login props
     private CallbackManager callbackManager = null;
@@ -60,7 +58,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         setContentView(R.layout.activity_login);
 
-        inputValidator = new InputValidator();
         notificationHandler = new NotificationHandler(this);
 
         //facebook login ..
@@ -94,41 +91,45 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(final LoginResult loginResult) {
-                        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
 
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-                                try {
-                                    String id = object.getString("id");
-                                    String email = object.getString("email");
-                                    String name = object.getString("first_name");
-                                    String picUri = "http://graph.facebook.com/"+id+"/picture?width=150&height=150";
+                        GraphRequest request = GraphRequest.newMeRequest(
+                                loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
 
-                                    User userData = new User(null,email,name,picUri,true);
+                                        String uid = object.optString("id");
+                                        String email = object.optString("email");
+                                        String name = object.optString("name");
+                                        String userPicUri = "http://graph.facebook.com/"+uid+"/picture?width=150&height=150";
+                                        try {
+                                            UserBindingModel user = new UserBindingModel(email,name,userPicUri,true);
 
-                                    if(!appJournal.getDbManager().checkIfUserExists(email)){
-                                        appJournal.getDbManager().addUser(userData);
+                                            if(appJournal.getDbManager().checkIfUserExists(email)){
+                                                appJournal.getDbManager().addUser(user);
+                                            }
+                                            appJournal.getAuthorizationManager().loginUser();
+                                            goToJournalActivity();
+
+                                        } catch (InvalidPropertiesFormatException e) {
+                                            notificationHandler.toastWarningNotificationTop(e.getMessage());
+                                        }
+
                                     }
-                                    appJournal.getAuthorizationManager().loginUser();
-                                    if(appJournal.getAuthorizationManager().isLoggedIn()){
-                                        goToJournalActivity();
-                                    }
-
-                                } catch (JSONException e) {
-                                    notificationHandler.toastWarningNotification(e.getMessage());
-                                }
-                            }
-                        });
+                                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id, name, email");
+                        request.setParameters(parameters);
                         request.executeAsync();
-
                     }
                     @Override
                     public void onCancel() {
-                        notificationHandler.toastWarningNotification("Couldn't log in");                    }
+                        Toast.makeText(getApplicationContext(), "Something went wrong with the login", Toast.LENGTH_SHORT).show();
+                    }
 
                     @Override
                     public void onError(FacebookException error) {
-                        notificationHandler.toastWarningNotification("Couldn't log in");
+                        Toast.makeText(getApplicationContext(), "User logged in", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -140,25 +141,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String userEmail = mEditTxtUserEmail.getText().toString();
                 String userPassword = mEditTxtUserPassword.getText().toString();
 
-                if(!inputValidator.isValidEmail(userEmail)){
-                    notificationHandler.toastWarningNotification("Invalid email");
-                }else if(!inputValidator.isMinLenghRestricted(Constants.PASSWORD_MIN_LENGHT,userPassword)){
-                    notificationHandler.toastWarningNotification("Invalid password. Minimum "+ Constants.NAME_MIN_LENGHT + " symbols");
-                }else{
-                    Encryption encryption = Encryption.getDefault("Key", userEmail, new byte[16]);
-                    String passwordDecrypted = encryption.encryptOrNull(userPassword);
-                    if(appJournal.getDbManager().checkIfUserExist(userEmail,passwordDecrypted)){
+                try {
+                    String encryptedPass = CipherHelper.cipher(Constants.PASS_KEY_ENCRYPTOR,userPassword);
+                    LoginUserBindingModel loginUserBinding = new LoginUserBindingModel(userEmail,userPassword);
+                    if(appJournal.getDbManager().checkIfUserExist(userEmail,encryptedPass)){
                         appJournal.getAuthorizationManager().loginUser();
                     }else{
-                        notificationHandler.toastWarningNotification("Invalid username or password");
+                        notificationHandler.toastWarningNotificationTop("Invalid username or password");
                     }
+
+                } catch (Exception e) {
+                    notificationHandler.toastWarningNotificationTop(e.getMessage());
                 }
+
                 if(appJournal.getAuthorizationManager().isLoggedIn()){
                     goToJournalActivity();
                 }
                 break;
         }
-
     }
 
     @Override

@@ -2,16 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.veronica.myjournal">
 
+    <!--send confirm sms with temp password-->
+    <!--<uses-permission android:name="android.permission.WRITE_SMS"/>-->
+    <!--<uses-permission android:name="android.permission.READ_SMS"/>-->
+
     <!--//facebook login-->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--send confirm sms with temp password-->
-    <uses-permission android:name="android.permission.WRITE_SMS"/>
-    <uses-permission android:name="android.permission.READ_SMS"/>
 
-    <!--not sure anymore-->
+    <!--check if there is network connection-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!--not sure anymore for that it is-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
+        android:fullBackupContent="@xml/my_backup_rules"
         android:name=".app.MyJournalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -32,7 +37,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
 
         <activity android:name=".MainActivity">
             <intent-filter>

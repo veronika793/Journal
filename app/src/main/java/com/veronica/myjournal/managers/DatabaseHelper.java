@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.icu.text.SimpleDateFormat;
 
+import com.veronica.myjournal.bindingmodels.UserBindingModel;
 import com.veronica.myjournal.models.Note;
 import com.veronica.myjournal.models.User;
 
@@ -67,7 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    public boolean addUser(User user){
+    public boolean addUser(UserBindingModel user){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues insertValues = new ContentValues();
         if(user.is_isFacebookUser()){
@@ -149,7 +150,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     public boolean checkIfUserExists(String email){
         SQLiteDatabase db = this.getWritableDatabase();
-        String Query = "SELECT * FROM " + USERS_TABLE + " WHERE " + USER_EMAIL + " = " + email;
         Cursor cursor = db.query(USERS_TABLE,new String[]{USER_EMAIL},USER_EMAIL+" =? ",new String[]{email},null,null,null);
         if(cursor.getCount() <= 0){
             cursor.close();

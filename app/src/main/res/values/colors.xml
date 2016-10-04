@@ -7,5 +7,6 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorToast">#f3398bde</color>
     <color name="colorToastWarning">#f3e45c75</color>
+    <color name="colorToastNeutral">#f3433e3f</color>
 
 </resources>

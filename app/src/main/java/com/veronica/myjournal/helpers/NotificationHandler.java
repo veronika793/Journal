@@ -24,11 +24,11 @@ public class NotificationHandler {
         this.mContext = mContext;
     }
 
-    public void toastNotification(String text){
+    public void toastSuccessNotificationTop(String text){
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
         View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) ((Activity) mContext).findViewById(R.id.custom_toast_container));
-        layout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.shape_toast));
+        layout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.shape_toast_success));
 
         TextView toastTxtView = (TextView) layout.findViewById(R.id.text);
         toastTxtView.setText(text);
@@ -40,7 +40,23 @@ public class NotificationHandler {
         toast.show();
     }
 
-    public void toastWarningNotification(String text){
+    public void toastSuccessNotificationBottom(String text){
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+
+        View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) ((Activity) mContext).findViewById(R.id.custom_toast_container));
+        layout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.shape_toast_success));
+
+        TextView toastTxtView = (TextView) layout.findViewById(R.id.text);
+        toastTxtView.setText(text);
+
+        Toast toast = new Toast(mContext);
+        toast.setGravity(Gravity.BOTTOM,0, 20);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
+
+    public void toastWarningNotificationTop(String text){
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
         View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) ((Activity) mContext).findViewById(R.id.custom_toast_container));
@@ -55,5 +71,55 @@ public class NotificationHandler {
         toast.setView(layout);
         toast.show();
     }
+
+    public void toastWarningNotificationBottom(String text){
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+
+        View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) ((Activity) mContext).findViewById(R.id.custom_toast_container));
+        layout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.shape_toast_warning));
+
+        TextView toastTxtView = (TextView) layout.findViewById(R.id.text);
+        toastTxtView.setText(text);
+
+        Toast toast = new Toast(mContext);
+        toast.setGravity(Gravity.BOTTOM,0, 20);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
+
+    public void toastNeutralNotificationTop(String text){
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+
+        View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) ((Activity) mContext).findViewById(R.id.custom_toast_container));
+        layout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.shape_toast_neutral));
+
+        TextView toastTxtView = (TextView) layout.findViewById(R.id.text);
+        toastTxtView.setText(text);
+
+        Toast toast = new Toast(mContext);
+        toast.setGravity(Gravity.TOP,0, 20);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
+
+    public void toastNeutralNotificationBottom(String text){
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+
+        View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) ((Activity) mContext).findViewById(R.id.custom_toast_container));
+        layout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.shape_toast_neutral));
+
+        TextView toastTxtView = (TextView) layout.findViewById(R.id.text);
+        toastTxtView.setText(text);
+
+        Toast toast = new Toast(mContext);
+        toast.setGravity(Gravity.BOTTOM,0, 20);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
+
+
 
 }

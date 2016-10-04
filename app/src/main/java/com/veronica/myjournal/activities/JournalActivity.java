@@ -1,7 +1,10 @@
 package com.veronica.myjournal.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -9,8 +12,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -159,7 +160,8 @@ public class JournalActivity extends AppCompatActivity{
                 Toast.makeText(getApplicationContext(), "Add new note", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.syncronize_user_data_to_remote_storage:
-                Toast.makeText(getApplicationContext(), "Synchronize", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(getApplicationContext(), String.valueOf(isNetworkAvailable()), Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -177,5 +179,12 @@ public class JournalActivity extends AppCompatActivity{
             }
         }
         return null;
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

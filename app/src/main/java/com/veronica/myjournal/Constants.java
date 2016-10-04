@@ -5,12 +5,20 @@ package com.veronica.myjournal;
  */
 public final class Constants {
 
+    public static String DEBUG_TAG = "DEBUG";
     public static int PICK_IMAGE_REQ_CODE = 1;
     public static int PASSWORD_MIN_LENGHT = 4;
-    public static int EMAIL_MIN_LENGHT = 5;
     public static String PHOTO_SELECTED = "PHOTO SELECTED";
     public static String SELECT_PHOTO = "SELECT PHOTO";
     public static int NAME_MIN_LENGHT = 3;
+
+    //kinvey
+    public static String APP_KEY_KINVEY  = "kid_HyvsJN-R";
+    public static String APP_SECRET_KINVER = "9a878ac1949646fc80f152a7f9f4f6f6";
+
+    //pass
+    public static String PASS_KEY_ENCRYPTOR  = "12345678";
+
     public static String HOME = "Home";
     public static String PROFILE = "Profile";
     public static String EDIT_PROFILE = "Edit Profile";

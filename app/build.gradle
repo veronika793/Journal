@@ -20,6 +20,9 @@ android {
 }
 repositories {
     mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -27,6 +30,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
-    compile 'se.simbio.encryption:library:1.2.0'
+    compile(name:'kinvey-android-2.10.8', ext:'aar')
 
 }

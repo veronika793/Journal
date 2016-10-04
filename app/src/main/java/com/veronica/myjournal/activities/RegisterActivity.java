@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,12 +11,14 @@ import android.widget.EditText;
 import com.veronica.myjournal.Constants;
 import com.veronica.myjournal.R;
 import com.veronica.myjournal.app.MyJournalApplication;
+import com.veronica.myjournal.bindingmodels.UserBindingModel;
+import com.veronica.myjournal.helpers.CipherHelper;
 import com.veronica.myjournal.helpers.ErrorHandler;
 import com.veronica.myjournal.helpers.InputValidator;
 import com.veronica.myjournal.helpers.NotificationHandler;
-import com.veronica.myjournal.models.User;
 
-import se.simbio.encryption.Encryption;
+import java.util.InvalidPropertiesFormatException;
+
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -65,7 +65,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-
     public void selectUserPhoto(View view){
         openGallery();
     }
@@ -88,11 +87,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
 
-
         switch (v.getId()){
             case R.id.btn_select_photo:openGallery();
                 break;
-            case R.id.btn_open_login_form:goToJournalActivity();
+            case R.id.btn_open_login_form: openLoginForm();
                 break;
             case R.id.btn_register:
 
@@ -103,38 +101,34 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 //String photoUri = mBtnSelectPhoto.getText().toString();
                 String photoUri = Constants.TEST_PHOTO_URL;
 
-                Encryption encryption = Encryption.getDefault("Key", email, new byte[16]);
-                String encryptedPassword = encryption.encryptOrNull(password);
-
-                if(!inputValidator.isValidUri(photoUri)){
-                    notificationHandler.toastWarningNotification("Invalid photo uri");
-                }else if(!inputValidator.isValidEmail(email)){
-                    notificationHandler.toastWarningNotification("Invalid email");
-                }else if(!inputValidator.isMinLenghRestricted(Constants.NAME_MIN_LENGHT,name)){
-                    notificationHandler.toastWarningNotification("Invalid name. Minimum "+ Constants.NAME_MIN_LENGHT + " symbols");
-                }else if(!inputValidator.isMinLenghRestricted(Constants.PASSWORD_MIN_LENGHT,password)){
-                    notificationHandler.toastWarningNotification("Invalid password. Minimum "+ Constants.NAME_MIN_LENGHT + " symbols");
-                }else{
-                    notificationHandler.toastNotification("Valid");
-
+                try {
                     if(appJournal.getDbManager().checkIfUserExists(email)){
-                        notificationHandler.toastWarningNotification("User already exists");
+                        notificationHandler.toastWarningNotificationTop("User already exists");
                     }else{
-                        User user = new User(null,email,encryptedPassword,name,photoUri,false);
-                        appJournal.getDbManager().addUser(user);
+                        String passwordEncrypt = CipherHelper.cipher(Constants.PASS_KEY_ENCRYPTOR,password);
+                        UserBindingModel userBindingModel = new UserBindingModel(email,password,name,photoUri,false);
+                        userBindingModel.set_password(passwordEncrypt);
+                        appJournal.getDbManager().addUser(userBindingModel);
                         appJournal.getAuthorizationManager().loginUser();
                     }
 
-                    if(appJournal.getAuthorizationManager().isLoggedIn()){
-                        goToJournalActivity();
-                    }
+                } catch (InvalidPropertiesFormatException e) {
+                    notificationHandler.toastWarningNotificationTop(e.getMessage());
+                } catch (Exception e) {
+                    notificationHandler.toastWarningNotificationTop(e.getMessage());
                 }
-
+                if(appJournal.getAuthorizationManager().isLoggedIn()){
+                    goToJournalActivity();
+                }
                 break;
         }
 
     }
 
+    private void openLoginForm() {
+        startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+        finish();
+    }
 
     @Override
     public void onBackPressed() {
@@ -159,9 +153,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void goToJournalActivity(){
-        startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+        startActivity(new Intent(RegisterActivity.this,JournalActivity.class));
         finish();
     }
-
 
 }

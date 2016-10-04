@@ -16,9 +16,11 @@ public class AuthorizationManager
     private static AuthorizationManager mInstance;
 
 
-    public static AuthorizationManager getInstance(Context context){
-        if(mInstance==null){
-            return new AuthorizationManager(context);
+    public synchronized static AuthorizationManager getInstance(Context context)
+    {
+        if (mInstance == null)
+        {
+            mInstance = new AuthorizationManager(context);
         }
         return mInstance;
     }
