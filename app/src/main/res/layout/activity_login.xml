@@ -16,7 +16,7 @@
         android:inputType="textEmailAddress"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="77dp" />
+        android:layout_marginTop="100dp" />
 
     <EditText
         style="@style/EditTxtFormsStyles"
@@ -40,14 +40,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="OR"
+        android:text="@string/or"
         android:id="@+id/textView3"
         android:layout_below="@+id/btn_login"
         android:layout_centerHorizontal="true" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/btn_login_fb"
-        android:text="Log in with Facebook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -58,7 +57,8 @@
         android:layout_alignStart="@+id/btn_login" />
 
     <TextView
-        android:paddingLeft="3dp"
+        android:paddingStart="3dp"
+        android:paddingEnd="0dp"
         android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

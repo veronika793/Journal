@@ -18,9 +18,11 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.veronica.myjournal.Constants;
 import com.veronica.myjournal.R;
 import com.veronica.myjournal.app.MyJournalApplication;
-import com.veronica.myjournal.helpers.Validator;
+import com.veronica.myjournal.helpers.InputValidator;
+import com.veronica.myjournal.helpers.NotificationHandler;
 import com.veronica.myjournal.models.User;
 
 import org.json.JSONException;
@@ -28,13 +30,16 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
+import se.simbio.encryption.Encryption;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private MyJournalApplication appJournal;
+    private NotificationHandler notificationHandler;
+    private InputValidator inputValidator;
 
     //facebook login props
     private CallbackManager callbackManager = null;
-    private AccessTokenTracker accessTokenTracker = null;
     private LoginButton fbLoginButton;
 
     //users login props
@@ -54,6 +59,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         setContentView(R.layout.activity_login);
+
+        inputValidator = new InputValidator();
+        notificationHandler = new NotificationHandler(this);
 
         //facebook login ..
         callbackManager = CallbackManager.Factory.create();
@@ -81,80 +89,74 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
 
-        //facebook login
-        if(v.getId()==R.id.btn_login_fb){
-            fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                @Override
-                public void onSuccess(final LoginResult loginResult) {
-                    GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+        switch (v.getId()){
+            case R.id.btn_login_fb:
+                fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(final LoginResult loginResult) {
+                        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
 
-                        @Override
-                        public void onCompleted(JSONObject object, GraphResponse response) {
-                            Log.i("LoginActivity", response.toString());
-                            try {
-                                String userId = object.getString("id");
-                                String userEmail = object.getString("email");
-                                String userName = object.getString("first_name");
-                                String userPicUri = "http://graph.facebook.com/"+userId+"/picture?width=150&height=150";
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                try {
+                                    String id = object.getString("id");
+                                    String email = object.getString("email");
+                                    String name = object.getString("first_name");
+                                    String picUri = "http://graph.facebook.com/"+id+"/picture?width=150&height=150";
 
-                                User userData = new User(null,userEmail,userName,userPicUri,true);
-                                boolean userAlreadyExists = appJournal.getDbManager().checkIfUserExists(userEmail);
-                                if(!userAlreadyExists){
-                                    appJournal.getDbManager().addUser(userData);
+                                    User userData = new User(null,email,name,picUri,true);
+
+                                    if(!appJournal.getDbManager().checkIfUserExists(email)){
+                                        appJournal.getDbManager().addUser(userData);
+                                    }
+                                    appJournal.getAuthorizationManager().loginUser();
+                                    if(appJournal.getAuthorizationManager().isLoggedIn()){
+                                        goToJournalActivity();
+                                    }
+
+                                } catch (JSONException e) {
+                                    notificationHandler.toastWarningNotification(e.getMessage());
                                 }
-                                appJournal.getAuthorizationManager().loginUser();
-                                Toast.makeText(getApplicationContext(), "Fb user logged in", Toast.LENGTH_SHORT).show();
-
-                                if(appJournal.getAuthorizationManager().isLoggedIn()){
-                                    startActivity(new Intent(LoginActivity.this,JournalActivity.class));
-                                    finish();
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
-                        }
-                    });
-                    request.executeAsync();
+                        });
+                        request.executeAsync();
 
-                }
-                @Override
-                public void onCancel() {
-                    Toast.makeText(getApplicationContext(), "Something went wrong with the login", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onError(FacebookException error) {
-                    Toast.makeText(getApplicationContext(), "User logged in", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        }else if(v.getId()==R.id.btn_open_register_form){
-            startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
-        }else if(v.getId()==R.id.btn_login){
-            String userEmail = mEditTxtUserEmail.getText().toString();
-            String userPassword = mEditTxtUserPassword.getText().toString();
-            if(Validator.validateLoginUserFields(userEmail,userPassword)){
-
-                    if(appJournal.getDbManager().checkIfUserExist(userEmail,userPassword)){
-                        appJournal.getAuthorizationManager().loginUser();
-                        Toast.makeText(getApplicationContext(), "User logged in", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(getApplicationContext(), "Invalid username or password", Toast.LENGTH_SHORT).show();
                     }
-            }else{
-                Toast.makeText(getApplicationContext(),"Invalid input" , Toast.LENGTH_SHORT).show();
-            }
-            if(appJournal.getAuthorizationManager().isLoggedIn()){
-                startActivity(new Intent(LoginActivity.this,JournalActivity.class));
-                finish();
-            }
+                    @Override
+                    public void onCancel() {
+                        notificationHandler.toastWarningNotification("Couldn't log in");                    }
 
-        }
+                    @Override
+                    public void onError(FacebookException error) {
+                        notificationHandler.toastWarningNotification("Couldn't log in");
+                    }
+                });
 
-        if(appJournal.getAuthorizationManager().isLoggedIn()){
-            startActivity(new Intent(LoginActivity.this,JournalActivity.class));
-            finish();
+                break;
+            case R.id.btn_open_register_form: openRegisterForm();
+                break;
+            case R.id.btn_login:
+
+                String userEmail = mEditTxtUserEmail.getText().toString();
+                String userPassword = mEditTxtUserPassword.getText().toString();
+
+                if(!inputValidator.isValidEmail(userEmail)){
+                    notificationHandler.toastWarningNotification("Invalid email");
+                }else if(!inputValidator.isMinLenghRestricted(Constants.PASSWORD_MIN_LENGHT,userPassword)){
+                    notificationHandler.toastWarningNotification("Invalid password. Minimum "+ Constants.NAME_MIN_LENGHT + " symbols");
+                }else{
+                    Encryption encryption = Encryption.getDefault("Key", userEmail, new byte[16]);
+                    String passwordDecrypted = encryption.encryptOrNull(userPassword);
+                    if(appJournal.getDbManager().checkIfUserExist(userEmail,passwordDecrypted)){
+                        appJournal.getAuthorizationManager().loginUser();
+                    }else{
+                        notificationHandler.toastWarningNotification("Invalid username or password");
+                    }
+                }
+                if(appJournal.getAuthorizationManager().isLoggedIn()){
+                    goToJournalActivity();
+                }
+                break;
         }
 
     }
@@ -176,6 +178,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
         }
 
+    }
+    private void openRegisterForm(){
+        startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+        finish();
+    }
+
+    private void goToJournalActivity(){
+        startActivity(new Intent(LoginActivity.this,LoginActivity.class));
+        finish();
     }
 
     @Override

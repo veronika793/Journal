@@ -4,20 +4,29 @@ import android.content.Intent;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.veronica.myjournal.Constants;
 import com.veronica.myjournal.R;
 import com.veronica.myjournal.app.MyJournalApplication;
-import com.veronica.myjournal.helpers.Validator;
+import com.veronica.myjournal.helpers.ErrorHandler;
+import com.veronica.myjournal.helpers.InputValidator;
+import com.veronica.myjournal.helpers.NotificationHandler;
 import com.veronica.myjournal.models.User;
+
+import se.simbio.encryption.Encryption;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
     private MyJournalApplication appJournal;
+
+    ErrorHandler errorHandler;
+    InputValidator inputValidator;
+    NotificationHandler notificationHandler;
 
     private EditText mEditTxtEmail;
     private EditText mEditTxtPassword;
@@ -31,12 +40,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         this.appJournal = (MyJournalApplication) this.getApplication();
         if(appJournal.getAuthorizationManager().isLoggedIn()){
             startActivity(new Intent(RegisterActivity.this,JournalActivity.class));
         }
-
         setContentView(R.layout.activity_register);
+
+        errorHandler = new ErrorHandler();
+        inputValidator = new InputValidator();
+        notificationHandler = new NotificationHandler(this);
 
         mEditTxtEmail = (EditText) findViewById(R.id.edit_txt_reg_email);
         mEditTxtPassword = (EditText) findViewById(R.id.edit_txt_reg_password);
@@ -49,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mBtnSelectPhoto.setOnClickListener(this);
         mBtnRegister.setOnClickListener(this);
         mBtnOpenLoginForm.setOnClickListener(this);
+
     }
 
 
@@ -73,44 +87,54 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.btn_select_photo){
-            openGallery();
-        }else if(v.getId()==R.id.btn_register){
 
-            String email = mEditTxtEmail.getText().toString().trim();
-            String password = mEditTxtPassword.getText().toString().trim();
-            String name = mEditTxtName.getText().toString().trim();
 
-            //TODO : only for debug purposes - must be changed
-            //String selectedPhotoUri = mBtnSelectPhoto.getText().toString();
-            String selectedPhotoUri = Constants.TEST_PHOTO_URL;
+        switch (v.getId()){
+            case R.id.btn_select_photo:openGallery();
+                break;
+            case R.id.btn_open_login_form:goToJournalActivity();
+                break;
+            case R.id.btn_register:
 
-            if(Validator.validateRegisterUserField(email,password,name,selectedPhotoUri)) {
-                User user = new User(null, email, password, name, selectedPhotoUri, false);
+                String name = mEditTxtName.getText().toString();
+                String email = mEditTxtEmail.getText().toString();
+                String password = mEditTxtPassword.getText().toString();
+                //TODO : only for debug purposes - must be changed
+                //String photoUri = mBtnSelectPhoto.getText().toString();
+                String photoUri = Constants.TEST_PHOTO_URL;
 
-                if (!this.appJournal.getDbManager().checkIfUserExists(email)) {
-                    this.appJournal.getDbManager().addUser(user);
-                    this.appJournal.getAuthorizationManager().loginUser();
-                    Toast.makeText(getApplicationContext(), "User registered", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "User already exists", Toast.LENGTH_SHORT).show();
+                Encryption encryption = Encryption.getDefault("Key", email, new byte[16]);
+                String encryptedPassword = encryption.encryptOrNull(password);
+
+                if(!inputValidator.isValidUri(photoUri)){
+                    notificationHandler.toastWarningNotification("Invalid photo uri");
+                }else if(!inputValidator.isValidEmail(email)){
+                    notificationHandler.toastWarningNotification("Invalid email");
+                }else if(!inputValidator.isMinLenghRestricted(Constants.NAME_MIN_LENGHT,name)){
+                    notificationHandler.toastWarningNotification("Invalid name. Minimum "+ Constants.NAME_MIN_LENGHT + " symbols");
+                }else if(!inputValidator.isMinLenghRestricted(Constants.PASSWORD_MIN_LENGHT,password)){
+                    notificationHandler.toastWarningNotification("Invalid password. Minimum "+ Constants.NAME_MIN_LENGHT + " symbols");
+                }else{
+                    notificationHandler.toastNotification("Valid");
+
+                    if(appJournal.getDbManager().checkIfUserExists(email)){
+                        notificationHandler.toastWarningNotification("User already exists");
+                    }else{
+                        User user = new User(null,email,encryptedPassword,name,photoUri,false);
+                        appJournal.getDbManager().addUser(user);
+                        appJournal.getAuthorizationManager().loginUser();
+                    }
+
+                    if(appJournal.getAuthorizationManager().isLoggedIn()){
+                        goToJournalActivity();
+                    }
                 }
-            }else{
-                Toast.makeText(getApplicationContext(), "Invalid fields", Toast.LENGTH_SHORT).show();
-            }
-            if(appJournal.getAuthorizationManager().isLoggedIn()){
-                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
-                finish();
-            }
 
-        }else if(v.getId()==R.id.btn_open_login_form){
-            startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                break;
         }
+
     }
 
-    boolean isEmailValid(String email) {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
-    }
 
     @Override
     public void onBackPressed() {
@@ -133,4 +157,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             startActivity(new Intent(RegisterActivity.this,JournalActivity.class));
         }
     }
+
+    private void goToJournalActivity(){
+        startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+        finish();
+    }
+
+
 }

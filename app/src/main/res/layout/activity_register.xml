@@ -9,6 +9,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.veronica.myjournal.activities.RegisterActivity">
 
+    <!--<zemin.notification.NotificationView-->
+        <!--android:id="@+id/notificator_register"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"/>-->
+
     <EditText
     style="@style/EditTxtFormsStyles"
     android:hint="@string/email"
@@ -16,7 +21,7 @@
     android:inputType="textEmailAddress"
     android:layout_alignParentTop="true"
     android:layout_alignParentStart="true"
-    android:layout_marginTop="40dp" />
+    android:layout_marginTop="100dp" />
 
 
     <EditText
@@ -29,6 +34,7 @@
     <EditText
         style="@style/EditTxtFormsStyles"
         android:hint="@string/name"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:id="@+id/edit_txt_reg_name"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/edit_txt_reg_password" />
@@ -57,7 +63,7 @@
         android:id="@+id/btn_register" />
 
     <TextView
-        android:paddingLeft="3dp"
+        android:paddingStart="3dp"
         android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -21,6 +21,7 @@
     <string name="phone_number">Phone number: +359…</string>
     <string name="enter">Enter</string>
     <string name="menu_item_add_note">menu_item_add_note</string>
+    <string name="or">OR</string>
 
     <string-array name="navigation_drawer_items_array">
         <item>Profile</item>

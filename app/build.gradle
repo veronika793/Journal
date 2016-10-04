@@ -27,5 +27,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'se.simbio.encryption:library:1.2.0'
 
 }
