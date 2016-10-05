@@ -1,10 +1,9 @@
 package com.veronica.myjournal.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -23,8 +22,11 @@ import com.veronica.myjournal.Constants;
 import com.veronica.myjournal.R;
 import com.veronica.myjournal.adapters.DrawerItemCustomAdapter;
 import com.veronica.myjournal.app.MyJournalApplication;
-import com.veronica.myjournal.fragments.ContainerFragment;
-import com.veronica.myjournal.kinvey.KinveyConnector;
+import com.veronica.myjournal.fragments.ChangePasswordFragment;
+import com.veronica.myjournal.fragments.ExportToDbFragment;
+import com.veronica.myjournal.fragments.HomeFragment;
+import com.veronica.myjournal.fragments.ImportFromDbFragment;
+import com.veronica.myjournal.fragments.JournalsFragment;
 import com.veronica.myjournal.models.User;
 import com.veronica.myjournal.objects.ObjectDrawerItem;
 
@@ -73,10 +75,11 @@ public class JournalActivity extends AppCompatActivity{
         mToolbar.setTitle(Constants.HOME);
         mToolbar.setNavigationIcon(R.drawable.icon_menu);
 
+
         //place fragments container
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_frame, new ContainerFragment(),"container_fragment")
+                .replace(R.id.content_frame, new HomeFragment(),"container_fragment")
                 .disallowAddToBackStack()
                 .commit();
 
@@ -98,50 +101,52 @@ public class JournalActivity extends AppCompatActivity{
     }
 
     private void selectItem(int position) {
-        // Create a new fragment and specify the planet to show based on position
-        Fragment fragment;
+
 
         mDrawerList.setItemChecked(position, true);
-        mToolbar.setTitle(mDrawerItems[position].name);
         mDrawerLayout.closeDrawer(mDrawerList);
 
         ObjectDrawerItem itemClicked = mDrawerItems[position];
 
         String itemName = itemClicked.name;
-        if (itemName.equals(Constants.HOME)) {
 
-        } else if (itemName.equals(Constants.PROFILE)) {
-
-        } else if (itemName.equals(Constants.JOURNALS)) {
-
-        }else if(itemName.equals(Constants.IMPORT_FROM_DB)){
-
-        }else if(itemName.equals(Constants.CHANGE_PASS)){
-
-        }
-        else if (itemName.equals(Constants.EXIT)) {
+        if (itemName.equals(Constants.EXIT)) {
             appJournal.getAuthManager().logoutUser();
             startActivity(new Intent(JournalActivity.this,LoginActivity.class));
             finish();
         }
+        Fragment fragmentToLoad = null;
+        if(itemName.equals(Constants.HOME)) {
+            fragmentToLoad = new HomeFragment();
+        }
+
+        else if (itemName.equals(Constants.JOURNALS)) {
+            fragmentToLoad = new JournalsFragment();
+        }
+        else if(itemName.equals(Constants.IMPORT_FROM_DB)){
+            fragmentToLoad = new ImportFromDbFragment();
+        }
+        else if(itemName.equals(Constants.EXPORT_TO_REMOTE_DB)){
+            fragmentToLoad = new ExportToDbFragment();
+        }
+        else if(itemName.equals(Constants.CHANGE_PASS)){
+            fragmentToLoad = new ChangePasswordFragment();
+        }
+        if(fragmentToLoad!=null) {
+            placeFragment(R.id.content_frame, fragmentToLoad, fragmentToLoad.getClass().getSimpleName());
+        }
     }
 
     private void initializeDrawerItems() {
-        mDrawerItems = new ObjectDrawerItem[7];
+        mDrawerItems = new ObjectDrawerItem[6];
         mDrawerItems[0] = new ObjectDrawerItem(R.drawable.icon_home, Constants.HOME);
-        mDrawerItems[1] = new ObjectDrawerItem(R.drawable.icon_profile, Constants.PROFILE);
-        mDrawerItems[2] = new ObjectDrawerItem(R.drawable.icon_change_pass, Constants.CHANGE_PASS);
-        mDrawerItems[3] = new ObjectDrawerItem(R.drawable.icon_notes, Constants.JOURNALS);
-        mDrawerItems[4] = new ObjectDrawerItem(R.drawable.icon_import_remote, Constants.IMPORT_FROM_DB);
-        mDrawerItems[5] = new ObjectDrawerItem(R.drawable.icon_import_remote, Constants.EXPORT_TO_REMOTE_DB);
-        mDrawerItems[6] = new ObjectDrawerItem(R.drawable.icon_exit, Constants.EXIT);
+        mDrawerItems[1] = new ObjectDrawerItem(R.drawable.icon_change_pass, Constants.CHANGE_PASS);
+        mDrawerItems[2] = new ObjectDrawerItem(R.drawable.icon_notes, Constants.JOURNALS);
+        mDrawerItems[3] = new ObjectDrawerItem(R.drawable.icon_import_remote, Constants.IMPORT_FROM_DB);
+        mDrawerItems[4] = new ObjectDrawerItem(R.drawable.icon_import_remote, Constants.EXPORT_TO_REMOTE_DB);
+        mDrawerItems[5] = new ObjectDrawerItem(R.drawable.icon_exit, Constants.EXIT);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        moveTaskToBack(true);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -162,14 +167,6 @@ public class JournalActivity extends AppCompatActivity{
             case R.id.ad_new_note_toolbar:
                 Toast.makeText(getApplicationContext(), "Add new note", Toast.LENGTH_SHORT).show();
                 break;
-//            case R.id.syncronize_user_data_to_remote_storage:
-//                if(isNetworkAvailable()) {
-//                    Toast.makeText(getApplicationContext(), "synchronizing..", Toast.LENGTH_SHORT).show();
-//                    KinveyConnector.getInstance().createUser(mCurrentUser);
-//                }else{
-//                    Toast.makeText(getApplicationContext(), "No network connection. Please synchronize later", Toast.LENGTH_SHORT).show();
-//                }
-//                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -188,10 +185,25 @@ public class JournalActivity extends AppCompatActivity{
         return null;
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    private void placeFragment( @IdRes int containerViewId,
+                                @NonNull Fragment fragment,
+                                @NonNull String fragmentTag) {
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(containerViewId, fragment, fragmentTag)
+                .addToBackStack(null)
+                .commit();
     }
+    //@Override
+    public void onBackPressed() {
+
+        int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+        if (backStackEntryCount == 0) {
+            moveTaskToBack(true);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 }

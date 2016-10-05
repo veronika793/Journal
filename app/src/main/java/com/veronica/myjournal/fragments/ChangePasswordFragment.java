@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.veronica.myjournal.Constants;
 import com.veronica.myjournal.R;
 
 /**
@@ -19,4 +20,5 @@ public class ChangePasswordFragment extends Fragment {
 
         return view;
     }
+
 }

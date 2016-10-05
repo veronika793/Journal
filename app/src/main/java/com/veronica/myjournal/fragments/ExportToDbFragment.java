@@ -14,12 +14,11 @@ import com.veronica.myjournal.Constants;
 import com.veronica.myjournal.R;
 
 /**
- * Created by Veronica on 9/30/2016.
+ * Created by Veronica on 10/5/2016.
  */
-public class ImportFromDbFragment extends Fragment{
-
+public class ExportToDbFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_import_from_db,container,false);
+        View view = inflater.inflate(R.layout.fragment_export_to_db,container,false);
 
         return view;
     }
@@ -30,6 +29,5 @@ public class ImportFromDbFragment extends Fragment{
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
-
 
 }
