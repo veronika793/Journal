@@ -7,8 +7,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.veronica.myjournal.bindingmodels.UserBindingModel;
-import com.veronica.myjournal.interfaces.ICRUDDbOperation;
-import com.veronica.myjournal.models.Note;
+import com.veronica.myjournal.interfaces.ICRUDDbOperations;
 import com.veronica.myjournal.models.User;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import java.util.List;
 /**
  * Created by Veronica on 10/2/2016.
  */
-public class UsersDbManager extends DbManager implements ICRUDDbOperation<User,UserBindingModel>{
+public class UsersDbManager extends DbManager implements ICRUDDbOperations<User,UserBindingModel> {
     private Context mContext;
 
 

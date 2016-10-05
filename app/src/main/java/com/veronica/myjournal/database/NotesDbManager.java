@@ -7,7 +7,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.veronica.myjournal.bindingmodels.NoteBindingModel;
-import com.veronica.myjournal.interfaces.ICRUDDbOperation;
+import com.veronica.myjournal.interfaces.ICRUDDbOperations;
 import com.veronica.myjournal.models.Note;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by Veronica on 10/5/2016.
  */
-public class NotesDbManager extends DbManager implements ICRUDDbOperation<Note,NoteBindingModel> {
+public class NotesDbManager extends DbManager implements ICRUDDbOperations<Note,NoteBindingModel> {
 
     private static final String NOTE_KEY_ID = "note_id";
     private static final String NOTES_TABLE  =  "notes";
