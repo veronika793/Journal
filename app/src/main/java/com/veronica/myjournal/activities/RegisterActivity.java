@@ -133,12 +133,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void onBackPressed() {
-        // leaves  back stack as it is, just all activities in background
-        moveTaskToBack(true);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         if(appJournal.getAuthManager().isLoggedIn()){
@@ -157,6 +151,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private void goToJournalActivity(){
         startActivity(new Intent(RegisterActivity.this,JournalActivity.class));
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // leaves  back stack as it is, just all activities in background
+        moveTaskToBack(true);
     }
 
 }

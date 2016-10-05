@@ -76,10 +76,15 @@ public class JournalActivity extends AppCompatActivity{
         mToolbar.setNavigationIcon(R.drawable.icon_menu);
 
 
+        HomeFragment homeFragment = new HomeFragment();
+        Bundle data = new Bundle();//create bundle instance
+        data.putParcelable("current_user", mCurrentUser);
+        homeFragment.setArguments(data);
+
         //place fragments container
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_frame, new HomeFragment(),"container_fragment")
+                .replace(R.id.content_frame, homeFragment,"container_fragment")
                 .disallowAddToBackStack()
                 .commit();
 
@@ -133,6 +138,11 @@ public class JournalActivity extends AppCompatActivity{
             fragmentToLoad = new ChangePasswordFragment();
         }
         if(fragmentToLoad!=null) {
+
+            Bundle data = new Bundle();//create bundle instance
+            data.putParcelable("current_user", mCurrentUser);
+            fragmentToLoad.setArguments(data);
+
             placeFragment(R.id.content_frame, fragmentToLoad, fragmentToLoad.getClass().getSimpleName());
         }
     }
