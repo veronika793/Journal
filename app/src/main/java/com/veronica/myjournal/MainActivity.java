@@ -8,8 +8,6 @@ import com.facebook.FacebookSdk;
 import com.veronica.myjournal.activities.LoginActivity;
 import com.veronica.myjournal.activities.RegisterActivity;
 import com.veronica.myjournal.app.MyJournalApplication;
-import com.veronica.myjournal.managers.AuthorizationManager;
-import com.veronica.myjournal.managers.DialogManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,18 +20,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         this.appJournal = (MyJournalApplication) this.getApplication();
-        this.appJournal.setDialogManager(new DialogManager(this));
+        this.appJournal.setAuthManager();
+        this.appJournal.setNotesDbManager();
+        this.appJournal.setUsersDbManager();
 
-        //appJournal.getDbManager().onUpgrade(appJournal.getDbManager().getWritableDatabase(),1,1);
-
+//        appJournal.getUserDbManager().onUpgrade(appJournal.getUserDbManager().getWritableDatabase(),1,1);
+//        appJournal.getAuthManager().logoutUser();
         //TODO 1: extract more constants
 
         startActivity(new Intent(this, RegisterActivity.class));
-        if(!AuthorizationManager.getInstance(this).isLoggedIn()){
+        if(!appJournal.getAuthManager().isLoggedIn()){
             openRegisterForm();
         }else{
             goToJournalActivity();
         }
+
 
     }
 
@@ -46,6 +47,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this,LoginActivity.class));
         finish();
     }
-    }
+}
 
 

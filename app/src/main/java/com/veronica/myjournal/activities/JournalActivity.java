@@ -24,30 +24,36 @@ import com.veronica.myjournal.R;
 import com.veronica.myjournal.adapters.DrawerItemCustomAdapter;
 import com.veronica.myjournal.app.MyJournalApplication;
 import com.veronica.myjournal.fragments.ContainerFragment;
+import com.veronica.myjournal.models.User;
 import com.veronica.myjournal.objects.ObjectDrawerItem;
 
 import java.util.List;
 
 public class JournalActivity extends AppCompatActivity{
 
-    MyJournalApplication app;
+    MyJournalApplication appJournal;
 
     private String[] mNavigationDrawerItemTitles;
     private ObjectDrawerItem[] mDrawerItems;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private Toolbar mToolbar;
+    private User mCurrentUser;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        app = (MyJournalApplication)this.getApplication();
+        appJournal = (MyJournalApplication)this.getApplication();
         setContentView(R.layout.activity_journal);
 
-        if(!app.getAuthorizationManager().isLoggedIn()){
+        if(!appJournal.getAuthManager().isLoggedIn()){
             startActivity(new Intent(JournalActivity.this,LoginActivity.class));
         }
+
+        String currentUserEmail = appJournal.getAuthManager().getUser();
+        mCurrentUser =  appJournal.getUserDbManager().getByEmail(currentUserEmail);
+
         //drawer
         initializeDrawerItems();
         mNavigationDrawerItemTitles = getResources().getStringArray(R.array.navigation_drawer_items_array);
@@ -72,6 +78,7 @@ public class JournalActivity extends AppCompatActivity{
                 .replace(R.id.content_frame, new ContainerFragment(),"container_fragment")
                 .disallowAddToBackStack()
                 .commit();
+
 
         // Set the list's click listener
 
@@ -119,7 +126,7 @@ public class JournalActivity extends AppCompatActivity{
         } else if (itemName.equals(Constants.JOURNALS)) {
 
         } else if (itemName.equals(Constants.EXIT)) {
-            app.getAuthorizationManager().logoutUser();
+            appJournal.getAuthManager().logoutUser();
             startActivity(new Intent(JournalActivity.this,LoginActivity.class));
             finish();
         }
@@ -161,7 +168,6 @@ public class JournalActivity extends AppCompatActivity{
                 break;
             case R.id.syncronize_user_data_to_remote_storage:
 
-                Toast.makeText(getApplicationContext(), String.valueOf(isNetworkAvailable()), Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);

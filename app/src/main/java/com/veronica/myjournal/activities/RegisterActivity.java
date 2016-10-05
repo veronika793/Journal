@@ -42,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
 
         this.appJournal = (MyJournalApplication) this.getApplication();
-        if(appJournal.getAuthorizationManager().isLoggedIn()){
+        if(appJournal.getAuthManager().isLoggedIn()){
             startActivity(new Intent(RegisterActivity.this,JournalActivity.class));
         }
         setContentView(R.layout.activity_register);
@@ -102,22 +102,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 String photoUri = Constants.TEST_PHOTO_URL;
 
                 try {
-                    if(appJournal.getDbManager().checkIfUserExists(email)){
+                    if(appJournal.getUserDbManager().checkIfExists(email)){
                         notificationHandler.toastWarningNotificationTop("User already exists");
                     }else{
                         String passwordEncrypt = CipherHelper.cipher(Constants.PASS_KEY_ENCRYPTOR,password);
                         UserBindingModel userBindingModel = new UserBindingModel(email,password,name,photoUri,false);
                         userBindingModel.set_password(passwordEncrypt);
-                        appJournal.getDbManager().addUser(userBindingModel);
-                        appJournal.getAuthorizationManager().loginUser();
+                        appJournal.getUserDbManager().insert(userBindingModel);
+                        appJournal.getAuthManager().loginUser(email);
                     }
 
-                } catch (InvalidPropertiesFormatException e) {
-                    notificationHandler.toastWarningNotificationTop(e.getMessage());
                 } catch (Exception e) {
                     notificationHandler.toastWarningNotificationTop(e.getMessage());
                 }
-                if(appJournal.getAuthorizationManager().isLoggedIn()){
+                if(appJournal.getAuthManager().isLoggedIn()){
                     goToJournalActivity();
                 }
                 break;
@@ -139,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onResume() {
         super.onResume();
-        if(appJournal.getAuthorizationManager().isLoggedIn()){
+        if(appJournal.getAuthManager().isLoggedIn()){
             startActivity(new Intent(RegisterActivity.this,JournalActivity.class));
         }
     }
@@ -147,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onRestart() {
         super.onRestart();
-        if(appJournal.getAuthorizationManager().isLoggedIn()){
+        if(appJournal.getAuthManager().isLoggedIn()){
             startActivity(new Intent(RegisterActivity.this,JournalActivity.class));
         }
     }

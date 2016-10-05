@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FacebookSdk.sdkInitialize(getApplicationContext());
         super.onCreate(savedInstanceState);
         appJournal = (MyJournalApplication)this.getApplication();
-        if(appJournal.getAuthorizationManager().isLoggedIn()){
+        if(appJournal.getAuthManager().isLoggedIn()){
             startActivity(new Intent(LoginActivity.this,JournalActivity.class));
             finish();
         }
@@ -105,10 +105,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         try {
                                             UserBindingModel user = new UserBindingModel(email,name,userPicUri,true);
 
-                                            if(appJournal.getDbManager().checkIfUserExists(email)){
-                                                appJournal.getDbManager().addUser(user);
+                                            if(!appJournal.getUserDbManager().checkIfExists(email)){
+                                                appJournal.getUserDbManager().insert(user);
                                             }
-                                            appJournal.getAuthorizationManager().loginUser();
+                                            appJournal.getAuthManager().loginUser(email);
                                             goToJournalActivity();
 
                                         } catch (InvalidPropertiesFormatException e) {
@@ -144,8 +144,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 try {
                     String encryptedPass = CipherHelper.cipher(Constants.PASS_KEY_ENCRYPTOR,userPassword);
                     LoginUserBindingModel loginUserBinding = new LoginUserBindingModel(userEmail,userPassword);
-                    if(appJournal.getDbManager().checkIfUserExist(userEmail,encryptedPass)){
-                        appJournal.getAuthorizationManager().loginUser();
+                    if(appJournal.getUserDbManager().isLoginValid(userEmail,encryptedPass)){
+                        appJournal.getAuthManager().loginUser(userEmail);
                     }else{
                         notificationHandler.toastWarningNotificationTop("Invalid username or password");
                     }
@@ -154,7 +154,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     notificationHandler.toastWarningNotificationTop(e.getMessage());
                 }
 
-                if(appJournal.getAuthorizationManager().isLoggedIn()){
+                if(appJournal.getAuthManager().isLoggedIn()){
                     goToJournalActivity();
                 }
                 break;
@@ -164,7 +164,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onRestart() {
         super.onRestart();
-        if(appJournal.getAuthorizationManager().isLoggedIn()){
+        if(appJournal.getAuthManager().isLoggedIn()){
             startActivity(new Intent(LoginActivity.this,JournalActivity.class));
             finish();
         }
@@ -173,7 +173,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        if(appJournal.getAuthorizationManager().isLoggedIn()){
+        if(appJournal.getAuthManager().isLoggedIn()){
             startActivity(new Intent(LoginActivity.this,JournalActivity.class));
             finish();
         }

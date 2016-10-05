@@ -1,14 +1,10 @@
 package com.veronica.myjournal.app;
 
 import android.app.Application;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import com.kinvey.android.Client;
-import com.kinvey.android.callback.KinveyPingCallback;
-import com.veronica.myjournal.Constants;
+import com.veronica.myjournal.database.NotesDbManager;
 import com.veronica.myjournal.managers.AuthorizationManager;
-import com.veronica.myjournal.managers.DatabaseHelper;
+import com.veronica.myjournal.database.UsersDbManager;
 import com.veronica.myjournal.managers.DialogManager;
 
 /**
@@ -18,49 +14,40 @@ public class MyJournalApplication extends Application {
 
     private AuthorizationManager authorizationManager;
     private DialogManager mDialogManager;
-    private DatabaseHelper dbManager;
-    private Client kinvClient;
+    private UsersDbManager usersDbManager;
+    private NotesDbManager notesDbManager;
 
-    public void setDialogManager(DialogManager dialogManager) {
-        this.mDialogManager = dialogManager;
 
+    public void setDialogManager() {
+        this.mDialogManager = new DialogManager(getApplicationContext());
     }
 
-    public DatabaseHelper getDbManager() {
-        return dbManager;
-    }
     public DialogManager getDialogManager() {
-        return mDialogManager;
-    }
-    public AuthorizationManager getAuthorizationManager() {
-        return authorizationManager;
+        return this.mDialogManager;
     }
 
-    public Client getKinveyClient(){
-        return kinvClient;
+    public void setUsersDbManager(){
+        this.usersDbManager = new UsersDbManager(getApplicationContext());
     }
 
-    public void initializeKinveyClient(){
-        final Client mKinveyClient = new Client.Builder(Constants.APP_KEY_KINVEY, Constants.APP_SECRET_KINVER
-                , getApplicationContext()).build();
-
-        mKinveyClient.ping(new KinveyPingCallback() {
-            public void onFailure(Throwable t) {
-                Log.e(Constants.DEBUG_TAG, "Kinvey Ping Failed", t);
-            }
-            public void onSuccess(Boolean b) {
-                Log.d(Constants.DEBUG_TAG, "Kinvey Ping Success");
-            }
-        });
-        kinvClient = mKinveyClient;
+    public NotesDbManager getNotesDbManager(){
+        return this.notesDbManager;
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        this.authorizationManager = AuthorizationManager.getInstance(getApplicationContext());
-        this.dbManager = new DatabaseHelper(getApplicationContext());
+    public void setNotesDbManager(){
+        this.notesDbManager = new NotesDbManager(getApplicationContext());
+    }
 
+    public UsersDbManager getUserDbManager() {
+        return this.usersDbManager;
+    }
+
+    public void setAuthManager(){
+        this.authorizationManager = new AuthorizationManager(getApplicationContext());
+    }
+
+    public AuthorizationManager getAuthManager() {
+        return this.authorizationManager;
     }
 
 }
