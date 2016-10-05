@@ -23,6 +23,7 @@ public final class Constants {
     public static String EDIT_PROFILE = "Edit Profile";
     public static String CHANGE_PASS = "Change Password";
     public static String IMPORT_FROM_DB = "Import Data";
+    public static String EXPORT_TO_REMOTE_DB = "Export Data";
 
     public static String EXIT = "Exit";
     public static String JOURNALS = "Journals";

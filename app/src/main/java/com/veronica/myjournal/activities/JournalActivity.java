@@ -127,13 +127,14 @@ public class JournalActivity extends AppCompatActivity{
     }
 
     private void initializeDrawerItems() {
-        mDrawerItems = new ObjectDrawerItem[6];
+        mDrawerItems = new ObjectDrawerItem[7];
         mDrawerItems[0] = new ObjectDrawerItem(R.drawable.icon_home, Constants.HOME);
         mDrawerItems[1] = new ObjectDrawerItem(R.drawable.icon_profile, Constants.PROFILE);
         mDrawerItems[2] = new ObjectDrawerItem(R.drawable.icon_change_pass, Constants.CHANGE_PASS);
         mDrawerItems[3] = new ObjectDrawerItem(R.drawable.icon_notes, Constants.JOURNALS);
-        mDrawerItems[5] = new ObjectDrawerItem(R.drawable.icon_import_remote, Constants.IMPORT_FROM_DB);
-        mDrawerItems[4] = new ObjectDrawerItem(R.drawable.icon_exit, Constants.EXIT);
+        mDrawerItems[4] = new ObjectDrawerItem(R.drawable.icon_import_remote, Constants.IMPORT_FROM_DB);
+        mDrawerItems[5] = new ObjectDrawerItem(R.drawable.icon_import_remote, Constants.EXPORT_TO_REMOTE_DB);
+        mDrawerItems[6] = new ObjectDrawerItem(R.drawable.icon_exit, Constants.EXIT);
     }
 
     @Override
@@ -161,14 +162,14 @@ public class JournalActivity extends AppCompatActivity{
             case R.id.ad_new_note_toolbar:
                 Toast.makeText(getApplicationContext(), "Add new note", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.syncronize_user_data_to_remote_storage:
-                if(isNetworkAvailable()) {
-                    Toast.makeText(getApplicationContext(), "synchronizing..", Toast.LENGTH_SHORT).show();
-                    KinveyConnector.getInstance().createUser(mCurrentUser);
-                }else{
-                    Toast.makeText(getApplicationContext(), "No network connection. Please synchronize later", Toast.LENGTH_SHORT).show();
-                }
-                break;
+//            case R.id.syncronize_user_data_to_remote_storage:
+//                if(isNetworkAvailable()) {
+//                    Toast.makeText(getApplicationContext(), "synchronizing..", Toast.LENGTH_SHORT).show();
+//                    KinveyConnector.getInstance().createUser(mCurrentUser);
+//                }else{
+//                    Toast.makeText(getApplicationContext(), "No network connection. Please synchronize later", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
         }
         return super.onOptionsItemSelected(item);
     }
