@@ -5,8 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 
 import com.veronica.myjournal.bindingmodels.UserBindingModel;
+import com.veronica.myjournal.helpers.DbBitmapUtility;
 import com.veronica.myjournal.interfaces.ICRUDDbOperations;
 import com.veronica.myjournal.models.User;
 
@@ -16,19 +18,16 @@ import java.util.List;
 public class UsersDbManager extends DbManager implements ICRUDDbOperations<User,UserBindingModel> {
     private Context mContext;
 
-
     public static final String USERS_TABLE  =  "users";
     public static final String USER_KEY_ID = "user_id";
 
     private static final String USER_EMAIL = "user_email";
     private static final String USER_PASSWORD = "user_password";
     private static final String USER_NAME = "user_name";
-    private static final String USER_PHOTO_URI = "user_photo";
-    private static final String NOTE_KEY_ID = "note_id";
-
+    private static final String USER_PHOTO = "user_photo";
 
     // Database creation sql statement
-    public static final String create_users_table= "CREATE TABLE "+ USERS_TABLE + " ( "+USER_KEY_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+USER_EMAIL+" TEXT NOT NULL UNIQUE, "+USER_PASSWORD+ " TEXT, "+USER_NAME+ " TEXT NOT NULL, "+USER_PHOTO_URI+ " TEXT NOT NULL);";
+    public static final String create_users_table= "CREATE TABLE "+ USERS_TABLE + " ( "+USER_KEY_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+USER_EMAIL+" TEXT NOT NULL UNIQUE, "+USER_PASSWORD+ " TEXT, "+USER_NAME+ " TEXT NOT NULL, "+USER_PHOTO+ " BLOB);";
 
     public UsersDbManager(Context context) {
         super(context);
@@ -61,16 +60,17 @@ public class UsersDbManager extends DbManager implements ICRUDDbOperations<User,
     public User getByEmail(String email){
         SQLiteDatabase db = this.getWritableDatabase();
         User user;
-        Cursor cursor = db.query(USERS_TABLE,new String[]{USER_KEY_ID,USER_EMAIL,USER_PASSWORD,USER_NAME,USER_PHOTO_URI},USER_EMAIL+" =? ",new String[]{email},null,null,null);
+        Cursor cursor = db.query(USERS_TABLE,new String[]{USER_KEY_ID,USER_EMAIL,USER_PASSWORD,USER_NAME,USER_PHOTO},USER_EMAIL+" =? ",new String[]{email},null,null,null);
         if(cursor!=null){
             cursor.moveToFirst();
             Integer userId = cursor.getInt(0);
             String userEmail = cursor.getString(1);
             String userPassword = cursor.getString(2);
             String userName = cursor.getString(3);
-            String userPhoto = cursor.getString(4);
+            byte[] userPhotoByteArr = cursor.getBlob(4);
 
-            user = new User(userId,userEmail,userPassword,userName,userPhoto);
+            Bitmap photo = DbBitmapUtility.getImage(userPhotoByteArr);
+            user = new User(userId,userEmail,userPassword,userName,photo);
             cursor.close();
             db.close();
             return user;
@@ -92,44 +92,21 @@ public class UsersDbManager extends DbManager implements ICRUDDbOperations<User,
 
     @Override
     public List<User> getAll() {
-        List<User> users = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        db.beginTransaction();
-        try {
-            String rawQuery = "SELECT * FROM " +USERS_TABLE;
-            Cursor usersCursor = db.rawQuery(rawQuery,null);
-
-            if(usersCursor!=null){
-                while (usersCursor.moveToNext()){
-                    Integer userId = usersCursor.getInt(0);
-                    String userEmail = usersCursor.getString(1);
-                    String userPassword = usersCursor.getString(2);
-                    String userName = usersCursor.getString(3);
-                    String userPhoto = usersCursor.getString(4);
-
-                    User user = new User(userId,userEmail,userPassword,userName,userPhoto);
-                    users.add(user);
-                }
-                usersCursor.close();
-                db.setTransactionSuccessful();
-            }
-        }finally {
-            db.endTransaction();
-        }
-        db.close();
-        return users;
+        return null;
     }
 
     @Override
     public boolean insert(UserBindingModel user) {
+
+        byte[] image = DbBitmapUtility.getBytes(user.get_profilePicUri());
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues insertValues = new ContentValues();
 
         insertValues.put(USER_EMAIL,user.get_email() );
         insertValues.put(USER_PASSWORD,user.get_password());
         insertValues.put(USER_NAME,user.get_name() );
-        insertValues.put(USER_PHOTO_URI,user.get_profilePicUri());
+        insertValues.put(USER_PHOTO,image);
 
         long response = db.insert(USERS_TABLE,null,insertValues);
         db.close();
@@ -140,7 +117,7 @@ public class UsersDbManager extends DbManager implements ICRUDDbOperations<User,
     public boolean update(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues insertValues = new ContentValues();
-
+        byte[] image = DbBitmapUtility.getBytes(user.get_profilePic());
 
         if(user.get_email()!=null){
             insertValues.put(USER_EMAIL,user.get_email() );
@@ -151,8 +128,8 @@ public class UsersDbManager extends DbManager implements ICRUDDbOperations<User,
         if(user.get_password()!=null){
             insertValues.put(USER_PASSWORD,user.get_password());
         }
-        if(user.get_profilePicUri()!=null){
-            insertValues.put(USER_PHOTO_URI,user.get_profilePicUri());
+        if(user.get_profilePic()!=null){
+            insertValues.put(USER_PHOTO,image);
         }
         long response = db.update(USERS_TABLE,insertValues,USER_EMAIL + " =? ",new String[]{user.get_email()});
         db.close();

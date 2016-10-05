@@ -1,6 +1,14 @@
 package com.veronica.myjournal.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,6 +47,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Button mBtnRegister;
     private Button mBtnOpenLoginForm;
 
+    private Bitmap mUserSelectedPic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,17 +82,41 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void openGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, Constants.PICK_IMAGE_REQ_CODE);
+//        Intent galleryIntent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+//        startActivityForResult(galleryIntent, Constants.PICK_IMAGE_REQ_CODE);
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("scale", true);
+        intent.putExtra("outputX", 460);
+        intent.putExtra("outputY", 460);
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, 1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode==RESULT_OK && requestCode == Constants.PICK_IMAGE_REQ_CODE ){
-            imageUrl = data.getData().toString();
-            mBtnSelectPhoto.setText(imageUrl);
+//        if(resultCode==RESULT_OK && requestCode == Constants.PICK_IMAGE_REQ_CODE ){
+//            imageUrl = data.getData().getPath();
+//            mBtnSelectPhoto.setText(imageUrl);
+//        }
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+        if (requestCode == 1) {
+            mBtnSelectPhoto.setText(Constants.PHOTO_SELECTED);
+            final Bundle extras = data.getExtras();
+            if (extras != null) {
+                //Get image
+                Bitmap result  = extras.getParcelable("data");
+                mUserSelectedPic = getCircleBitmap(result);
+                Log.d("DEBUG", "da");
+            }
         }
     }
 
@@ -100,17 +134,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 String email = mEditTxtEmail.getText().toString();
                 String password = mEditTxtPassword.getText().toString();
                 //TODO : only for debug purposes - must be changed
-                //String photoUri = mBtnSelectPhoto.getText().toString();
-                String photoUri = Constants.TEST_PHOTO_URL;
-
+                String photoUri = mBtnSelectPhoto.getText().toString();
                 try {
                     if(appJournal.getUserDbManager().checkIfExists(email)){
                         notificationHandler.toastWarningNotificationTop("User already exists");
                     }else{
                         String cypherKey = KeyGenerator.generateKey(email);
-                        Log.d("DEBUG", String.valueOf(cypherKey.length()));
                         String passwordEncrypt = CipherHelper.cipher(cypherKey,password);
-                        UserBindingModel userBindingModel = new UserBindingModel(email,password,name,photoUri);
+                        UserBindingModel userBindingModel = new UserBindingModel(email,password,name,mUserSelectedPic);
                         userBindingModel.set_password(passwordEncrypt);
                         appJournal.getUserDbManager().insert(userBindingModel);
                         appJournal.getAuthManager().loginUser(email);
@@ -126,6 +157,30 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
     }
+
+    private Bitmap getCircleBitmap(Bitmap bitmap) {
+        final Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(output);
+
+        final int color = Color.WHITE;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawOval(rectF, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+
+        bitmap.recycle();
+
+        return output;
+    }
+
 
     private void openLoginForm() {
         startActivity(new Intent(RegisterActivity.this,LoginActivity.class));

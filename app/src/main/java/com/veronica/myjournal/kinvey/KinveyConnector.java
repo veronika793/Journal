@@ -67,7 +67,7 @@ public class KinveyConnector implements KinveyUserCallback{
         });
         myKinveyClient.user().put("user_id", user.get_id());
         myKinveyClient.user().put("user_password", user.get_password());
-        myKinveyClient.user().put("user_pic", user.get_profilePicUri());
+        myKinveyClient.user().put("user_pic", user.get_profilePic());
         myKinveyClient.user().put("user_name", user.get_name());
 
         logoutUser();

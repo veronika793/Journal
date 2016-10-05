@@ -22,11 +22,13 @@ import com.veronica.myjournal.Constants;
 import com.veronica.myjournal.R;
 import com.veronica.myjournal.adapters.DrawerItemCustomAdapter;
 import com.veronica.myjournal.app.MyJournalApplication;
+import com.veronica.myjournal.fragments.AddNoteFragment;
 import com.veronica.myjournal.fragments.ChangePasswordFragment;
 import com.veronica.myjournal.fragments.ExportToDbFragment;
 import com.veronica.myjournal.fragments.HomeFragment;
 import com.veronica.myjournal.fragments.ImportFromDbFragment;
 import com.veronica.myjournal.fragments.JournalsFragment;
+import com.veronica.myjournal.helpers.DbBitmapUtility;
 import com.veronica.myjournal.models.User;
 import com.veronica.myjournal.objects.ObjectDrawerItem;
 
@@ -56,6 +58,9 @@ public class JournalActivity extends AppCompatActivity{
 
         String currentUserEmail = appJournal.getAuthManager().getUser();
         mCurrentUser =  appJournal.getUserDbManager().getByEmail(currentUserEmail);
+        byte[] arr = DbBitmapUtility.getBytes(mCurrentUser.get_profilePic());
+
+
 
         //drawer
         initializeDrawerItems();
@@ -90,11 +95,6 @@ public class JournalActivity extends AppCompatActivity{
 
 
         // Set the list's click listener
-
-//        String customFont = "IndieFlower.ttf";
-//        Typeface typeface = Typeface.createFromAsset(getAssets(),customFont);
-//        txtView.setTypeface(typeface);
-
 
     }
 
@@ -175,7 +175,7 @@ public class JournalActivity extends AppCompatActivity{
                 }
                 break;
             case R.id.ad_new_note_toolbar:
-                Toast.makeText(getApplicationContext(), "Add new note", Toast.LENGTH_SHORT).show();
+                placeFragment(R.id.content_frame,new AddNoteFragment(),"add_note_fragment");
                 break;
         }
         return super.onOptionsItemSelected(item);

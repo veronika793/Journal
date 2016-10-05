@@ -24,6 +24,10 @@ public final class Constants {
     public static String CHANGE_PASS = "Change Password";
     public static String IMPORT_FROM_DB = "Import Data";
     public static String EXPORT_TO_REMOTE_DB = "Export Data";
+    public static String NO_NOTES_MSG = "You have no notes";
+
+    public static String FONT_ONE = "IndieFlower.ttf";
+    public static String FONT_TWO = "ShadowsIntoLight.ttf";
 
     public static String EXIT = "Exit";
     public static String JOURNALS = "Journals";

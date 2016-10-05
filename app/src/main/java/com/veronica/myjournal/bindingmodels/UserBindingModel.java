@@ -1,5 +1,7 @@
 package com.veronica.myjournal.bindingmodels;
 
+import android.graphics.Bitmap;
+
 import com.veronica.myjournal.Constants;
 import com.veronica.myjournal.helpers.InputValidator;
 
@@ -11,14 +13,14 @@ public class UserBindingModel{
     private String _email;
     private String _password;
     private String _name;
-    private String _profilePicUri;
+    private Bitmap _profilePic;
 
-    public UserBindingModel(String email, String password, String name, String photo) throws InvalidPropertiesFormatException {
+    public UserBindingModel(String email, String password, String name, Bitmap photo) throws InvalidPropertiesFormatException {
         this._validator = new InputValidator();
         this.set_email(email);
         this.set_password(password);
         this.set_name(name);
-        this.set_profilePicUri(photo);
+        this.set_profilePic(photo);
 
     }
 
@@ -44,8 +46,12 @@ public class UserBindingModel{
         this._name = name;
     }
 
-    public void set_profilePicUri(String _profilePicUri) {
-        this._profilePicUri = _profilePicUri;
+    public void set_profilePic(Bitmap profilePic) throws InvalidPropertiesFormatException {
+
+        if(profilePic==null){
+            throw new InvalidPropertiesFormatException("Invalid pic");
+        }
+        this._profilePic = profilePic;
     }
 
     public String get_email() {
@@ -60,8 +66,8 @@ public class UserBindingModel{
         return _name;
     }
 
-    public String get_profilePicUri() {
-        return _profilePicUri;
+    public Bitmap get_profilePicUri() {
+        return _profilePic;
     }
 
 }

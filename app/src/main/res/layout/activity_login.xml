@@ -14,6 +14,9 @@
         android:hint="@string/email"
         android:id="@+id/edit_txt_login_email"
         android:inputType="textEmailAddress"
+        android:maxLength="24"
+        android:singleLine="true"
+        android:maxLines="1"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="100dp" />
@@ -21,6 +24,9 @@
     <EditText
         style="@style/EditTxtFormsStyles"
         android:hint="@string/password"
+        android:maxLength="24"
+        android:singleLine="true"
+        android:maxLines="1"
         android:id="@+id/edit_txt_login_password"
         android:inputType="textPassword"
         android:layout_marginTop="20dp"
