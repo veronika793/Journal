@@ -21,6 +21,9 @@ public final class Constants {
     public static String HOME = "Home";
     public static String PROFILE = "Profile";
     public static String EDIT_PROFILE = "Edit Profile";
+    public static String CHANGE_PASS = "Change Password";
+    public static String IMPORT_FROM_DB = "Import Data";
+
     public static String EXIT = "Exit";
     public static String JOURNALS = "Journals";
     public static String TEST_PHOTO_URL = "https://pbs.twimg.com/profile_images/378800000532546226/dbe5f0727b69487016ffd67a6689e75a.jpeg";

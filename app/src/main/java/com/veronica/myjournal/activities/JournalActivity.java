@@ -99,18 +99,8 @@ public class JournalActivity extends AppCompatActivity{
 
     private void selectItem(int position) {
         // Create a new fragment and specify the planet to show based on position
-        Fragment fragment = new ContainerFragment();
-//        Bundle args = new Bundle();
-//        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-//        fragment.setArguments(args);
+        Fragment fragment;
 
-        // Insert the fragment by replacing any existing fragment
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment)
-                .commit();
-
-        // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
         mToolbar.setTitle(mDrawerItems[position].name);
         mDrawerLayout.closeDrawer(mDrawerList);
@@ -120,13 +110,16 @@ public class JournalActivity extends AppCompatActivity{
         String itemName = itemClicked.name;
         if (itemName.equals(Constants.HOME)) {
 
-        } else if (itemName.equals(Constants.EDIT_PROFILE)) {
-
         } else if (itemName.equals(Constants.PROFILE)) {
 
         } else if (itemName.equals(Constants.JOURNALS)) {
 
-        } else if (itemName.equals(Constants.EXIT)) {
+        }else if(itemName.equals(Constants.IMPORT_FROM_DB)){
+
+        }else if(itemName.equals(Constants.CHANGE_PASS)){
+
+        }
+        else if (itemName.equals(Constants.EXIT)) {
             appJournal.getAuthManager().logoutUser();
             startActivity(new Intent(JournalActivity.this,LoginActivity.class));
             finish();
@@ -134,11 +127,12 @@ public class JournalActivity extends AppCompatActivity{
     }
 
     private void initializeDrawerItems() {
-        mDrawerItems = new ObjectDrawerItem[5];
+        mDrawerItems = new ObjectDrawerItem[6];
         mDrawerItems[0] = new ObjectDrawerItem(R.drawable.icon_home, Constants.HOME);
         mDrawerItems[1] = new ObjectDrawerItem(R.drawable.icon_profile, Constants.PROFILE);
-        mDrawerItems[2] = new ObjectDrawerItem(R.drawable.icon_edit_profile, Constants.EDIT_PROFILE);
+        mDrawerItems[2] = new ObjectDrawerItem(R.drawable.icon_change_pass, Constants.CHANGE_PASS);
         mDrawerItems[3] = new ObjectDrawerItem(R.drawable.icon_notes, Constants.JOURNALS);
+        mDrawerItems[5] = new ObjectDrawerItem(R.drawable.icon_import_remote, Constants.IMPORT_FROM_DB);
         mDrawerItems[4] = new ObjectDrawerItem(R.drawable.icon_exit, Constants.EXIT);
     }
 
