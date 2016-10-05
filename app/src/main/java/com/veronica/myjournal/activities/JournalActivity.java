@@ -24,6 +24,7 @@ import com.veronica.myjournal.R;
 import com.veronica.myjournal.adapters.DrawerItemCustomAdapter;
 import com.veronica.myjournal.app.MyJournalApplication;
 import com.veronica.myjournal.fragments.ContainerFragment;
+import com.veronica.myjournal.kinvey.KinveyConnector;
 import com.veronica.myjournal.models.User;
 import com.veronica.myjournal.objects.ObjectDrawerItem;
 
@@ -116,7 +117,7 @@ public class JournalActivity extends AppCompatActivity{
 
         ObjectDrawerItem itemClicked = mDrawerItems[position];
 
-        String itemName = itemClicked.name.toString();
+        String itemName = itemClicked.name;
         if (itemName.equals(Constants.HOME)) {
 
         } else if (itemName.equals(Constants.EDIT_PROFILE)) {
@@ -167,7 +168,12 @@ public class JournalActivity extends AppCompatActivity{
                 Toast.makeText(getApplicationContext(), "Add new note", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.syncronize_user_data_to_remote_storage:
-
+                if(isNetworkAvailable()) {
+                    Toast.makeText(getApplicationContext(), "synchronizing..", Toast.LENGTH_SHORT).show();
+                    KinveyConnector.getInstance().createUser(mCurrentUser);
+                }else{
+                    Toast.makeText(getApplicationContext(), "No network connection. Please synchronize later", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);

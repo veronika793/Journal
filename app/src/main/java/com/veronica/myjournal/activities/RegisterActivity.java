@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import com.veronica.myjournal.bindingmodels.UserBindingModel;
 import com.veronica.myjournal.helpers.CipherHelper;
 import com.veronica.myjournal.helpers.ErrorHandler;
 import com.veronica.myjournal.helpers.InputValidator;
+import com.veronica.myjournal.helpers.KeyGenerator;
 import com.veronica.myjournal.helpers.NotificationHandler;
 
 import java.util.InvalidPropertiesFormatException;
@@ -105,8 +107,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     if(appJournal.getUserDbManager().checkIfExists(email)){
                         notificationHandler.toastWarningNotificationTop("User already exists");
                     }else{
-                        String passwordEncrypt = CipherHelper.cipher(Constants.PASS_KEY_ENCRYPTOR,password);
-                        UserBindingModel userBindingModel = new UserBindingModel(email,password,name,photoUri,false);
+                        String cypherKey = KeyGenerator.generateKey(email);
+                        Log.d("DEBUG", String.valueOf(cypherKey.length()));
+                        String passwordEncrypt = CipherHelper.cipher(cypherKey,password);
+                        UserBindingModel userBindingModel = new UserBindingModel(email,password,name,photoUri);
                         userBindingModel.set_password(passwordEncrypt);
                         appJournal.getUserDbManager().insert(userBindingModel);
                         appJournal.getAuthManager().loginUser(email);

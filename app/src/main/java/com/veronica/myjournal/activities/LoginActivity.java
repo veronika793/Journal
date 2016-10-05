@@ -23,6 +23,7 @@ import com.veronica.myjournal.bindingmodels.LoginUserBindingModel;
 import com.veronica.myjournal.bindingmodels.UserBindingModel;
 import com.veronica.myjournal.helpers.CipherHelper;
 import com.veronica.myjournal.helpers.InputValidator;
+import com.veronica.myjournal.helpers.KeyGenerator;
 import com.veronica.myjournal.helpers.NotificationHandler;
 
 import org.json.JSONObject;
@@ -36,10 +37,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private MyJournalApplication appJournal;
     private NotificationHandler notificationHandler;
 
-    //facebook login props
-    private CallbackManager callbackManager = null;
-    private LoginButton fbLoginButton;
-
     //users login props
     private EditText mEditTxtUserEmail;
     private EditText mEditTxtUserPassword;
@@ -48,26 +45,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        FacebookSdk.sdkInitialize(getApplicationContext());
         super.onCreate(savedInstanceState);
         appJournal = (MyJournalApplication)this.getApplication();
         if(appJournal.getAuthManager().isLoggedIn()){
             startActivity(new Intent(LoginActivity.this,JournalActivity.class));
             finish();
         }
-
         setContentView(R.layout.activity_login);
 
         notificationHandler = new NotificationHandler(this);
 
-        //facebook login ..
-        callbackManager = CallbackManager.Factory.create();
-        fbLoginButton = (LoginButton) findViewById(R.id.btn_login_fb);
-        fbLoginButton.setReadPermissions(Arrays.asList(
-                "public_profile", "email"));
-        fbLoginButton.setOnClickListener(this);
-
-        //users login..
         mEditTxtUserEmail = (EditText) findViewById(R.id.edit_txt_login_email);
         mEditTxtUserPassword = (EditText) findViewById(R.id.edit_txt_login_password);
         mBtnOpenRegisterForm = (Button) findViewById(R.id.btn_open_register_form);
@@ -77,63 +64,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mBtnLogin.setOnClickListener(this);
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode,resultCode,data);
-    }
-
-
     @Override
     public void onClick(View v) {
 
         switch (v.getId()){
-            case R.id.btn_login_fb:
-                fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(final LoginResult loginResult) {
 
-                        GraphRequest request = GraphRequest.newMeRequest(
-                                loginResult.getAccessToken(),
-                                new GraphRequest.GraphJSONObjectCallback() {
-                                    @Override
-                                    public void onCompleted(JSONObject object, GraphResponse response) {
-
-                                        String uid = object.optString("id");
-                                        String email = object.optString("email");
-                                        String name = object.optString("name");
-                                        String userPicUri = "http://graph.facebook.com/"+uid+"/picture?width=150&height=150";
-                                        try {
-                                            UserBindingModel user = new UserBindingModel(email,name,userPicUri,true);
-
-                                            if(!appJournal.getUserDbManager().checkIfExists(email)){
-                                                appJournal.getUserDbManager().insert(user);
-                                            }
-                                            appJournal.getAuthManager().loginUser(email);
-                                            goToJournalActivity();
-
-                                        } catch (InvalidPropertiesFormatException e) {
-                                            notificationHandler.toastWarningNotificationTop(e.getMessage());
-                                        }
-
-                                    }
-                                });
-                        Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id, name, email");
-                        request.setParameters(parameters);
-                        request.executeAsync();
-                    }
-                    @Override
-                    public void onCancel() {
-                        Toast.makeText(getApplicationContext(), "Something went wrong with the login", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-                        Toast.makeText(getApplicationContext(), "User logged in", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                break;
             case R.id.btn_open_register_form: openRegisterForm();
                 break;
             case R.id.btn_login:
@@ -142,7 +77,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String userPassword = mEditTxtUserPassword.getText().toString();
 
                 try {
-                    String encryptedPass = CipherHelper.cipher(Constants.PASS_KEY_ENCRYPTOR,userPassword);
+
+                    // generates custom key for each user
+
+                    String cypherKey = KeyGenerator.generateKey(userEmail);
+                    String encryptedPass = CipherHelper.cipher(cypherKey,userPassword);
                     LoginUserBindingModel loginUserBinding = new LoginUserBindingModel(userEmail,userPassword);
                     if(appJournal.getUserDbManager().isLoginValid(userEmail,encryptedPass)){
                         appJournal.getAuthManager().loginUser(userEmail);

@@ -3,13 +3,12 @@ package com.veronica.myjournal.app;
 import android.app.Application;
 
 import com.veronica.myjournal.database.NotesDbManager;
+import com.veronica.myjournal.kinvey.KinveyConnector;
 import com.veronica.myjournal.managers.AuthorizationManager;
 import com.veronica.myjournal.database.UsersDbManager;
 import com.veronica.myjournal.managers.DialogManager;
 
-/**
- * Created by Veronica on 9/28/2016.
- */
+
 public class MyJournalApplication extends Application {
 
     private AuthorizationManager authorizationManager;
@@ -50,4 +49,16 @@ public class MyJournalApplication extends Application {
         return this.authorizationManager;
     }
 
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        initializeSingletons();
+    }
+
+    private void initializeSingletons() {
+
+        KinveyConnector.setupContext(getApplicationContext());
+        KinveyConnector.getInstance();
+    }
 }

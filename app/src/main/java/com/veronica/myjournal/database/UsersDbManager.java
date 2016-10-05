@@ -13,9 +13,6 @@ import com.veronica.myjournal.models.User;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Veronica on 10/2/2016.
- */
 public class UsersDbManager extends DbManager implements ICRUDDbOperations<User,UserBindingModel> {
     private Context mContext;
 
@@ -27,12 +24,11 @@ public class UsersDbManager extends DbManager implements ICRUDDbOperations<User,
     private static final String USER_PASSWORD = "user_password";
     private static final String USER_NAME = "user_name";
     private static final String USER_PHOTO_URI = "user_photo";
-    private static final String USER_IS_FACEBOOK = "is_fb_user";
     private static final String NOTE_KEY_ID = "note_id";
 
 
     // Database creation sql statement
-    public static final String create_users_table= "CREATE TABLE "+ USERS_TABLE + " ( "+USER_KEY_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+USER_EMAIL+" TEXT NOT NULL UNIQUE, "+USER_PASSWORD+ " TEXT, "+USER_NAME+ " TEXT NOT NULL, "+USER_PHOTO_URI+ " TEXT NOT NULL, "+ USER_IS_FACEBOOK+ " BOOLEAN NOT NULL);";
+    public static final String create_users_table= "CREATE TABLE "+ USERS_TABLE + " ( "+USER_KEY_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+USER_EMAIL+" TEXT NOT NULL UNIQUE, "+USER_PASSWORD+ " TEXT, "+USER_NAME+ " TEXT NOT NULL, "+USER_PHOTO_URI+ " TEXT NOT NULL);";
 
     public UsersDbManager(Context context) {
         super(context);
@@ -50,7 +46,6 @@ public class UsersDbManager extends DbManager implements ICRUDDbOperations<User,
         onCreate(db);
     }
 
-
     public boolean checkIfExists(String email){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.query(USERS_TABLE,new String[]{USER_EMAIL},USER_EMAIL+" =? ",new String[]{email},null,null,null);
@@ -61,13 +56,12 @@ public class UsersDbManager extends DbManager implements ICRUDDbOperations<User,
         }
         cursor.close();
         return false;
-
     }
 
     public User getByEmail(String email){
         SQLiteDatabase db = this.getWritableDatabase();
         User user;
-        Cursor cursor = db.query(USERS_TABLE,new String[]{USER_KEY_ID,USER_EMAIL,USER_PASSWORD,USER_NAME,USER_PHOTO_URI,USER_IS_FACEBOOK},USER_EMAIL+" =? ",new String[]{email},null,null,null);
+        Cursor cursor = db.query(USERS_TABLE,new String[]{USER_KEY_ID,USER_EMAIL,USER_PASSWORD,USER_NAME,USER_PHOTO_URI},USER_EMAIL+" =? ",new String[]{email},null,null,null);
         if(cursor!=null){
             cursor.moveToFirst();
             Integer userId = cursor.getInt(0);
@@ -75,9 +69,8 @@ public class UsersDbManager extends DbManager implements ICRUDDbOperations<User,
             String userPassword = cursor.getString(2);
             String userName = cursor.getString(3);
             String userPhoto = cursor.getString(4);
-            Boolean userIsFb = cursor.getInt(5)>0;
 
-            user = new User(userId,userEmail,userPassword,userName,userPhoto,userIsFb);
+            user = new User(userId,userEmail,userPassword,userName,userPhoto);
             cursor.close();
             db.close();
             return user;
@@ -114,9 +107,8 @@ public class UsersDbManager extends DbManager implements ICRUDDbOperations<User,
                     String userPassword = usersCursor.getString(2);
                     String userName = usersCursor.getString(3);
                     String userPhoto = usersCursor.getString(4);
-                    Boolean userIsFb = usersCursor.getInt(5)>0;
 
-                    User user = new User(userId,userEmail,userPassword,userName,userPhoto,userIsFb);
+                    User user = new User(userId,userEmail,userPassword,userName,userPhoto);
                     users.add(user);
                 }
                 usersCursor.close();
@@ -133,19 +125,12 @@ public class UsersDbManager extends DbManager implements ICRUDDbOperations<User,
     public boolean insert(UserBindingModel user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues insertValues = new ContentValues();
-        if(user.is_isFacebookUser()){
-            insertValues.put(USER_EMAIL,user.get_email() );
-            insertValues.put(USER_NAME,user.get_name() );
-            insertValues.put(USER_PHOTO_URI,user.get_profilePicUri());
-            insertValues.put(USER_IS_FACEBOOK,user.is_isFacebookUser());
 
-        }else{
-            insertValues.put(USER_EMAIL,user.get_email() );
-            insertValues.put(USER_PASSWORD,user.get_password());
-            insertValues.put(USER_NAME,user.get_name() );
-            insertValues.put(USER_PHOTO_URI,user.get_profilePicUri());
-            insertValues.put(USER_IS_FACEBOOK,user.is_isFacebookUser());
-        }
+        insertValues.put(USER_EMAIL,user.get_email() );
+        insertValues.put(USER_PASSWORD,user.get_password());
+        insertValues.put(USER_NAME,user.get_name() );
+        insertValues.put(USER_PHOTO_URI,user.get_profilePicUri());
+
         long response = db.insert(USERS_TABLE,null,insertValues);
         db.close();
         return response > 0;

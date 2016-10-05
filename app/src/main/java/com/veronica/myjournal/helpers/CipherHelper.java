@@ -65,7 +65,7 @@ public class CipherHelper {
     }
 
     public static String toHex(byte[] stringBytes) {
-        StringBuffer result = new StringBuffer(2 * stringBytes.length);
+        StringBuilder result = new StringBuilder(2 * stringBytes.length);
 
         for (byte stringByte : stringBytes) {
             result.append(HEX.charAt((stringByte >> 4) & 0x0f)).append(HEX.charAt(stringByte & 0x0f));
@@ -76,4 +76,3 @@ public class CipherHelper {
 
     private final static String HEX = "0123456789ABCDEF";
 }
-

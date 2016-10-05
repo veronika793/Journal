@@ -13,8 +13,7 @@ public final class Constants {
     public static int NAME_MIN_LENGHT = 3;
 
     //kinvey
-    public static String APP_KEY_KINVEY  = "kid_HyvsJN-R";
-    public static String APP_SECRET_KINVER = "9a878ac1949646fc80f152a7f9f4f6f6";
+
 
     //pass
     public static String PASS_KEY_ENCRYPTOR  = "12345678";

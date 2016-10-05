@@ -1,16 +1,10 @@
 package com.veronica.myjournal.bindingmodels;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.veronica.myjournal.Constants;
 import com.veronica.myjournal.helpers.InputValidator;
 
 import java.util.InvalidPropertiesFormatException;
 
-/**
- * Created by Veronica on 9/28/2016.
- */
 public class UserBindingModel{
 
     InputValidator _validator;
@@ -18,25 +12,14 @@ public class UserBindingModel{
     private String _password;
     private String _name;
     private String _profilePicUri;
-    private boolean _isFacebookUser;
 
-    public UserBindingModel(String email, String password, String name, String photo, Boolean isFacebookUser) throws InvalidPropertiesFormatException {
+    public UserBindingModel(String email, String password, String name, String photo) throws InvalidPropertiesFormatException {
         this._validator = new InputValidator();
         this.set_email(email);
         this.set_password(password);
         this.set_name(name);
         this.set_profilePicUri(photo);
-        this.set_isFacebookUser(isFacebookUser);
 
-    }
-
-    //facebook user constructor
-    public UserBindingModel(String email, String name, String photo, boolean isFacebookUser) throws InvalidPropertiesFormatException {
-        this._validator = new InputValidator();
-        this.set_email(email);
-        this.set_name(name);
-        this.set_profilePicUri(photo);
-        this.set_isFacebookUser(isFacebookUser);
     }
 
     public void set_email(String email) throws InvalidPropertiesFormatException {
@@ -65,10 +48,6 @@ public class UserBindingModel{
         this._profilePicUri = _profilePicUri;
     }
 
-    public void set_isFacebookUser(boolean _isFacebookUser) {
-        this._isFacebookUser = _isFacebookUser;
-    }
-
     public String get_email() {
         return _email;
     }
@@ -84,10 +63,5 @@ public class UserBindingModel{
     public String get_profilePicUri() {
         return _profilePicUri;
     }
-
-    public boolean is_isFacebookUser() {
-        return _isFacebookUser;
-    }
-
 
 }
