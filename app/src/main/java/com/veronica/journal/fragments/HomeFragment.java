@@ -50,6 +50,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home,container,false);
 
+
         mTxtUser = (TextView)view.findViewById(R.id.txt_user_name);
         mTxtNoNotesMsg = (TextView)view.findViewById(R.id.txt_no_notes_msg);
         mTxtNoNotesMsg.setPaintFlags(mTxtNoNotesMsg.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
