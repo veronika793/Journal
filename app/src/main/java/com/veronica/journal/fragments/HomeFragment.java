@@ -19,7 +19,7 @@ import com.veronica.journal.Constants;
 import com.veronica.journal.JournalApp;
 import com.veronica.journal.R;
 import com.veronica.journal.dbmodels.User;
-import com.veronica.journal.loaders.ImageLoaderCircled;
+import com.veronica.journal.loaders.AvatarLoader;
 
 
 public class HomeFragment extends Fragment {
@@ -47,22 +47,22 @@ public class HomeFragment extends Fragment {
 
         mTxtUser = (TextView)view.findViewById(R.id.txt_user_name);
         mTxtNoNotesMsg = (TextView)view.findViewById(R.id.txt_no_notes_msg);
-        mTxtNoNotesMsg.setPaintFlags(mTxtNoNotesMsg.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         mTxtJournal = (TextView)view.findViewById(R.id.txt_journal);
         mImgViewUserPhoto = (ImageView)view.findViewById(R.id.img_view_user_photo);
-        mTxtUser.setText(mCurrentUser.getName());
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+
+        mTxtNoNotesMsg.setPaintFlags(mTxtNoNotesMsg.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+        mTxtUser.setText(mCurrentUser.getName());
 
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), Constants.FONT_ONE);
         mTxtUser.setTypeface(typeface);
         mTxtNoNotesMsg.setTypeface(typeface);
         mTxtJournal.setTypeface(typeface);
 
-        new ImageLoaderCircled(getActivity(),mImgViewUserPhoto,progressBar).execute(Uri.parse(mCurrentUser.getPhotoUri()));
+        new AvatarLoader(getActivity(),mImgViewUserPhoto,progressBar).execute(Uri.parse(mCurrentUser.getPhotoUri()));
 
         return view;
     }
-
 
     private void placeFragment( @IdRes int containerViewId,
                                 @NonNull Fragment fragment,
@@ -77,8 +77,7 @@ public class HomeFragment extends Fragment {
 
     private void setCurrentUser() {
         long userId = Long.parseLong(appJournal.getAuthManager().getUser());
-        Long userId2 = Long.valueOf(appJournal.getAuthManager().getUser());
-        mCurrentUser =  User.findById(User.class, Long.valueOf(userId2));
+        mCurrentUser =  User.findById(User.class, userId);
     }
 
 

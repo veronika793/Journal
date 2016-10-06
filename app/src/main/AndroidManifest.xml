@@ -24,7 +24,7 @@
         <meta-data android:name="QUERY_LOG" android:value="true" />
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.veronica.journal" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,19 +32,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.LoginActivity" >
+        <activity android:name=".activities.LoginActivity" android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.RegisterActivity">
+        <activity android:name=".activities.RegisterActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.JournalActivity">
+        <activity android:name=".activities.JournalActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>

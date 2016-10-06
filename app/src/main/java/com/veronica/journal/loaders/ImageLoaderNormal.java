@@ -31,7 +31,7 @@ public class ImageLoaderNormal extends AsyncTask<Uri,Integer,Void> {
     protected Void doInBackground(Uri... params) {
 
         try {
-            image = BitmapHelper.decodeUri(Constants.PICK_REQUIRED_SIZE,activity.getContentResolver(),params[0]);
+            image = BitmapHelper.decodeUri(activity.getContentResolver(),params[0]);
         } catch (Exception e) {
             e.printStackTrace();
         }

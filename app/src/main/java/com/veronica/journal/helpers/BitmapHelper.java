@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -32,28 +33,15 @@ public class BitmapHelper {
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 
-    public static Bitmap decodeUri(int size,ContentResolver resolver,Uri selectedImage) throws FileNotFoundException {
+    public static Bitmap decodeUri(ContentResolver resolver,Uri selectedImage) throws FileNotFoundException {
 
         // Decode image size
         BitmapFactory.Options o = new BitmapFactory.Options();
         o.inJustDecodeBounds = true;
         BitmapFactory.decodeStream(resolver.openInputStream(selectedImage), null, o);
 
-        // The new size we want to scale to
-        final int REQUIRED_SIZE = size;
-
-        // Find the correct scale value. It should be the power of 2.
-        int width_tmp = o.outWidth, height_tmp = o.outHeight;
         int scale = 1;
-        while (true) {
-            if (width_tmp / 2 < REQUIRED_SIZE
-                    || height_tmp / 2 < REQUIRED_SIZE) {
-                break;
-            }
-            width_tmp /= 2;
-            height_tmp /= 2;
-            scale *= 2;
-        }
+
         // Decode with inSampleSize
         BitmapFactory.Options o2 = new BitmapFactory.Options();
         o2.inSampleSize = scale;
@@ -79,5 +67,20 @@ public class BitmapHelper {
         canvas.drawBitmap(bitmap, rect, rect, paint);
 
         return output;
+    }
+
+    public static Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // "RECREATE" THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        return resizedBitmap;
     }
 }
