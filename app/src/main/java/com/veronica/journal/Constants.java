@@ -5,7 +5,7 @@ public final class Constants {
     public static String DEBUG_TAG = "DEBUG";
     public static String DB_NAME = "journal_database.db";
     public static int PICK_IMAGE_REQ_CODE = 200;
-    public static int PICK_REQUIRED_SIZE = 220;
+    public static int PICK_REQUIRED_SIZE = 240;
     public static int PASSWORD_MIN_LENGHT = 4;
     public static String PHOTO_SELECTED = "PHOTO SELECTED";
     public static String SELECT_PHOTO = "SELECT PHOTO";

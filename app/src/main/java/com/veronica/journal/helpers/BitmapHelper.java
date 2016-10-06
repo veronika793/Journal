@@ -32,7 +32,7 @@ public class BitmapHelper {
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 
-    public static Bitmap decodeUri(ContentResolver resolver,Uri selectedImage) throws FileNotFoundException {
+    public static Bitmap decodeUri(int size,ContentResolver resolver,Uri selectedImage) throws FileNotFoundException {
 
         // Decode image size
         BitmapFactory.Options o = new BitmapFactory.Options();
@@ -40,7 +40,7 @@ public class BitmapHelper {
         BitmapFactory.decodeStream(resolver.openInputStream(selectedImage), null, o);
 
         // The new size we want to scale to
-        final int REQUIRED_SIZE = Constants.PICK_REQUIRED_SIZE;
+        final int REQUIRED_SIZE = size;
 
         // Find the correct scale value. It should be the power of 2.
         int width_tmp = o.outWidth, height_tmp = o.outHeight;

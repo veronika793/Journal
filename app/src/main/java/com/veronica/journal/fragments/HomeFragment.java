@@ -1,6 +1,5 @@
 package com.veronica.journal.fragments;
 
-import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -9,24 +8,18 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.veronica.journal.Constants;
 import com.veronica.journal.JournalApp;
 import com.veronica.journal.R;
-import com.veronica.journal.dbmodels.Note;
 import com.veronica.journal.dbmodels.User;
-import com.veronica.journal.helpers.BitmapHelper;
-import com.veronica.journal.tasks.ImageLoader;
-
-
-import java.io.FileNotFoundException;
-import java.util.List;
+import com.veronica.journal.loaders.ImageLoaderCircled;
 
 
 public class HomeFragment extends Fragment {
@@ -36,6 +29,8 @@ public class HomeFragment extends Fragment {
     private TextView mTxtNoNotesMsg;
 
     private ImageView mImgViewUserPhoto;
+
+    ProgressBar progressBar;
 
     JournalApp appJournal;
     private User mCurrentUser;
@@ -56,18 +51,15 @@ public class HomeFragment extends Fragment {
         mTxtJournal = (TextView)view.findViewById(R.id.txt_journal);
         mImgViewUserPhoto = (ImageView)view.findViewById(R.id.img_view_user_photo);
         mTxtUser.setText(mCurrentUser.getName());
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), Constants.FONT_ONE);
         mTxtUser.setTypeface(typeface);
         mTxtNoNotesMsg.setTypeface(typeface);
         mTxtJournal.setTypeface(typeface);
-        try {
-            Bitmap image = BitmapHelper.decodeUri(getActivity().getContentResolver(), Uri.parse(mCurrentUser.getPhotoUri()));
-            Bitmap cropped = BitmapHelper.getCroppedBitmap(image);
-            mImgViewUserPhoto.setImageBitmap(cropped);
-        } catch (Exception e) {
-            Log.d("DEBUG", e.getMessage());
-        }
+
+        new ImageLoaderCircled(getActivity(),mImgViewUserPhoto,progressBar).execute(Uri.parse(mCurrentUser.getPhotoUri()));
+
         return view;
     }
 
