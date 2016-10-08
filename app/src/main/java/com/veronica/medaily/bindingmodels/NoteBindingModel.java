@@ -3,55 +3,45 @@ package com.veronica.medaily.bindingmodels;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.veronica.medaily.Constants;
+import com.veronica.medaily.helpers.InputValidator;
+
+import java.util.InvalidPropertiesFormatException;
+
 /**
  * Created by Veronica on 9/30/2016.
  */
-public class NoteBindingModel implements Parcelable {
+public class NoteBindingModel{
 
-    private Integer _id;
-    private Integer _user_id;
     private String _title;
     private String _content;
-    private String _created_on;
-    private String _photo;
-    private String _location;
+    private String _category;
+    private String _createdOn;
+    private String _photoUrl;
 
 
-    public NoteBindingModel(Integer id, Integer user_id, String  title, String  content, String created_on, String photo, String location) {
-        this.set_id(id);
-        this.set_user_id(user_id);
+    public NoteBindingModel(String  title, String  content,String _category) throws InvalidPropertiesFormatException {
         this.set_title(title);
         this.set_content(content);
-        this.set_created_on(created_on);
-        this.set_photo(photo);
-        this.set_location(location);
+        this.set_category(_category);
     }
 
-    public NoteBindingModel(Integer id, Integer user_id, String title, String content, String created_on) {
-        this(id,user_id,title,content,created_on,null,null);
-    }
-
-    public Integer get_id() {
-        return _id;
-    }
-
-    public void set_id(Integer _id) {
-        this._id = _id;
-    }
-
-    public Integer get_user_id() {
-        return _user_id;
-    }
-
-    public void set_user_id(Integer _user_id) {
-        this._user_id = _user_id;
+    public NoteBindingModel(String _title, String _content, String _category, String _createdOn, String _photoUrl) throws InvalidPropertiesFormatException {
+        this.set_title(_title);
+        this.set_content(_content);
+        this.set_category(_category);
+        this._createdOn = _createdOn;
+        this._photoUrl = _photoUrl;
     }
 
     public String get_title() {
         return _title;
     }
 
-    public void set_title(String _title) {
+    public void set_title(String _title) throws InvalidPropertiesFormatException {
+        if(!InputValidator.isMinLenghRestricted(Constants.NOTE_TITLE_MIN_LENGTH,_title)){
+            throw new InvalidPropertiesFormatException("Invalid title. Minimum "+Constants.NOTE_TITLE_MIN_LENGTH + " characters");
+        }
         this._title = _title;
     }
 
@@ -59,82 +49,37 @@ public class NoteBindingModel implements Parcelable {
         return _content;
     }
 
-    public void set_content(String _content) {
+    public void set_content(String _content) throws InvalidPropertiesFormatException {
+        if(!InputValidator.isMinLenghRestricted(Constants.NOTE_CONTENT_MIN_LENGTH,_title)){
+            throw new InvalidPropertiesFormatException("Invalid content. Minimum "+Constants.NOTE_CONTENT_MIN_LENGTH + " characters");
+        }
         this._content = _content;
     }
 
-    public String get_created_on() {
-        return _created_on;
+    public String get_category() {
+        return _category;
     }
 
-    public void set_created_on(String _created_on) {
-        this._created_on = _created_on;
-    }
-
-    public String get_photo() {
-        return _photo;
-    }
-
-    public void set_photo(String _photo) {
-        this._photo = _photo;
-    }
-
-    public String get_location() {
-        return _location;
-    }
-
-    public void set_location(String _location) {
-        this._location = _location;
-    }
-
-
-
-    protected NoteBindingModel(Parcel in) {
-        _id = in.readByte() == 0x00 ? null : in.readInt();
-        _user_id = in.readByte() == 0x00 ? null : in.readInt();
-        _title = in.readString();
-        _content = in.readString();
-        _created_on = in.readString();
-        _photo = in.readString();
-        _location = in.readString();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        if (_id == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeInt(_id);
+    public void set_category(String _category) throws InvalidPropertiesFormatException {
+        if(!InputValidator.isMinLenghRestricted(Constants.CATEGORY_TITLE_MIN_LENGTH,_title)){
+            throw new InvalidPropertiesFormatException("Invalid category title. Minimum "+Constants.CATEGORY_TITLE_MIN_LENGTH + " characters");
         }
-        if (_user_id == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeInt(_user_id);
-        }
-        dest.writeString(_title);
-        dest.writeString(_content);
-        dest.writeString(_created_on);
-        dest.writeString(_photo);
-        dest.writeString(_location);
+        this._category = _category;
     }
 
-    @SuppressWarnings("unused")
-    public static final Creator<NoteBindingModel> CREATOR = new Creator<NoteBindingModel>() {
-        @Override
-        public NoteBindingModel createFromParcel(Parcel in) {
-            return new NoteBindingModel(in);
-        }
+    public String get_createdOn() {
+        return _createdOn;
+    }
 
-        @Override
-        public NoteBindingModel[] newArray(int size) {
-            return new NoteBindingModel[size];
-        }
-    };
+    public void set_createdOn(String _createdOn) {
+        this._createdOn = _createdOn;
+    }
+
+    public String get_photoUrl() {
+        return _photoUrl;
+    }
+
+    public void set_photoUrl(String _photoUrl) {
+        this._photoUrl = _photoUrl;
+    }
 }

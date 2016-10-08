@@ -11,22 +11,19 @@ public class Note extends SugarRecord implements Parcelable {
     String title;
     String content;
     String createdOnDate;
-    String reminderDate;
     String photoUri;
-    String location;
 
     public Note(){
 
     }
 
-    public Note(Category category, User user, String title, String content, String createdOn,String reminderDate, String photoUri, String location) {
+    public Note(Category category, User user, String title, String content, String createdOn, String photoUri) {
         this.category = category;
         this.user = user;
         this.title = title;
         this.content = content;
         this.createdOnDate = createdOn;
         this.photoUri = photoUri;
-        this.location = location;
     }
 
     public void setUser(User user) {
@@ -49,16 +46,8 @@ public class Note extends SugarRecord implements Parcelable {
         this.createdOnDate = createdOnDate;
     }
 
-    public void setReminderDate(String reminderDate) {
-        this.reminderDate = reminderDate;
-    }
-
     public void setPhotoUri(String photoUri) {
         this.photoUri = photoUri;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public User getUser() {
@@ -81,19 +70,9 @@ public class Note extends SugarRecord implements Parcelable {
         return this.photoUri;
     }
 
-    public String getLocation() {
-        return this.location;
-    }
-
     public Category getCategory() {
         return category;
     }
-
-    public String getReminderDate() {
-        return reminderDate;
-    }
-
-
 
     protected Note(Parcel in) {
         user = (User) in.readValue(User.class.getClassLoader());
@@ -101,9 +80,7 @@ public class Note extends SugarRecord implements Parcelable {
         title = in.readString();
         content = in.readString();
         createdOnDate = in.readString();
-        reminderDate = in.readString();
         photoUri = in.readString();
-        location = in.readString();
     }
 
     @Override
@@ -118,9 +95,7 @@ public class Note extends SugarRecord implements Parcelable {
         dest.writeString(title);
         dest.writeString(content);
         dest.writeString(createdOnDate);
-        dest.writeString(reminderDate);
         dest.writeString(photoUri);
-        dest.writeString(location);
     }
 
     @SuppressWarnings("unused")

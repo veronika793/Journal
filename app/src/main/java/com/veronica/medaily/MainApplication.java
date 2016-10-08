@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.orm.SugarApp;
 import com.orm.SugarContext;
+import com.orm.SugarDb;
 import com.veronica.medaily.R;
 import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.dbmodels.Note;
@@ -44,10 +45,6 @@ public class MainApplication extends SugarApp {
             Note.findById(Note.class, (long) 1);
             Category.findById(Category.class,(long)1);
 
-            Category journalCategory = new Category(null,"Journal","Your personal journal", R.color.colorHomeBackground);
-            journalCategory.save();
-            Category notesCategory = new Category(null,"Journal","Your daily notes",R.color.colorHomeBackground);
-            notesCategory.save();
 
         }else{
             Log.d("DEBUG", "DATABASE EXISTS");

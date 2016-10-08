@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 
+import com.orm.SugarRecord;
 import com.veronica.medaily.Constants;
 import com.veronica.medaily.MainApplication;
 import com.veronica.medaily.dbmodels.User;
@@ -30,6 +32,8 @@ import com.veronica.medaily.fragments.SynchronizeFragment;
 import com.veronica.medaily.models.ObjectDrawerItem;
 import com.veronica.medaily.R;
 import com.veronica.medaily.adapters.DrawerItemCustomAdapter;
+
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity{
 
@@ -46,7 +50,7 @@ public class HomeActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainApp = (MainApplication)this.getApplication();
-        setContentView(R.layout.activity_journal);
+        setContentView(R.layout.activity_home);
 
         if(!mainApp.getAuthManager().isLoggedIn()){
             goToLoginActivity();
@@ -94,12 +98,18 @@ public class HomeActivity extends AppCompatActivity{
             this.mainApp.getAuthManager().logoutUser();
             this.goToLoginActivity();
         }else{
-            Long userId = Long.valueOf(userIdAsStr);
-            mCurrentUser =  User.findById(User.class, userId);
-            if(mCurrentUser==null){
+
+            List<User> users = User.find(User.class," id =? ",String.valueOf(userIdAsStr));
+            if(users.isEmpty()){
                 this.mainApp.getAuthManager().logoutUser();
                 this.goToLoginActivity();
+            }else{
+                this.mCurrentUser = users.get(0);
             }
+            Log.d("DEBUG", "test");
+
+
+
         }
     }
 
@@ -201,6 +211,7 @@ public class HomeActivity extends AppCompatActivity{
     //@Override
     public void onBackPressed() {
 
+        // returns the previous fragments if any
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
         if (backStackEntryCount == 0) {
             moveTaskToBack(true);

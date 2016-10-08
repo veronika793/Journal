@@ -23,7 +23,6 @@ import com.veronica.medaily.loaders.AvatarLoader;
 public class HomeFragment extends BaseFragment {
 
     private TextView mTxtUser;
-    private TextView mTxtJournal;
     private TextView mTxtWellcomeMsg;
 
     private ImageView mImgViewUserPhoto;
@@ -33,22 +32,20 @@ public class HomeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home,container,false);
 
-        mTxtUser = (TextView)view.findViewById(R.id.txt_user_name);
+        mTxtUser = (TextView)view.findViewById(R.id.txt_username);
+
         mTxtWellcomeMsg = (TextView)view.findViewById(R.id.text_wellcome_msg);
-        mTxtJournal = (TextView)view.findViewById(R.id.txt_journal);
         mImgViewUserPhoto = (ImageView)view.findViewById(R.id.img_view_user_photo);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
-        mTxtWellcomeMsg.setPaintFlags(mTxtWellcomeMsg.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+        super.setupUnderline(mTxtWellcomeMsg);
+        super.setupTypefaceView(mTxtUser);
+        super.setupTypefaceView(mTxtWellcomeMsg);
+        //scrolling textview
         mTxtWellcomeMsg.setMovementMethod(new ScrollingMovementMethod());
+        mTxtUser.setText("Hello "+mCurrentUser.getName());
 
-        mTxtUser.setText(mCurrentUser.getName());
-
-        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), Constants.FONT_ONE);
-        mTxtUser.setTypeface(typeface);
-        mTxtWellcomeMsg.setTypeface(typeface);
-        mTxtJournal.setTypeface(typeface);
-
+        //parse profile image resize it make it circular and loads it asynchronously
         new AvatarLoader(getActivity(),mImgViewUserPhoto,progressBar).execute(Uri.parse(mCurrentUser.getPhotoUri()));
         return view;
     }

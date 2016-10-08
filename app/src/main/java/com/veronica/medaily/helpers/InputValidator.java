@@ -6,32 +6,36 @@ import android.webkit.URLUtil;
 /**
  * Created by Veronica on 10/3/2016.
  */
-public  class InputValidator {
+public final class InputValidator {
 
-    public  boolean isMinLenghRestricted(int minLenght,String value){
+    private InputValidator() {
+        throw new AssertionError();
+    }
+
+    public static boolean isMinLenghRestricted(int minLenght,String value){
         return !value.trim().equals("") && value.trim().length() >= minLenght;
     }
 
-    public  boolean isValidEmail(String email){
+    public static boolean isValidEmail(String email){
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    public  boolean isValidUri(String uri){
+    public static boolean isValidUri(String uri){
         return  URLUtil.isValidUrl(uri);
     }
-    public  boolean validateLoginUserFields(String s ,String s2 ){
+    public static boolean validateLoginUserFields(String s ,String s2 ){
         return true;
     }
 
-    public  boolean validateRegisterUserField(String s1,String s2,String s3, String s4){
+    public static boolean validateRegisterUserField(String s1,String s2,String s3, String s4){
         return true;
     }
 
-    public  boolean isNullOrEmpty(String value){
+    public static boolean isNullOrEmpty(String value){
         return TextUtils.isEmpty(value);
     }
 
-    public boolean isNumeric(String string){
+    public static boolean isNumeric(String string){
         return TextUtils.isDigitsOnly(string);
     }
 

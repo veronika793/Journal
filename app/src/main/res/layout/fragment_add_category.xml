@@ -5,28 +5,32 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:id="@+id/edit_txt_category_title"
         android:layout_width="match_parent"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
         android:hint="@string/name"
-        android:maxLength="20"
+        android:maxLength="40"
         android:maxLines="1"
+        android:inputType="textCapSentences"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
         android:scrollbars="horizontal"
         android:layout_height="wrap_content"
-        android:id="@+id/edit_txt_category_title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp" />
 
     <EditText
+        android:id="@+id/edit_txt_category_description"
         android:layout_width="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
-        android:maxLength="60"
+        android:maxLength="95"
         android:maxLines="1"
-        android:hint="@string/description"
+        android:inputType="textCapSentences"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
+        android:hint="@string/category_description"
         android:scrollbars="horizontal"
-        android:id="@+id/edit_txt_category_description"
         android:layout_below="@+id/edit_txt_category_title"
         android:layout_alignLeft="@+id/edit_txt_category_title"
         android:layout_alignStart="@+id/edit_txt_category_title"
@@ -46,13 +50,27 @@
         android:layout_alignEnd="@+id/edit_txt_category_description" />
 
     <Button
+        android:id="@+id/btn_create_category"
         android:layout_width="match_parent"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
         android:layout_height="wrap_content"
-        android:text="@string/create_category"
-        android:id="@+id/btn_create_category"
+        android:text="@string/save"
         android:layout_below="@+id/mixer"
         android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/txt_view_add_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_category"
+        android:textSize="35sp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/edit_txt_category_title"
+        android:layout_alignStart="@+id/edit_txt_category_title"
+        android:layout_alignRight="@+id/edit_txt_category_title"
+        android:layout_alignEnd="@+id/edit_txt_category_title" />
 
 </RelativeLayout>

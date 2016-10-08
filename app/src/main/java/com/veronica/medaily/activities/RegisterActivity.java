@@ -23,7 +23,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private MainApplication mainApp;
 
-    InputValidator inputValidator;
     NotificationHandler notificationHandler;
 
     private EditText mEditTxtEmail;
@@ -47,7 +46,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
         setContentView(R.layout.activity_register);
 
-        inputValidator = new InputValidator();
         notificationHandler = new NotificationHandler(this);
 
         mEditTxtEmail = (EditText) findViewById(R.id.edit_txt_reg_email);
@@ -85,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         // To search for all documents available via installed storage providers,
         // it would be "*/*".
         intent.setType("image/*");
-        startActivityForResult(intent, Constants.PICK_IMAGE_REQ_CODE);
+        startActivityForResult(intent, Constants.PICK_PROFILE_IMAGE_REQ_CODE);
 
     }
 
@@ -93,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK && requestCode == Constants.PICK_IMAGE_REQ_CODE ) {
+        if (resultCode == RESULT_OK && requestCode == Constants.PICK_PROFILE_IMAGE_REQ_CODE ) {
             mBtnSelectPhoto.setText(Constants.PHOTO_SELECTED);
             Uri selectedImage = data.getData();
             this.selectedImageUri = selectedImage.toString();
@@ -111,8 +109,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.btn_register:
 
-                String name = mEditTxtName.getText().toString();
-                String email = mEditTxtEmail.getText().toString();
+                String name = mEditTxtName.getText().toString().trim();
+                String email = mEditTxtEmail.getText().toString().trim();
                 String password = mEditTxtPassword.getText().toString();
 
                 try {
