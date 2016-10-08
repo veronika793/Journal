@@ -1,4 +1,4 @@
-package com.veronica.journal.managers;
+package com.veronica.medaily.managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;

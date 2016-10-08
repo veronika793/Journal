@@ -9,4 +9,5 @@
     <color name="colorToastWarning">#f3e45c75</color>
     <color name="colorToastNeutral">#f3433e3f</color>
     <color name="colorHomeBackground">#ECE7D4</color>
+    <color name="colorCategoryDefault">#ffd123</color>
 </resources>

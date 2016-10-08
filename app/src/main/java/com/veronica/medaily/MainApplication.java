@@ -1,22 +1,23 @@
-package com.veronica.journal;
+package com.veronica.medaily;
 
 import android.content.ContextWrapper;
 import android.util.Log;
 
 import com.orm.SugarApp;
 import com.orm.SugarContext;
-import com.orm.SugarDb;
-import com.veronica.journal.dbmodels.Note;
-import com.veronica.journal.dbmodels.User;
-import com.veronica.journal.kinvey.KinveyConnector;
-import com.veronica.journal.managers.AuthorizationManager;
+import com.veronica.medaily.R;
+import com.veronica.medaily.dbmodels.Category;
+import com.veronica.medaily.dbmodels.Note;
+import com.veronica.medaily.dbmodels.User;
+import com.veronica.medaily.kinvey.KinveyConnector;
+import com.veronica.medaily.managers.AuthorizationManager;
 
 import java.io.File;
 
 /**
  * Created by Veronica on 10/6/2016.
  */
-public class JournalApp extends SugarApp {
+public class MainApplication extends SugarApp {
 
     private AuthorizationManager authorizationManager;
 
@@ -41,6 +42,13 @@ public class JournalApp extends SugarApp {
             Log.d("DEBUG", "DOES NOT EXISTS");
             User.findById(User.class, (long) 1);
             Note.findById(Note.class, (long) 1);
+            Category.findById(Category.class,(long)1);
+
+            Category journalCategory = new Category(null,"Journal","Your personal journal", R.color.colorHomeBackground);
+            journalCategory.save();
+            Category notesCategory = new Category(null,"Journal","Your daily notes",R.color.colorHomeBackground);
+            notesCategory.save();
+
         }else{
             Log.d("DEBUG", "DATABASE EXISTS");
 //            recreates database..

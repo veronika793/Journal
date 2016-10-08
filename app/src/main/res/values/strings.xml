@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Journal</string>
+    <string name="app_name">Me Daily</string>
     <string name="ok">OK</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
@@ -22,13 +22,12 @@
     <string name="enter">Enter</string>
     <string name="menu_item_add_note">Add Note</string>
     <string name="or">OR</string>
-    <string name="wellcome_msg">Welcome to your personal Journal. You can capture important moments from your life in just one click. Enjoy it :))</string>
+    <string name="wellcome_msg">Welcome to Me Daily app.\nYou can add notes or capture favourite moments in just a few clicks away.\nHow to use: Add category according to your needs and save it. Then you can add as many notes as you like. Synchronize with remote database so you can backup you data (optional).\nEnjoy :))</string>
     <string name="owner_end_text">\'s Journal</string>
+    <string name="add_category">Add Category</string>
+    <string name="create_category">Add Category</string>
+    <string name="description">Description</string>
+    <string name="profile_picture">Profile Picture</string>
 
-    <string-array name="navigation_drawer_items_array">
-        <item>Profile</item>
-        <item>Edit Profile</item>
-        <item>Notes</item>
-        <item>Exit</item>
-    </string-array>
+
 </resources>

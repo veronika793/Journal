@@ -32,15 +32,16 @@
     </RelativeLayout>
 
     <ImageView
+        android:contentDescription="@string/profile_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/img_view_user_photo"
+        android:layout_marginTop="32dp"
         android:layout_below="@+id/relativeLayout"
-        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true" />
 
     <RelativeLayout
-        android:padding="20dp"
+        android:padding="10dp"
         android:background="@drawable/shape_borders"
         android:id="@+id/fragment_home_notes_container"
         android:layout_width="match_parent"
@@ -53,9 +54,10 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:id="@+id/txt_no_notes_msg"
+            android:id="@+id/text_wellcome_msg"
             android:textSize="18sp"
-            android:maxLines="6"
+            android:maxLines="4"
+            android:scrollbars="vertical"
             android:text="@string/wellcome_msg"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true" />
@@ -66,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="22dp"
         android:layout_below="@+id/img_view_user_photo"
         android:layout_centerHorizontal="true" />
 

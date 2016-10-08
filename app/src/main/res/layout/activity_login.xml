@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.veronica.journal.activities.LoginActivity">
+    tools:context="com.veronica.medaily.activities.LoginActivity">
 
     <EditText
         style="@style/EditTxtFormsStyles"

@@ -1,21 +1,22 @@
-package com.veronica.journal;
+package com.veronica.medaily;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.veronica.journal.activities.LoginActivity;
-import com.veronica.journal.activities.RegisterActivity;
+import com.veronica.medaily.activities.LoginActivity;
+import com.veronica.medaily.R;
+import com.veronica.medaily.activities.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private JournalApp appJournal;
+    private MainApplication appJournal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.appJournal = (JournalApp) this.getApplication();
+        this.appJournal = (MainApplication) this.getApplication();
         this.appJournal.setAuthManager();
 
         //this.appJournal.getAuthManager().logoutUser();

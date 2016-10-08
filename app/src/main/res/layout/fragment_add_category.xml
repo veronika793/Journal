@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/colorHomeBackground"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:hint="@string/name"
+        android:maxLength="20"
+        android:maxLines="1"
+        android:scrollbars="horizontal"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_txt_category_title"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:maxLength="60"
+        android:maxLines="1"
+        android:hint="@string/description"
+        android:scrollbars="horizontal"
+        android:id="@+id/edit_txt_category_description"
+        android:layout_below="@+id/edit_txt_category_title"
+        android:layout_alignLeft="@+id/edit_txt_category_title"
+        android:layout_alignStart="@+id/edit_txt_category_title"
+        android:layout_alignRight="@+id/edit_txt_category_title"
+        android:layout_alignEnd="@+id/edit_txt_category_title" />
+
+
+    <com.commonsware.cwac.colormixer.ColorMixer
+        android:id="@+id/mixer"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/edit_txt_category_description"
+        android:layout_alignLeft="@+id/edit_txt_category_description"
+        android:layout_alignStart="@+id/edit_txt_category_description"
+        android:layout_alignRight="@+id/edit_txt_category_description"
+        android:layout_marginTop="20dp"
+        android:layout_alignEnd="@+id/edit_txt_category_description" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:layout_height="wrap_content"
+        android:text="@string/create_category"
+        android:id="@+id/btn_create_category"
+        android:layout_below="@+id/mixer"
+        android:layout_marginTop="20dp" />
+
+</RelativeLayout>
