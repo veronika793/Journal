@@ -14,6 +14,7 @@ import com.veronica.medaily.R;
 import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.dbmodels.User;
+import com.veronica.medaily.managers.AuthorizationManager;
 
 import java.util.List;
 
@@ -21,18 +22,17 @@ import java.util.List;
  * Created by Veronica on 10/8/2016.
  */
 public class AlarmReceiver extends BroadcastReceiver {
+    AuthorizationManager authorizationManager;
     @Override
     public void onReceive(Context context, Intent intent) {
         // create notification bar
 
-        Log.d("DEBUG", "alarm received");
-        MainApplication mainApplication = (MainApplication)context.getApplicationContext();
-
+        authorizationManager = new AuthorizationManager(context);
         //runs the alarms only if there is logged in user
-        if(mainApplication.getAuthManager().isLoggedIn()){
+        if(authorizationManager.isLoggedIn()){
 
             if(intent.hasExtra("alarm_id")) {
-                Long currentUserId = intent.getLongExtra("alarm_user_id",-1);
+                Long currentUserId = Long.valueOf(authorizationManager.getUser());
                 List<NoteReminder> userReminders = NoteReminder.find(NoteReminder.class," user = ?", String.valueOf(currentUserId));
                 for (NoteReminder reminder : userReminders) {
                     Long alarmId = intent.getLongExtra("alarm_id",-1);
@@ -54,5 +54,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                 }
             }
         }
+
     }
 }

@@ -134,6 +134,7 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
                 selectedCategory = (String)mCategoriesSpinner.getSelectedItem();
                 Category category = Category.find(Category.class," name = ? ",selectedCategory).get(0);
 
+                Log.d("DEBUG", category.getName());
                 try {
                     Date currentDate = Calendar.getInstance().getTime();
                     String dateAsString = DateHelper.fromDateToString(currentDate);
@@ -145,7 +146,7 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
                     notificationHandler.toastSuccessNotificationBottom("Note added successfully");
 
                     if(pickedDate!=null){
-                        startAlarm(note);
+                        setupAlarm(note);
                     }
 
                 } catch (InvalidPropertiesFormatException e) {
@@ -165,7 +166,7 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
         }
     }
 
-    private void startAlarm(Note note) {
+    private void setupAlarm(Note note) {
 
         AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
         Date pickedDateToDate  = pickedDate.getTime();
@@ -176,10 +177,8 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
         NoteReminder reminder = new NoteReminder(mCurrentUser,note, DateHelper.fromDateToString(reminderCalendar.getTime()));
         reminder.save();
 
-        Long alarmUserId = mCurrentUser.getId();
         Intent intent = new Intent(getContext(), AlarmReceiver.class);
         intent.putExtra("alarm_id", reminder.getId());
-        intent.putExtra("alarm_user_id", alarmUserId);
         intent.putExtra("alarm_title", note.getTitle());
         intent.putExtra("alarm_content", note.getContent());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), reminder.getId().intValue(), intent, 0);
@@ -190,12 +189,12 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
     // used for spinner - updates position
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        mSpinnerSelectedPosition = position;
+        mCategoriesSpinner.setSelection(position);
     }
     // used for spinner - updates position
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        mSpinnerSelectedPosition = 0;
+        mCategoriesSpinner.setSelection(0);
     }
 
     @Override
