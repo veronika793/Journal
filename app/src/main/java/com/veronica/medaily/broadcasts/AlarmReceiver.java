@@ -7,14 +7,10 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
-import android.util.Log;
 
-import com.veronica.medaily.MainApplication;
 import com.veronica.medaily.R;
-import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
-import com.veronica.medaily.dbmodels.User;
-import com.veronica.medaily.managers.AuthorizationManager;
+import com.veronica.medaily.AuthorizationManager;
 
 import java.util.List;
 

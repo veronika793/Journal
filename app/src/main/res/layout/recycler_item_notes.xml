@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/colorWhite"
+    android:padding="1dp"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:background="@color/colorNoteBackground"
+        android:id="@+id/recycler_container_categories"
+        android:orientation="vertical"
+        android:padding="25dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="@color/colorWhite"
+                android:id="@+id/txt_note_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="20sp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/txt_category_icon"
+                android:layout_toLeftOf="@+id/txt_category_icon" />
+
+            <TextView
+                android:id="@+id/txt_note_created_on"
+                android:textColor="@color/colorWhite"
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="20dp"
+                android:text="Created On" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_note_content"
+                android:layout_width="wrap_content"
+                android:maxLines="2"
+                android:textColor="@color/colorWhite"
+                android:ellipsize="end"
+                android:layout_height="wrap_content"
+                android:text="Content"
+                android:layout_toLeftOf="@+id/txt_category_notes_count"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/txt_note_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:text="Category"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

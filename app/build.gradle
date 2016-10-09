@@ -35,6 +35,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.github.satyan:sugar:1.4'
-    compile 'com.commonsware.cwac:colormixer:0.6.+'
+    compile 'com.commonsware.cwac:colormixer:0.6.1'
     compile(name: 'kinvey-android-2.10.8', ext: 'aar')
 }

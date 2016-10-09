@@ -1,17 +1,11 @@
 package com.veronica.medaily;
 
 import android.content.ContextWrapper;
-import android.util.Log;
 
 import com.orm.SugarApp;
 import com.orm.SugarContext;
-import com.orm.SugarDb;
-import com.veronica.medaily.R;
-import com.veronica.medaily.dbmodels.Category;
-import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.User;
 import com.veronica.medaily.kinvey.KinveyConnector;
-import com.veronica.medaily.managers.AuthorizationManager;
 
 import java.io.File;
 

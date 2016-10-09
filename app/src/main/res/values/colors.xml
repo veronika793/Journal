@@ -10,4 +10,8 @@
     <color name="colorToastNeutral">#f3433e3f</color>
     <color name="colorHomeBackground">#ECE7D4</color>
     <color name="colorCategoryDefault">#ffd123</color>
+    <color name="colorDefaultCategoryColor">#EDDEA5</color>
+    <color name="colorLightGrey1">#e1e1e1</color>
+    <color name="colorLightGrey2">#fafafa</color>
+    <color name="colorNoteBackground">#f4c768</color>
 </resources>

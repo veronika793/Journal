@@ -45,7 +45,6 @@
         android:maxLines="1"
         android:inputType="textCapSentences"
         android:singleLine="true"
-        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:id="@+id/edit_txt_reg_name"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/edit_txt_reg_password" />

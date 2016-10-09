@@ -12,10 +12,10 @@ import java.util.List;
  */
 public class Category extends SugarRecord implements Parcelable {
 
-    User user;
-    String name;
-    String description;
-    int color;
+    private User user;
+    private String name;
+    private String description;
+    private int color;
 
     public Category(){
 
@@ -61,6 +61,14 @@ public class Category extends SugarRecord implements Parcelable {
         name = in.readString();
         description = in.readString();
         color = in.readInt();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

@@ -49,6 +49,7 @@
         android:id="@+id/categories_spinner"
         android:layout_width="wrap_content"
         android:layout_marginTop="20dp"
+        android:padding="5dp"
         android:hint="@string/category"
         android:layout_below="@+id/edit_txt_note_content"
         android:layout_alignLeft="@+id/edit_txt_note_content"
@@ -98,6 +99,5 @@
         android:layout_marginTop="20dp"
         android:layout_alignRight="@+id/linearLayout"
         android:layout_alignEnd="@+id/linearLayout" />
-
 
 </RelativeLayout>

@@ -43,7 +43,7 @@ public class HomeFragment extends BaseFragment {
         super.setupTypefaceView(mTxtWellcomeMsg);
         //scrolling textview
         mTxtWellcomeMsg.setMovementMethod(new ScrollingMovementMethod());
-        mTxtUser.setText("Hello "+mCurrentUser.getName());
+        mTxtUser.setText("Welcome "+mCurrentUser.getName());
 
         //parse profile image resize it make it circular and loads it asynchronously
         new AvatarLoader(getActivity(),mImgViewUserPhoto,progressBar).execute(Uri.parse(mCurrentUser.getPhotoUri()));

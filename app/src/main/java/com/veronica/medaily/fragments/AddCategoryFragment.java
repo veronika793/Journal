@@ -57,7 +57,7 @@ public class AddCategoryFragment extends BaseFragment implements ColorMixer.OnCo
         }
         //sets default color
         //TODO: must be changed
-        mColorMixer.setColor(ContextCompat.getColor(getContext(),R.color.colorHomeBackground));
+        mColorMixer.setColor(ContextCompat.getColor(getContext(),R.color.colorDefaultCategoryColor));
         mColorMixer.setOnColorChangedListener(this);
 
         return view;
