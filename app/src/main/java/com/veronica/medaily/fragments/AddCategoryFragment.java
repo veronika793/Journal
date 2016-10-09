@@ -74,16 +74,21 @@ public class AddCategoryFragment extends BaseFragment implements ColorMixer.OnCo
                 try {
                     CategoryBindingModel categoryBindingModel = new CategoryBindingModel(title,description);
                     Category category = new Category(super.mCurrentUser,title,description,mColorMixer.getColor());
-                    if(Category.find(Category.class," name = ? ",title).isEmpty()) {
+                    //check if this category exists for the current user if not creates
+                    if(Category.find(Category.class," name = ? and user = ?",new String[]{title,String.valueOf(mCurrentUser.getId())}).isEmpty()) {
                         category.save();
                         notificationHandler.toastSuccessNotificationBottom("Category added");
                     }else{
                         notificationHandler.toastNeutralNotificationBottom("This category already exists");
                     }
 
+
+
                 } catch (InvalidPropertiesFormatException e) {
                     notificationHandler.toastWarningNotificationBottom(e.getMessage());
                 }
+
+
             }else{
                 notificationHandler.toastNeutralNotificationBottom("You have reached you limit for categories");
             }

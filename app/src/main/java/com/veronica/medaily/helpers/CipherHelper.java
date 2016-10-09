@@ -6,7 +6,10 @@ import javax.crypto.spec.SecretKeySpec;
 
 /**
  * Created by Veronica on 10/4/2016.
+ * Generates password for each user using secret key and password
  */
+
+
 public class CipherHelper {
 
     // Algorithm used

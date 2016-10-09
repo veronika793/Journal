@@ -17,11 +17,6 @@ public class Category extends SugarRecord implements Parcelable {
     String description;
     int color;
 
-
-    List<Note> getNotes() {
-        return Note.find(Note.class, "category = ?",String.valueOf(getId()));
-    }
-
     public Category(){
 
     }
@@ -31,6 +26,10 @@ public class Category extends SugarRecord implements Parcelable {
         this.name = title;
         this.description = description;
         this.color = color;
+    }
+
+    public List<Note> getNotes() {
+        return Note.find(Note.class, "category = ?",String.valueOf(getId()));
     }
 
     public User getUser() {

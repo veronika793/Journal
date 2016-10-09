@@ -7,14 +7,14 @@ import java.util.Date;
 /**
  * Created by Veronica on 10/9/2016.
  */
-public final class DateFormatter {
+public final class DateHelper {
 
-    public static SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    public static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     public static Date fromStringToDate(String date){
         Date dateResult = null;
         try {
-            dateResult = formater.parse(date);
+            dateResult = formatter.parse(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -24,7 +24,7 @@ public final class DateFormatter {
 
     public static String fromDateToString(Date date){
 
-        String datetime = formater.format(date);
+        String datetime = formatter.format(date);
         return datetime;
     }
 }

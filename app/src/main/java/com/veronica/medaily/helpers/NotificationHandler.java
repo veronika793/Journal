@@ -17,7 +17,7 @@ import com.veronica.medaily.R;
  * Created by Veronica on 10/4/2016.
  */
 public class NotificationHandler {
-
+    //TODO: export common stuff
     private Context mContext;
 
     public NotificationHandler(Context mContext) {

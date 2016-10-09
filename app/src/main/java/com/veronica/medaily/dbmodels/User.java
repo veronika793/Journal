@@ -24,11 +24,14 @@ public class User extends SugarRecord implements Parcelable {
         this.photoUri=photoUri;
     }
 
-    List<Note> getNotes() {
+    public List<Note> getNotes() {
         return Note.find(Note.class, "user = ?",String.valueOf(getId()));
     }
-    List<Category> getCategories() {
-        return find(Category.class, "user = ?",String.valueOf(getId()));
+    public List<Category> getCategories() {
+        return Category.find(Category.class, "user = ?",String.valueOf(getId()));
+    }
+    public List<NoteReminder> getNoteReminders() {
+        return NoteReminder.find(NoteReminder.class, "user = ?",String.valueOf(getId()));
     }
 
     public void setEmail(String email) {

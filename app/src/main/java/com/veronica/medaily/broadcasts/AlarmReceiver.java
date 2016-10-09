@@ -9,7 +9,13 @@ import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
+import com.veronica.medaily.MainApplication;
 import com.veronica.medaily.R;
+import com.veronica.medaily.dbmodels.Note;
+import com.veronica.medaily.dbmodels.NoteReminder;
+import com.veronica.medaily.dbmodels.User;
+
+import java.util.List;
 
 /**
  * Created by Veronica on 10/8/2016.
@@ -19,24 +25,34 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // create notification bar
 
-        if(intent.hasExtra("alarm_id")){
-            int alarmId = intent.getIntExtra("alarm_id",0);
-            String title = intent.getStringExtra("alarm_title");
-            String content = intent.getStringExtra("alarm_content");
-            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            Log.d("DEBUG", alarmSound.toString());
-            android.support.v4.app.NotificationCompat.Builder mBuilder =
-                    new NotificationCompat.Builder(context)
-                            .setSmallIcon(R.drawable.icon_add_note)
-                            .setContentTitle(title)
-                            .setContentText(content)
-                            .setSound(alarmSound);
+        Log.d("DEBUG", "alarm received");
+        MainApplication mainApplication = (MainApplication)context.getApplicationContext();
 
-            NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(alarmId, mBuilder.build());
+        //runs the alarms only if there is logged in user
+        if(mainApplication.getAuthManager().isLoggedIn()){
+
+            if(intent.hasExtra("alarm_id")) {
+                Long currentUserId = intent.getLongExtra("alarm_user_id",-1);
+                List<NoteReminder> userReminders = NoteReminder.find(NoteReminder.class," user = ?", String.valueOf(currentUserId));
+                for (NoteReminder reminder : userReminders) {
+                    Long alarmId = intent.getLongExtra("alarm_id",-1);
+                    //check if current user has such alarm and can be notified
+                    if(reminder.getId() == alarmId){
+                        String title = intent.getStringExtra("alarm_title");
+                        String content = intent.getStringExtra("alarm_content");
+                        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        android.support.v4.app.NotificationCompat.Builder mBuilder =
+                                new NotificationCompat.Builder(context)
+                                        .setSmallIcon(R.drawable.icon_add_note)
+                                        .setContentTitle(title)
+                                        .setContentText(content)
+                                        .setSound(alarmSound);
+
+                        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                        mNotificationManager.notify(alarmId.intValue(), mBuilder.build());
+                    }
+                }
+            }
         }
-
     }
-
-
 }

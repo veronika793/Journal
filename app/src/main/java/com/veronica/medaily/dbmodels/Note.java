@@ -4,6 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.orm.SugarRecord;
+
+import java.util.List;
+
 public class Note extends SugarRecord implements Parcelable {
 
     User user;
@@ -24,6 +27,10 @@ public class Note extends SugarRecord implements Parcelable {
         this.content = content;
         this.createdOnDate = createdOn;
         this.photoUri = photoUri;
+    }
+
+    public List<NoteReminder> getNoteReminders() {
+        return find(NoteReminder.class, "note = ?",String.valueOf(getId()));
     }
 
     public void setUser(User user) {

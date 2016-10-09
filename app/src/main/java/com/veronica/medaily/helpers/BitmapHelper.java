@@ -33,6 +33,7 @@ public class BitmapHelper {
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 
+    //decodes photo uri to bitmap
     public static Bitmap decodeUri(ContentResolver resolver,Uri selectedImage) throws FileNotFoundException {
 
         // Decode image size

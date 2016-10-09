@@ -39,18 +39,13 @@ public class MainApplication extends SugarApp {
 
         initializeSingletons();
         if(!doesDatabaseExist((ContextWrapper) getApplicationContext(),Constants.DB_NAME)){
-
-            Log.d("DEBUG", "DOES NOT EXISTS");
             User.findById(User.class, (long) 1);
-            Note.findById(Note.class, (long) 1);
-            Category.findById(Category.class,(long)1);
-
 
         }else{
-            Log.d("DEBUG", "DATABASE EXISTS");
 //            recreates database..
 //            SugarDb sugarDb = new SugarDb(getApplicationContext());
 //            new File(sugarDb.getDB().getPath()).delete();
+            User.findById(User.class, (long) 1);
         }
     }
 
