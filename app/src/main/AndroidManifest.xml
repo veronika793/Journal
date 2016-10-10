@@ -2,21 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.veronica.medaily">
 
-    <!--network access-->
+    <!--network access - needed for remote data synchronization-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!--not sure for what it was added-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-    <!--for opening gallery -->
+    <!--for reading media content -->
     <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!--gps based location-->
-    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
-    <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
-    <!--<uses-feature android:name="android.hardware.location.gps" />-->
+    <!--for alarm receiver - make sure the device does not go back to sleep-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name="com.veronica.medaily.MainApplication"
@@ -31,12 +30,20 @@
         <meta-data android:name="QUERY_LOG" android:value="true" />
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.veronica.medaily" />
 
-        <receiver android:name=".broadcasts.AlarmReceiver">
-            <intent-filter>
-                <action android:name="com.veronica.medaily.Alarm_Receiver"/>
-            </intent-filter>
+
+
+        <receiver
+            android:name=".broadcasts.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED" />-->
+            <!--</intent-filter>-->
         </receiver>
-        <activity android:name="com.veronica.medaily.MainActivity" android:screenOrientation="portrait">
+
+        <activity
+            android:name="com.veronica.medaily.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,19 +52,25 @@
 
         </activity>
 
-        <activity android:name="com.veronica.medaily.activities.LoginActivity" android:screenOrientation="portrait" >
+        <activity
+            android:name="com.veronica.medaily.activities.LoginActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
 
-        <activity android:name="com.veronica.medaily.activities.RegisterActivity" android:screenOrientation="portrait">
+        <activity
+            android:name="com.veronica.medaily.activities.RegisterActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
 
-        <activity android:name="com.veronica.medaily.activities.HomeActivity" android:screenOrientation="portrait">
+        <activity
+            android:name="com.veronica.medaily.activities.HomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>

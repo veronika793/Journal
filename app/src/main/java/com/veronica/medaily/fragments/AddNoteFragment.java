@@ -134,7 +134,6 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
                 selectedCategory = (String)mCategoriesSpinner.getSelectedItem();
                 Category category = Category.find(Category.class," name = ? ",selectedCategory).get(0);
 
-                Log.d("DEBUG", category.getName());
                 try {
                     Date currentDate = Calendar.getInstance().getTime();
                     String dateAsString = DateHelper.fromDateToString(currentDate);
@@ -200,8 +199,5 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void pick(Calendar pickedDateTime) {
         this.pickedDate = pickedDateTime;
-        if(this.pickedDate!=null) {
-            Log.d("DEBUG", "Alarm set at: " + DateHelper.fromDateToString(pickedDate.getTime()));
-        }
     }
 }
