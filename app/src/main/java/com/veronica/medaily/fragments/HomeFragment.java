@@ -1,12 +1,9 @@
 package com.veronica.medaily.fragments;
 
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +11,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.veronica.medaily.Constants;
-import com.veronica.medaily.MainApplication;
 import com.veronica.medaily.R;
-import com.veronica.medaily.loaders.AvatarLoader;
+import com.veronica.medaily.tasks.AvatarLoader;
 
 
 public class HomeFragment extends BaseFragment {
@@ -26,7 +21,6 @@ public class HomeFragment extends BaseFragment {
     private TextView mTxtWellcomeMsg;
 
     private ImageView mImgViewUserPhoto;
-
     ProgressBar progressBar;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

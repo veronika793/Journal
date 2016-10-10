@@ -4,8 +4,12 @@ import android.content.ContextWrapper;
 
 import com.orm.SugarApp;
 import com.orm.SugarContext;
+import com.veronica.medaily.dbmodels.Category;
+import com.veronica.medaily.dbmodels.Note;
+import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.dbmodels.User;
 import com.veronica.medaily.kinvey.KinveyConnector;
+import com.veronica.medaily.managers.AuthorizationManager;
 
 import java.io.File;
 
@@ -34,12 +38,18 @@ public class MainApplication extends SugarApp {
         initializeSingletons();
         if(!doesDatabaseExist((ContextWrapper) getApplicationContext(),Constants.DB_NAME)){
             User.findById(User.class, (long) 1);
+            Note.findById(Note.class, (long) 1);
+            NoteReminder.findById(NoteReminder.class, (long) 1);
+            Category.findById(Category.class, (long) 1);
 
         }else{
 //            recreates database..
 //            SugarDb sugarDb = new SugarDb(getApplicationContext());
 //            new File(sugarDb.getDB().getPath()).delete();
             User.findById(User.class, (long) 1);
+            Note.findById(Note.class, (long) 1);
+            NoteReminder.findById(NoteReminder.class, (long) 1);
+            Category.findById(Category.class, (long) 1);
         }
     }
 

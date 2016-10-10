@@ -10,46 +10,42 @@ import android.support.v7.app.NotificationCompat;
 
 import com.veronica.medaily.R;
 import com.veronica.medaily.dbmodels.NoteReminder;
-import com.veronica.medaily.AuthorizationManager;
-
-import java.util.List;
+import com.veronica.medaily.managers.AuthorizationManager;
 
 /**
- * Created by Veronica on 10/8/2016.
+ * @see  if the reminder belongs to curent logged user and if fires notification
+ *
  */
-public class AlarmReceiver extends BroadcastReceiver {
+public class NotificationReceiver extends BroadcastReceiver {
     AuthorizationManager authorizationManager;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         // create notification bar
-
         authorizationManager = new AuthorizationManager(context);
         //runs the alarms only if there is logged in user
         if(authorizationManager.isLoggedIn()){
 
             if(intent.hasExtra("alarm_id")) {
                 Long currentUserId = Long.valueOf(authorizationManager.getUser());
-                List<NoteReminder> userReminders = NoteReminder.find(NoteReminder.class," user = ?", String.valueOf(currentUserId));
-                for (NoteReminder reminder : userReminders) {
-                    Long alarmId = intent.getLongExtra("alarm_id",-1);
-                    //check if current user has such alarm and can be notified
-                    if(reminder.getId() == alarmId){
-                        String title = intent.getStringExtra("alarm_title");
-                        String content = intent.getStringExtra("alarm_content");
+                Long reminderId = intent.getLongExtra("alarm_id",-1);
+
+                NoteReminder reminder = NoteReminder.findById(NoteReminder.class,reminderId);
+                if(reminder.getUser().getId()==currentUserId) {
+                    if (reminder != null) {
                         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                         android.support.v4.app.NotificationCompat.Builder mBuilder =
                                 new NotificationCompat.Builder(context)
                                         .setSmallIcon(R.drawable.icon_add_note)
-                                        .setContentTitle(title)
-                                        .setContentText(content)
+                                        .setContentTitle(reminder.getNote().getTitle())
+                                        .setContentText(reminder.getNote().getTitle())
                                         .setSound(alarmSound);
 
                         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                        mNotificationManager.notify(alarmId.intValue(), mBuilder.build());
+                        mNotificationManager.notify(reminder.getId().intValue(), mBuilder.build());
                     }
                 }
             }
         }
-
     }
 }

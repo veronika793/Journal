@@ -56,19 +56,21 @@ public class Category extends SugarRecord implements Parcelable {
         this.color = color;
     }
 
-    protected Category(Parcel in) {
-        user = (User) in.readValue(User.class.getClassLoader());
-        name = in.readString();
-        description = in.readString();
-        color = in.readInt();
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+
+
+    protected Category(Parcel in) {
+        user = (User) in.readValue(User.class.getClassLoader());
+        name = in.readString();
+        description = in.readString();
+        color = in.readInt();
     }
 
     @Override
@@ -80,8 +82,8 @@ public class Category extends SugarRecord implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(user);
         dest.writeString(name);
-        dest.writeInt(color);
         dest.writeString(description);
+        dest.writeInt(color);
     }
 
     @SuppressWarnings("unused")

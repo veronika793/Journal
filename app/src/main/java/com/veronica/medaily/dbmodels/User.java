@@ -4,8 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.orm.SugarRecord;
+import com.veronica.medaily.dbmodels.Category;
+import com.veronica.medaily.dbmodels.Note;
+import com.veronica.medaily.dbmodels.NoteReminder;
 
 import java.util.List;
+
 public class User extends SugarRecord implements Parcelable {
 
     String email;
@@ -65,7 +69,6 @@ public class User extends SugarRecord implements Parcelable {
     public String getPhotoUri() {
         return photoUri;
     }
-
 
     protected User(Parcel in) {
         email = in.readString();

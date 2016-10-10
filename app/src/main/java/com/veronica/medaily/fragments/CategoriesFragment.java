@@ -2,7 +2,6 @@ package com.veronica.medaily.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -35,14 +34,12 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.userCategories = mCurrentUser.getCategories();
-
         Collections.sort(userCategories, new Comparator<Category>() {
             @Override
             public int compare(Category lhs, Category rhs) {
                 return lhs.getName().toLowerCase().compareTo(rhs.getName().toLowerCase());
             }
         });
-
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

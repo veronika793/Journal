@@ -1,4 +1,4 @@
-package com.veronica.medaily.loaders;
+package com.veronica.medaily.tasks;
 
 import android.app.Activity;
 import android.graphics.Bitmap;

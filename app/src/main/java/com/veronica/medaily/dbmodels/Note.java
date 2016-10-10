@@ -81,6 +81,7 @@ public class Note extends SugarRecord implements Parcelable {
         return category;
     }
 
+
     protected Note(Parcel in) {
         user = (User) in.readValue(User.class.getClassLoader());
         category = (Category) in.readValue(Category.class.getClassLoader());

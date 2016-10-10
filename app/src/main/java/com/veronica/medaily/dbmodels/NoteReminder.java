@@ -9,6 +9,7 @@ import com.orm.SugarRecord;
  * Created by Veronica on 10/8/2016.
  */
 public class NoteReminder extends SugarRecord implements Parcelable {
+
     private User user;
     private Note note;
     private String startTime;
@@ -45,6 +46,7 @@ public class NoteReminder extends SugarRecord implements Parcelable {
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
+
 
     protected NoteReminder(Parcel in) {
         user = (User) in.readValue(User.class.getClassLoader());

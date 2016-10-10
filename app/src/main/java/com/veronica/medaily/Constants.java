@@ -2,7 +2,7 @@ package com.veronica.medaily;
 
 public final class Constants {
 
-    public static String DB_NAME = "me_daily.db";
+    public static String DB_NAME = "database_me_daily.db";
 
     public static int PICK_PROFILE_IMAGE_REQ_CODE = 200;
     public static int PICK_NOTE_IMAGE_REQ_CODE = 201;
@@ -22,6 +22,10 @@ public final class Constants {
     public static int NOTE_CONTENT_MIN_LENGTH = 3;
 
     public static int CATEGORIES_LIMIT_COUNT = 20;
+
+    public static String START_ALARM_ACTION = "START_ALARM";
+    public static String RESHEDULE_ALARMS_ACTION = "RESHEDULE_ALARMS";
+    public static String ACTION_BOOT_COMPLETED = "android.intent.action.BOOT_COMPLETED";
 
     public static String HOME = "Home";
     public static String PROFILE = "Profile";

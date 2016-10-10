@@ -1,7 +1,5 @@
 package com.veronica.medaily.fragments;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -20,8 +18,8 @@ import android.widget.TextView;
 
 import com.veronica.medaily.Constants;
 import com.veronica.medaily.R;
+import com.veronica.medaily.managers.AlarmsManager;
 import com.veronica.medaily.bindingmodels.NoteBindingModel;
-import com.veronica.medaily.broadcasts.AlarmReceiver;
 import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
@@ -43,7 +41,7 @@ import java.util.List;
 public class AddNoteFragment extends BaseFragment implements View.OnClickListener ,AdapterView.OnItemSelectedListener,IDatePicked{
 
     private NotificationHandler notificationHandler;
-
+    private AlarmsManager alarmsManager;
     private TextView mTxtViewAddNote;
     private EditText mEditTxtNoteTitle;
     private EditText mEditTxtNoteContent;
@@ -167,22 +165,16 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
 
     private void setupAlarm(Note note) {
 
-        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
         Date pickedDateToDate  = pickedDate.getTime();
-
         Calendar reminderCalendar = Calendar.getInstance();
         reminderCalendar.setTime(pickedDateToDate);
 
         NoteReminder reminder = new NoteReminder(mCurrentUser,note, DateHelper.fromDateToString(reminderCalendar.getTime()));
         reminder.save();
 
-        Intent intent = new Intent(getContext(), AlarmReceiver.class);
-        intent.putExtra("alarm_id", reminder.getId());
-        intent.putExtra("alarm_title", note.getTitle());
-        intent.putExtra("alarm_content", note.getContent());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), reminder.getId().intValue(), intent, 0);
+        alarmsManager = new AlarmsManager(getContext());
+        alarmsManager.setupAlarm(reminder);
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, reminderCalendar.getTimeInMillis(), pendingIntent);
     }
 
     // used for spinner - updates position

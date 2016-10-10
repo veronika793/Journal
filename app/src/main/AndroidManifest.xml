@@ -25,20 +25,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <meta-data android:name="DATABASE" android:value="me_daily.db" />
-        <meta-data android:name="VERSION" android:value="7" />
+        <meta-data android:name="DATABASE" android:value="database_me_daily.db" />
+        <meta-data android:name="VERSION" android:value="1" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.veronica.medaily" />
 
 
-
+        <service android:name=".services.RecallAlarmsService"/>
         <receiver
-            android:name=".broadcasts.AlarmReceiver"
+            android:name=".broadcasts.NotificationReceiver"
             android:enabled="true"
             android:exported="false">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.BOOT_COMPLETED" />-->
-            <!--</intent-filter>-->
+        </receiver>
+        <receiver android:name=".broadcasts.BootCompletedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
         </receiver>
 
         <activity
