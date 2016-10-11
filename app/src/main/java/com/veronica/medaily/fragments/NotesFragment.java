@@ -21,14 +21,17 @@ import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.dialogs.CategoriesDetailsDialog;
 import com.veronica.medaily.dialogs.EditCategoryDialog;
+import com.veronica.medaily.dialogs.EditNoteDialog;
+import com.veronica.medaily.interfaces.INoteEditListener;
 import com.veronica.medaily.loaders.CategoriesLoader;
 import com.veronica.medaily.loaders.NotesLoader;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class NotesFragment extends BaseFragment implements android.widget.SearchView.OnQueryTextListener {
+public class NotesFragment extends BaseFragment implements android.widget.SearchView.OnQueryTextListener,INoteEditListener {
 
+    private NotesAdapter mNotesAdapter;
     private SearchView mSearchViewNotes;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -36,14 +39,17 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
     private ItemTouchHelper itemTouchHelper;
 
     private List<Note> userNotes;
+    private NotesFragment notesFragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeItemTouchHelper();
+        notesFragment = this;
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_notes,container,false);
         mSearchViewNotes = (SearchView) view.findViewById(R.id.search_view_notes);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_notes);
@@ -52,23 +58,41 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
         mSearchViewNotes.setOnQueryTextListener(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        try {
-            this.userNotes = new NotesLoader(progressBar,mCurrentUser,mRecyclerView).execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        final Bundle bundle = this.getArguments();
+
+        if(bundle.containsKey("category_id")){
+            long categoryId = bundle.getLong("category_id");
+            Category category = Category.findById(Category.class,categoryId);
+            this.userNotes = category.getNotes();
+            this.mNotesAdapter = new NotesAdapter(category.getNotes());
+            mRecyclerView.setAdapter(mNotesAdapter);
+            progressBar.setVisibility(View.GONE);
+        }else{
+
+            try {
+                this.userNotes = new NotesLoader(progressBar,mCurrentUser,mRecyclerView).execute().get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
         }
 
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerClickListener(getContext(), mRecyclerView ,new RecyclerClickListener.OnItemClickListener() {
 
                     @Override public void onItemClick(View view, int position) {
-                        Log.d("DEBUG", "item clicked");
+                        NoteDetailsFragment noteDetailsFragment = new NoteDetailsFragment();
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString("note_id", String.valueOf(userNotes.get(position).getId()));
+                        noteDetailsFragment.setArguments(bundle1);
+                        placeFragment(R.id.content_frame,noteDetailsFragment,"note_details,fragment");
                     }
 
                     @Override public void onLongItemClick(View view, int position) {
-
+                        EditNoteDialog editNoteDialog = new EditNoteDialog(getContext(),userNotes.get(position),position,notesFragment);
+                        editNoteDialog.show();
                     }
 
                     @Override
@@ -111,15 +135,25 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
     @Override
     public boolean onQueryTextSubmit(String query) {
         NotesAdapter notesAdapter = (NotesAdapter) mRecyclerView.getAdapter();
-        notesAdapter.filter(query);
+        if(notesAdapter!=null) {
+            notesAdapter.filter(query);
+        }
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
         NotesAdapter notesAdapter = (NotesAdapter) mRecyclerView.getAdapter();
-        notesAdapter.filter(newText);
+        if(notesAdapter!=null) {
+            notesAdapter.filter(newText);
+        }
         return true;
     }
 
+    @Override
+    public void noteEdited(Note note, int position) {
+        userNotes.set(position,note);
+        NotesAdapter notesAdapter = (NotesAdapter) mRecyclerView.getAdapter();
+        notesAdapter.updateNotes(userNotes);
+    }
 }

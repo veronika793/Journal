@@ -76,9 +76,9 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
         mTxtViewAddNote = (TextView)view.findViewById(R.id.txt_view_add_note);
         super.setupTypefaceView(mTxtViewAddNote);
         super.setupUnderline(mTxtViewAddNote);
-        mEditTxtNoteTitle = (EditText) view.findViewById(R.id.edit_txt_note_title);
-        mEditTxtNoteContent = (EditText) view.findViewById(R.id.edit_txt_note_content);
-        mCategoriesSpinner = (Spinner) view.findViewById(R.id.categories_spinner);
+        mEditTxtNoteTitle = (EditText) view.findViewById(R.id.edit_txt_note_edit);
+        mEditTxtNoteContent = (EditText) view.findViewById(R.id.edit_txt_note_content_edit);
+        mCategoriesSpinner = (Spinner) view.findViewById(R.id.categories_spinner_edit);
 
         mBtnAddPhoto = (Button) view.findViewById(R.id.btn_note_add_img);
         mBtnAddReminder = (Button) view.findViewById(R.id.btn_note_add_reminder);
@@ -166,6 +166,7 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
     private void setupAlarm(Note note) {
         Date pickedDateToDate  = pickedDate.getTime();
         note.setReminderDate(DateHelper.fromDateToString(pickedDateToDate));
+        note.save();
         Calendar reminderCalendar = Calendar.getInstance();
         reminderCalendar.setTime(pickedDateToDate);
 

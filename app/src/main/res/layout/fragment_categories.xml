@@ -6,6 +6,7 @@
 
    <SearchView
        android:layout_width="match_parent"
+       android:queryHint="Search category.."
        android:layout_height="wrap_content"
        android:id="@+id/search_view_categories" />
 

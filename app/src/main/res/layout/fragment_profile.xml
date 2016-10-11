@@ -1,14 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/colorLightGrey1"
+    android:padding="10dp"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Change password fragment"
-        android:id="@+id/textView2"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:paddingTop="30dp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:padding="5dp"
+            android:maxHeight="220dp"
+            android:minHeight="180dp"
+            android:contentDescription="Image Preview"
+            android:background="@color/colorLightGrey2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/img_user_photo_preview"
+            android:layout_gravity="center_horizontal" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Change name.."
+            android:maxLines="1"
+            android:scrollbars="vertical"
+            android:id="@+id/edit_txt_name_new"
+            android:layout_gravity="center_horizontal" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Change password.."
+            android:maxLines="1"
+            android:scrollbars="vertical"
+            android:id="@+id/edit_txt_password_new"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/select_new_photo"
+            android:id="@+id/btn_select_photo_edit"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:id="@+id/btn_save_new_profile" />
+
+        <TextView
+            android:paddingLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note: empty fields will note be changed"
+            android:id="@+id/textView2" />
+    </LinearLayout>
 </RelativeLayout>

@@ -47,11 +47,15 @@ public class AvatarLoader extends AsyncTask<Uri,Integer,Void>{
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         this.imageView.setImageBitmap(croppedImage);
-        this.progressBar.setVisibility(View.GONE);
+        if(progressBar!=null) {
+            this.progressBar.setVisibility(View.GONE);
+        }
     }
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-        progressBar.setProgress(values[0]);
+        if(progressBar!=null) {
+            progressBar.setProgress(values[0]);
+        }
     }
 }

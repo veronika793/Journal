@@ -22,7 +22,7 @@
         android:layout_alignParentTop="true" />
 
     <EditText
-        android:id="@+id/edit_txt_note_title"
+        android:id="@+id/edit_txt_note_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/title"
@@ -35,30 +35,30 @@
 
 
     <EditText
-        android:id="@+id/edit_txt_note_content"
+        android:id="@+id/edit_txt_note_content_edit"
         android:layout_width="wrap_content"
         android:layout_marginTop="20dp"
         android:maxLines="4"
         android:hint="@string/content"
         android:scrollbars="vertical"
-        android:layout_below="@+id/edit_txt_note_title"
-        android:layout_alignLeft="@+id/edit_txt_note_title"
-        android:layout_alignStart="@+id/edit_txt_note_title"
-        android:layout_alignRight="@+id/edit_txt_note_title"
-        android:layout_alignEnd="@+id/edit_txt_note_title"
+        android:layout_below="@+id/edit_txt_note_edit"
+        android:layout_alignLeft="@+id/edit_txt_note_edit"
+        android:layout_alignStart="@+id/edit_txt_note_edit"
+        android:layout_alignRight="@+id/edit_txt_note_edit"
+        android:layout_alignEnd="@+id/edit_txt_note_edit"
         android:layout_height="wrap_content" />
 
     <Spinner
-        android:id="@+id/categories_spinner"
+        android:id="@+id/categories_spinner_edit"
         android:layout_width="wrap_content"
         android:layout_marginTop="20dp"
         android:padding="5dp"
         android:hint="@string/category"
-        android:layout_below="@+id/edit_txt_note_content"
-        android:layout_alignLeft="@+id/edit_txt_note_content"
-        android:layout_alignStart="@+id/edit_txt_note_content"
-        android:layout_alignRight="@+id/edit_txt_note_content"
-        android:layout_alignEnd="@+id/edit_txt_note_content"
+        android:layout_below="@+id/edit_txt_note_content_edit"
+        android:layout_alignLeft="@+id/edit_txt_note_content_edit"
+        android:layout_alignStart="@+id/edit_txt_note_content_edit"
+        android:layout_alignRight="@+id/edit_txt_note_content_edit"
+        android:layout_alignEnd="@+id/edit_txt_note_content_edit"
         android:layout_height="wrap_content"
         tools:targetApi="lollipop" />
 
@@ -69,11 +69,11 @@
         android:layout_centerVertical="true"
         android:weightSum="2"
         android:layout_marginTop="30dp"
-        android:layout_below="@+id/categories_spinner"
-        android:layout_alignLeft="@+id/categories_spinner"
-        android:layout_alignStart="@+id/categories_spinner"
-        android:layout_alignRight="@+id/categories_spinner"
-        android:layout_alignEnd="@+id/categories_spinner"
+        android:layout_below="@+id/categories_spinner_edit"
+        android:layout_alignLeft="@+id/categories_spinner_edit"
+        android:layout_alignStart="@+id/categories_spinner_edit"
+        android:layout_alignRight="@+id/categories_spinner_edit"
+        android:layout_alignEnd="@+id/categories_spinner_edit"
         android:id="@+id/linearLayout">
 
         <Button

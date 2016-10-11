@@ -71,6 +71,7 @@
         </activity>
 
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name="com.veronica.medaily.activities.HomeActivity"
             android:screenOrientation="portrait">
             <intent-filter>

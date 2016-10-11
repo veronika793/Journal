@@ -1,75 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:background="@color/colorWhite"
     android:padding="1dp"
+    android:weightSum="6"
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:background="@color/colorHomeBackground"
-        android:id="@+id/container_notes"
-        android:orientation="vertical"
-        android:padding="25dp"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
+        android:id="@+id/container_notes"
+        android:padding="15dp"
         android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:paddingBottom="5dp"
+        <LinearLayout
+            android:layout_weight="3"
+            android:paddingEnd="15dp"
+            android:paddingRight="15dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="New Text"
                 android:maxLines="1"
-                android:ellipsize="end"
-                android:textSize="25sp"
+
                 android:id="@+id/txt_note_title" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txt_note_createdon"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:text="New Text"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:textSize="15dp"
                 android:id="@+id/txt_note_content" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:id="@+id/txt_note_reminder"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-        </RelativeLayout>
-
-        <RelativeLayout
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="4"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:textSize="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="New Text"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:id="@+id/txt_note_category" />
-        </RelativeLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:id="@+id/txt_note_createdon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:id="@+id/txt_note_reminder" />
+        </LinearLayout>
     </LinearLayout>
+
+
 
 </LinearLayout>

@@ -8,9 +8,11 @@ import android.widget.ProgressBar;
 import com.veronica.medaily.adapters.NotesAdapter;
 import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.User;
+import com.veronica.medaily.helpers.DateHelper;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,7 +33,9 @@ public class NotesLoader extends AsyncTask<Void,Integer,List<Note>> {
         Collections.sort(notes, new Comparator<Note>() {
             @Override
             public int compare(Note lhs, Note rhs) {
-                return lhs.getTitle().toLowerCase().compareTo(rhs.getTitle().toLowerCase());
+                Date first = DateHelper.fromStringToDate(lhs.getCreatedOnDate());
+                Date second = DateHelper.fromStringToDate(rhs.getCreatedOnDate());
+                return second.compareTo(first);
             }
         });
 

@@ -44,9 +44,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         }
     }
 
-    public NotesAdapter(List<Note> categories) {
-        this.mNotes = categories;
-        this.mNotesCopy.addAll(categories);
+    public NotesAdapter(List<Note> notes) {
+        this.mNotes = notes;
+        this.mNotesCopy.addAll(notes);
     }
 
     @Override
@@ -64,11 +64,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
         String hexColor = String.format("#%06X", (0xFFFFFF & mNotes.get(position).getCategory().getColor()));
         holder.noteContainer.setBackgroundColor(Color.parseColor(hexColor));
-        holder.noteTitle.setText(mNotes.get(position).getTitle());
-        holder.noteContent.setText(mNotes.get(position).getContent());
-        holder.noteCategory.setText(mNotes.get(position).getCategory().getName());
-        holder.noteCreatedOn.setText(mNotes.get(position).getCreatedOnDate());
-        holder.noteReminder.setText(mNotes.get(position).getReminderDate());
+        holder.noteTitle.setText("Title: "+mNotes.get(position).getTitle());
+        holder.noteContent.setText("Content: "+mNotes.get(position).getContent());
+        holder.noteCategory.setText("Category: "+mNotes.get(position).getCategory().getName());
+        holder.noteCreatedOn.setText("Created on: "+mNotes.get(position).getCreatedOnDate());
+        if(!(mNotesCopy.get(position).getReminderDate() == null)){
+            holder.noteReminder.setText("Reminder:"+mNotes.get(position).getReminderDate());
+
+        }
 
     }
 

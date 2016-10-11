@@ -1,6 +1,7 @@
 package com.veronica.medaily.fragments;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,9 +21,11 @@ import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.dialogs.CategoriesDetailsDialog;
 import com.veronica.medaily.dialogs.EditCategoryDialog;
+import com.veronica.medaily.helpers.NotificationHandler;
 import com.veronica.medaily.interfaces.ICategoryEditListener;
 import com.veronica.medaily.loaders.CategoriesLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -35,13 +38,14 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
     private ProgressBar progressBar;
     private CategoriesFragment categoriesFragment;
     private ItemTouchHelper itemTouchHelper;
-
+    private NotificationHandler notificationHandler;
     private List<Category> userCategories;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         categoriesFragment = this;
+        notificationHandler = new NotificationHandler(getContext());
         initializeItemTouchHelper();
     }
 
@@ -50,7 +54,7 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar_categories);
         mSearchViewCategories = (SearchView) view.findViewById(R.id.search_view_categories);
         mSearchViewCategories.setOnQueryTextListener(this);
-
+        mSearchViewCategories.setIconified(true);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_categories);
 
         mRecyclerView.setHasFixedSize(true);
@@ -61,7 +65,16 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
                 new RecyclerClickListener(getContext(), mRecyclerView ,new RecyclerClickListener.OnItemClickListener() {
 
                     @Override public void onItemClick(View view, int position) {
-                        Log.d("DEBUG", "item clicked");
+
+                        if(userCategories.get(position).getNotes().size()>0) {
+                            NotesFragment notesFragment = new NotesFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putLong("category_id", userCategories.get(position).getId());
+                            notesFragment.setArguments(bundle);
+                            placeFragment(R.id.content_frame, notesFragment, "notes_fragment");
+                        }else{
+                            notificationHandler.toastNeutralNotificationBottom("This category is empty");
+                        }
                     }
 
                     @Override public void onLongItemClick(View view, int position) {
@@ -123,14 +136,19 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
     @Override
     public boolean onQueryTextSubmit(String query) {
         CategoriesAdapter categoriesAdapter = (CategoriesAdapter) mRecyclerView.getAdapter();
-        categoriesAdapter.filter(query);
+        if(categoriesAdapter!=null) {
+            categoriesAdapter.filter(query);
+        }
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
         CategoriesAdapter categoriesAdapter = (CategoriesAdapter) mRecyclerView.getAdapter();
-        categoriesAdapter.filter(newText);
+        // on back pressed adapter is null check s
+        if(categoriesAdapter!=null) {
+            categoriesAdapter.filter(newText);
+        }
         return true;
     }
 
