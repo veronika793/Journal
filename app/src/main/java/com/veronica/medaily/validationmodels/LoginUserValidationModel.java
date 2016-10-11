@@ -1,4 +1,4 @@
-package com.veronica.medaily.bindingmodels;
+package com.veronica.medaily.validationmodels;
 
 import com.veronica.medaily.Constants;
 import com.veronica.medaily.helpers.InputValidator;
@@ -8,12 +8,12 @@ import java.util.InvalidPropertiesFormatException;
 /**
  * Created by Veronica on 10/4/2016.
  */
-public class LoginUserBindingModel {
+public class LoginUserValidationModel {
 
     private String _email;
     private String _password;
 
-    public LoginUserBindingModel(String email, String password) throws InvalidPropertiesFormatException {
+    public LoginUserValidationModel(String email, String password) throws InvalidPropertiesFormatException {
         this.set_email(email);
         this.set_password(password);
     }

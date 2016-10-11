@@ -10,7 +10,7 @@ import android.widget.EditText;
 import com.veronica.medaily.MainApplication;
 import com.veronica.medaily.helpers.NotificationHandler;
 import com.veronica.medaily.R;
-import com.veronica.medaily.bindingmodels.LoginUserBindingModel;
+import com.veronica.medaily.validationmodels.LoginUserValidationModel;
 import com.veronica.medaily.dbmodels.User;
 import com.veronica.medaily.helpers.CipherHelper;
 import com.veronica.medaily.helpers.KeyGenerator;
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     // generates custom key for each user
                     String cypherKey = KeyGenerator.generateKey(userEmail);
                     String encryptedPass = CipherHelper.cipher(cypherKey,userPassword);
-                    LoginUserBindingModel loginUserBinding = new LoginUserBindingModel(userEmail,userPassword);
+                    LoginUserValidationModel loginUserBinding = new LoginUserValidationModel(userEmail,userPassword);
 
                     List<User> userList = User.find(User.class,"email = ? and password = ?",new String[]{userEmail,encryptedPass});
                     if(userList.isEmpty()){

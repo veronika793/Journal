@@ -11,10 +11,9 @@ import android.widget.EditText;
 
 import com.veronica.medaily.Constants;
 import com.veronica.medaily.MainApplication;
-import com.veronica.medaily.bindingmodels.UserBindingModel;
+import com.veronica.medaily.validationmodels.UserValidationModel;
 import com.veronica.medaily.dbmodels.User;
 import com.veronica.medaily.helpers.CipherHelper;
-import com.veronica.medaily.helpers.InputValidator;
 import com.veronica.medaily.helpers.NotificationHandler;
 import com.veronica.medaily.R;
 import com.veronica.medaily.helpers.KeyGenerator;
@@ -117,7 +116,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     String cypherKey = KeyGenerator.generateKey(email);
                     String passwordEncrypt = CipherHelper.cipher(cypherKey,password);
-                    UserBindingModel userBindingModel = new UserBindingModel(email,password,name,selectedImageUri);
+                    UserValidationModel userBindingModel = new UserValidationModel(email,password,name,selectedImageUri);
                     userBindingModel.set_password(passwordEncrypt);
 
                     if(!User.find(User.class,"email = ?",email).isEmpty()){

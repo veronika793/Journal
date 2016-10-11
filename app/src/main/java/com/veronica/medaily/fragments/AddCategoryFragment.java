@@ -2,7 +2,6 @@ package com.veronica.medaily.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 import com.commonsware.cwac.colormixer.ColorMixer;
 import com.veronica.medaily.Constants;
 import com.veronica.medaily.R;
-import com.veronica.medaily.bindingmodels.CategoryBindingModel;
+import com.veronica.medaily.validationmodels.CategoryValidationModel;
 import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.helpers.NotificationHandler;
 
@@ -43,10 +42,10 @@ public class AddCategoryFragment extends BaseFragment implements ColorMixer.OnCo
         View view = inflater.inflate(R.layout.fragment_add_category,container,false);
 
         mTextView = (TextView)view.findViewById(R.id.txt_view_add_category);
-        mEditTxtDescription = (EditText)view.findViewById(R.id.edit_txt_category_description);
-        mColorMixer = (ColorMixer)view.findViewById(R.id.mixer);
+        mEditTxtDescription = (EditText)view.findViewById(R.id.edit_txt_edit_cat_descr);
+        mColorMixer = (ColorMixer)view.findViewById(R.id.mixer_edit_category);
         mBtnAddCategory = (Button)view.findViewById(R.id.btn_create_category);
-        mEditTxtTitle = (EditText)view.findViewById(R.id.edit_txt_category_title);
+        mEditTxtTitle = (EditText)view.findViewById(R.id.edit_txt_edit_cat_name);
 
 //        super.setupUnderline(mTextView);
         super.setupTypefaceView(mTextView);
@@ -55,8 +54,6 @@ public class AddCategoryFragment extends BaseFragment implements ColorMixer.OnCo
         if(mBtnAddCategory!=null) {
             mBtnAddCategory.setOnClickListener(this);
         }
-        //sets default color
-        //TODO: must be changed
         mColorMixer.setColor(ContextCompat.getColor(getContext(),R.color.colorDefaultCategoryColor));
         mColorMixer.setOnColorChangedListener(this);
 
@@ -72,7 +69,7 @@ public class AddCategoryFragment extends BaseFragment implements ColorMixer.OnCo
                 String title = mEditTxtTitle.getText().toString().trim();
                 String description = mEditTxtDescription.getText().toString().trim();
                 try {
-                    CategoryBindingModel categoryBindingModel = new CategoryBindingModel(title,description);
+                    CategoryValidationModel categoryBindingModel = new CategoryValidationModel(title,description);
                     Category category = new Category(super.mCurrentUser,title,description,mColorMixer.getColor());
                     //check if this category exists for the current user if not creates
                     if(Category.find(Category.class," name = ? and user = ?",new String[]{title,String.valueOf(mCurrentUser.getId())}).isEmpty()) {

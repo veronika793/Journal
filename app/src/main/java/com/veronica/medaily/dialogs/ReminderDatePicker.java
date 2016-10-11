@@ -3,7 +3,6 @@ package com.veronica.medaily.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -13,7 +12,6 @@ import com.veronica.medaily.R;
 import com.veronica.medaily.helpers.NotificationHandler;
 import com.veronica.medaily.interfaces.IDatePicked;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -47,7 +45,7 @@ public class ReminderDatePicker extends Dialog implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.datepicker_layout);
+        setContentView(R.layout.dialog_datepicker);
         setTitle("Select date");
 
         mDatePicker = (DatePicker) findViewById(R.id.datePicker1);

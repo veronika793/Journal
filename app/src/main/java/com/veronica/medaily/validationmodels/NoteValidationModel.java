@@ -1,7 +1,4 @@
-package com.veronica.medaily.bindingmodels;
-
-import android.os.Parcel;
-import android.os.Parcelable;
+package com.veronica.medaily.validationmodels;
 
 import com.veronica.medaily.Constants;
 import com.veronica.medaily.helpers.InputValidator;
@@ -11,7 +8,7 @@ import java.util.InvalidPropertiesFormatException;
 /**
  * Created by Veronica on 9/30/2016.
  */
-public class NoteBindingModel{
+public class NoteValidationModel {
 
     private String _title;
     private String _content;
@@ -20,13 +17,13 @@ public class NoteBindingModel{
     private String _photoUrl;
 
 
-    public NoteBindingModel(String  title, String  content,String _category) throws InvalidPropertiesFormatException {
+    public NoteValidationModel(String  title, String  content, String _category) throws InvalidPropertiesFormatException {
         this.set_title(title);
         this.set_content(content);
         this.set_category(_category);
     }
 
-    public NoteBindingModel(String _title, String _content, String _category, String _createdOn, String _photoUrl) throws InvalidPropertiesFormatException {
+    public NoteValidationModel(String _title, String _content, String _category, String _createdOn, String _photoUrl) throws InvalidPropertiesFormatException {
         this.set_title(_title);
         this.set_content(_content);
         this.set_category(_category);

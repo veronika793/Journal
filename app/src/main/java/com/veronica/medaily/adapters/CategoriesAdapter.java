@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -59,7 +60,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         String hexColor = String.format("#%06X", (0xFFFFFF & mCategories.get(position).getColor()));
         holder.categoryContainer.setBackgroundColor(Color.parseColor(hexColor));
         holder.mCategoryName.setText(mCategories.get(position).getName());
-        holder.mCategoryDescription.setText(mCategories.get(position).getName());
+        holder.mCategoryDescription.setText(mCategories.get(position).getDescription());
         holder.mTotalNotes.setText(String.valueOf(notesCount+ " Notes"));
 
     }
@@ -81,6 +82,20 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
                 }
             }
         }
+        this.notifyDataSetChanged();
+    }
+
+    public void addCategories(List<Category> categories){
+        mCategories.addAll(categories);
         notifyDataSetChanged();
+    }
+
+    public void updateCategories(List<Category> categories){
+        mCategories = categories;
+        notifyDataSetChanged();
+    }
+
+    public List<Category> getCategories(){
+        return mCategories;
     }
 }

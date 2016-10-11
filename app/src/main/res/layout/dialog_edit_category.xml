@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/edit_dialog_container"
+    android:padding="15dp"
     android:background="@color/colorHomeBackground"
     android:layout_height="match_parent">
 
     <EditText
         android:id="@+id/edit_txt_edit_cat_name"
         android:layout_width="match_parent"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
-        android:hint="@string/name"
         android:maxLength="40"
-        android:maxLines="1"
+        android:maxLines="2"
         android:inputType="textCapSentences"
-        android:scrollbars="horizontal"
+        android:scrollbars="vertical"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -21,19 +20,14 @@
 
     <EditText
         android:id="@+id/edit_txt_edit_cat_descr"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
         android:maxLength="95"
-        android:maxLines="1"
+        android:maxLines="2"
         android:inputType="textCapSentences"
-        android:hint="@string/category_description"
-        android:scrollbars="horizontal"
-        android:layout_below="@+id/edit_txt_edit_cat_name"
-        android:layout_alignLeft="@+id/edit_txt_edit_cat_name"
-        android:layout_alignStart="@+id/edit_txt_edit_cat_name"
-        android:layout_alignRight="@+id/edit_txt_edit_cat_name"
-        android:layout_alignEnd="@+id/edit_txt_edit_cat_name" />
+        android:scrollbars="vertical"
+        android:layout_below="@+id/edit_txt_edit_cat_name" />
 
 
     <com.commonsware.cwac.colormixer.ColorMixer
@@ -48,27 +42,33 @@
         android:layout_alignEnd="@+id/edit_txt_edit_cat_descr" />
 
     <Button
-        android:id="@+id/btn_create_category"
+        android:id="@+id/btn_edit_category"
         android:layout_width="match_parent"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
         android:layout_height="wrap_content"
         android:text="@string/save"
         android:layout_below="@+id/mixer_edit_category"
         android:layout_marginTop="20dp" />
 
     <TextView
-        android:id="@+id/txt_view_add_category"
+        android:id="@+id/txt_view_edit_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_category"
-        android:textSize="35sp"
+        android:text="@string/edit_category"
+        android:textSize="25sp"
         android:gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/edit_txt_edit_cat_name"
-        android:layout_alignStart="@+id/edit_txt_edit_cat_name"
-        android:layout_alignRight="@+id/edit_txt_edit_cat_name"
-        android:layout_alignEnd="@+id/edit_txt_edit_cat_name" />
+        android:layout_alignParentTop="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/close"
+        android:id="@+id/btn_edit_cat_cancel"
+        android:layout_below="@+id/btn_edit_category"
+        android:layout_alignLeft="@+id/btn_edit_category"
+        android:layout_alignStart="@+id/btn_edit_category"
+        android:layout_marginTop="1dp"
+        android:layout_alignRight="@+id/btn_edit_category"
+        android:layout_alignEnd="@+id/btn_edit_category" />
 
 </RelativeLayout>

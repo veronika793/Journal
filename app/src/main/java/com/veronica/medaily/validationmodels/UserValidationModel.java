@@ -1,18 +1,18 @@
-package com.veronica.medaily.bindingmodels;
+package com.veronica.medaily.validationmodels;
 
 import com.veronica.medaily.Constants;
 import com.veronica.medaily.helpers.InputValidator;
 
 import java.util.InvalidPropertiesFormatException;
 
-public class UserBindingModel{
+public class UserValidationModel {
 
     private String _email;
     private String _password;
     private String _name;
     private String _profilePic;
 
-    public UserBindingModel(String email, String password, String name, String photoUri) throws InvalidPropertiesFormatException {
+    public UserValidationModel(String email, String password, String name, String photoUri) throws InvalidPropertiesFormatException {
         this.set_email(email);
         this.set_password(password);
         this.set_name(name);

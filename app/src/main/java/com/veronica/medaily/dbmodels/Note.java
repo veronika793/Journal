@@ -15,18 +15,20 @@ public class Note extends SugarRecord implements Parcelable {
     String content;
     String createdOnDate;
     String photoUri;
+    String reminderDate;
 
     public Note(){
 
     }
 
-    public Note(Category category, User user, String title, String content, String createdOn, String photoUri) {
+    public Note(Category category, User user, String title, String content, String createdOn, String photoUri,String reminderDate) {
         this.category = category;
         this.user = user;
         this.title = title;
         this.content = content;
         this.createdOnDate = createdOn;
         this.photoUri = photoUri;
+        this.reminderDate = reminderDate;
     }
 
     public List<NoteReminder> getNoteReminders() {
@@ -81,6 +83,13 @@ public class Note extends SugarRecord implements Parcelable {
         return category;
     }
 
+    public String getReminderDate() {
+        return reminderDate;
+    }
+
+    public void setReminderDate(String reminderDate) {
+        this.reminderDate = reminderDate;
+    }
 
     protected Note(Parcel in) {
         user = (User) in.readValue(User.class.getClassLoader());
@@ -89,6 +98,7 @@ public class Note extends SugarRecord implements Parcelable {
         content = in.readString();
         createdOnDate = in.readString();
         photoUri = in.readString();
+        reminderDate = in.readString();
     }
 
     @Override
@@ -104,6 +114,7 @@ public class Note extends SugarRecord implements Parcelable {
         dest.writeString(content);
         dest.writeString(createdOnDate);
         dest.writeString(photoUri);
+        dest.writeString(reminderDate);
     }
 
     @SuppressWarnings("unused")

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
 
 import com.veronica.medaily.R;
+import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.managers.AuthorizationManager;
 
@@ -31,18 +32,21 @@ public class NotificationReceiver extends BroadcastReceiver {
                 Long reminderId = intent.getLongExtra("alarm_id",-1);
 
                 NoteReminder reminder = NoteReminder.findById(NoteReminder.class,reminderId);
-                if(reminder.getUser().getId()==currentUserId) {
-                    if (reminder != null) {
+
+                if(reminder!=null){
+                    Note note = reminder.getNote();
+                    if(reminder.getUser().getId()==currentUserId) {
                         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                         android.support.v4.app.NotificationCompat.Builder mBuilder =
                                 new NotificationCompat.Builder(context)
                                         .setSmallIcon(R.drawable.icon_add_note)
-                                        .setContentTitle(reminder.getNote().getTitle())
-                                        .setContentText(reminder.getNote().getTitle())
+                                        .setContentTitle(note.getTitle())
+                                        .setContentText(note.getTitle())
                                         .setSound(alarmSound);
 
                         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                         mNotificationManager.notify(reminder.getId().intValue(), mBuilder.build());
+                        reminder.delete();
                     }
                 }
             }

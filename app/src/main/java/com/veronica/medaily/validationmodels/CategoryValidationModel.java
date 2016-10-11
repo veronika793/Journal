@@ -1,21 +1,19 @@
-package com.veronica.medaily.bindingmodels;
+package com.veronica.medaily.validationmodels;
 
 import com.veronica.medaily.Constants;
 import com.veronica.medaily.helpers.InputValidator;
 
 import java.util.InvalidPropertiesFormatException;
 
-import javax.xml.validation.ValidatorHandler;
-
 /**
  * Created by Veronica on 10/8/2016.
  */
-public class CategoryBindingModel {
+public class CategoryValidationModel {
 
     private String _title;
     private String _content;
 
-    public CategoryBindingModel(String _title, String _content) throws InvalidPropertiesFormatException {
+    public CategoryValidationModel(String _title, String _content) throws InvalidPropertiesFormatException {
         this.set_title(_title);
         this.set_content(_content);
     }
