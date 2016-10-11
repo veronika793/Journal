@@ -30,7 +30,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         public TextView mTotalNotes;
         public ViewHolder(View v) {
             super(v);
-            categoryContainer = v.findViewById(R.id.recycler_container_categories);
+            categoryContainer = v.findViewById(R.id.container_categories);
             mCategoryName = (TextView) v.findViewById(R.id.txt_category_name);
             mCategoryDescription = (TextView) v.findViewById(R.id.txt_category_description);
             mTotalNotes = (TextView)v.findViewById(R.id.txt_category_notes_count);
@@ -61,7 +61,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         holder.categoryContainer.setBackgroundColor(Color.parseColor(hexColor));
         holder.mCategoryName.setText(mCategories.get(position).getName());
         holder.mCategoryDescription.setText(mCategories.get(position).getDescription());
-        holder.mTotalNotes.setText(String.valueOf(notesCount+ " Notes"));
+        holder.mTotalNotes.setText(String.valueOf(notesCount));
 
     }
 
@@ -85,13 +85,16 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         this.notifyDataSetChanged();
     }
 
-    public void addCategories(List<Category> categories){
-        mCategories.addAll(categories);
+    public void updateCategories(List<Category> categories){
+        mCategories = categories;
+        mCategoriesCopy.clear();
+        mCategoriesCopy.addAll(categories);
         notifyDataSetChanged();
     }
 
-    public void updateCategories(List<Category> categories){
-        mCategories = categories;
+    public void deleteCategory(Category category){
+        this.mCategories.remove(category);
+        mCategoriesCopy.remove(category);
         notifyDataSetChanged();
     }
 

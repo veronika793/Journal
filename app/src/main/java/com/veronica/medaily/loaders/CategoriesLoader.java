@@ -1,6 +1,5 @@
-package com.veronica.medaily.tasks;
+package com.veronica.medaily.loaders;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

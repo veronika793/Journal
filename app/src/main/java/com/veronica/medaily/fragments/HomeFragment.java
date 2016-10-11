@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.veronica.medaily.R;
-import com.veronica.medaily.tasks.AvatarLoader;
+import com.veronica.medaily.loaders.AvatarLoader;
 
 
 public class HomeFragment extends BaseFragment {

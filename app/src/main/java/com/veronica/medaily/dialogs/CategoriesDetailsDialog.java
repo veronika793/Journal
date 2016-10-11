@@ -33,11 +33,7 @@ public class CategoriesDetailsDialog extends Dialog implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.dialog_category_details);
-        View view = findViewById(R.id.category_details_container);
-        String hexColor = String.format("#%06X", (0xFFFFFF & this.category.getColor()));
-        view.setBackgroundColor(Color.parseColor(hexColor));
 
         txtCategoryTitle = (TextView) findViewById(R.id.edit_txt_edit_cat_name);
         txtCategoryDescription = (TextView) findViewById(R.id.edit_txt_edit_cat_descr);

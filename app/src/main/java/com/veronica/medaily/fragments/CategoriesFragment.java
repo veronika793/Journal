@@ -21,7 +21,7 @@ import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.dialogs.CategoriesDetailsDialog;
 import com.veronica.medaily.dialogs.EditCategoryDialog;
 import com.veronica.medaily.interfaces.ICategoryEditListener;
-import com.veronica.medaily.tasks.CategoriesLoader;
+import com.veronica.medaily.loaders.CategoriesLoader;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -33,9 +33,8 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private ProgressBar progressBar;
-    private boolean singleClick = false;
-    private boolean doubleClick = false;
     private CategoriesFragment categoriesFragment;
+    private ItemTouchHelper itemTouchHelper;
 
     private List<Category> userCategories;
 
@@ -43,6 +42,7 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         categoriesFragment = this;
+        initializeItemTouchHelper();
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,7 +57,6 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
 
         mLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mItemTouchHelper.attachToRecyclerView(mRecyclerView);
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerClickListener(getContext(), mRecyclerView ,new RecyclerClickListener.OnItemClickListener() {
 
@@ -77,7 +76,8 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
                     }
                 })
         );
-
+        //note item touch helper after gesture detector ! ..
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
         try {
             userCategories = new CategoriesLoader(progressBar,mCurrentUser,mRecyclerView).execute().get();
         } catch (InterruptedException e) {
@@ -88,36 +88,37 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
         return view;
     }
 
-    ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(
+    private void initializeItemTouchHelper() {
+        itemTouchHelper = new ItemTouchHelper(
 
-            new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                    ItemTouchHelper.RIGHT) {
+                new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                        ItemTouchHelper.RIGHT) {
 
-                @Override
-                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                    return false;
-                }
-
-                @Override
-                public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                    int elementPosition = viewHolder.getAdapterPosition();
-                    Category categoryToBeRemoved = userCategories.get(elementPosition);
-                    List<Note> notesToBeRemoved = categoryToBeRemoved.getNotes();
-                    int count = notesToBeRemoved.size();
-                    for (int i = 0; i < count; i++) {
-                        //if there are any reminders set for the note delete them also
-                        if(!notesToBeRemoved.get(i).getNoteReminders().isEmpty()){
-                            NoteReminder.delete(notesToBeRemoved.get(i).getNoteReminders().get(0));
-                        }
-                        Note.delete(notesToBeRemoved.get(i));
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                        return false;
                     }
-                    Category.delete(categoryToBeRemoved);
-                    userCategories.remove(elementPosition);
-                    mRecyclerView.getAdapter().notifyItemRemoved(elementPosition);
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                        int elementPosition = viewHolder.getAdapterPosition();
+                        Category categoryToBeRemoved = userCategories.get(elementPosition);
+                        List<Note> notesToBeRemoved = categoryToBeRemoved.getNotes();
+                        int count = notesToBeRemoved.size();
+                        for (int i = 0; i < count; i++) {
+                            //if there are any reminders set for the note delete them also
+                            if(!notesToBeRemoved.get(i).getNoteReminders().isEmpty()){
+                                NoteReminder.delete(notesToBeRemoved.get(i).getNoteReminders().get(0));
+                            }
+                            Note.delete(notesToBeRemoved.get(i));
+                        }
+                        CategoriesAdapter categoriesAdapter = (CategoriesAdapter) mRecyclerView.getAdapter();
+                        categoriesAdapter.deleteCategory(categoryToBeRemoved);
+                        Category.delete(categoryToBeRemoved);
+                    }
                 }
-
-            });
-
+        );
+    }
 
     @Override
     public boolean onQueryTextSubmit(String query) {

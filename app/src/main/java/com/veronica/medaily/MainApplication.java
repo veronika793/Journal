@@ -4,6 +4,7 @@ import android.content.ContextWrapper;
 
 import com.orm.SugarApp;
 import com.orm.SugarContext;
+import com.orm.SugarDb;
 import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
@@ -46,6 +47,8 @@ public class MainApplication extends SugarApp {
 //            recreates database..
 //            SugarDb sugarDb = new SugarDb(getApplicationContext());
 //            new File(sugarDb.getDB().getPath()).delete();
+//            this.setAuthManager();
+//            this.getAuthManager().logoutUser();
             User.findById(User.class, (long) 1);
             Note.findById(Note.class, (long) 1);
             NoteReminder.findById(NoteReminder.class, (long) 1);

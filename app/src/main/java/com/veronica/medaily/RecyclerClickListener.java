@@ -2,6 +2,7 @@ package com.veronica.medaily;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -55,6 +56,7 @@ public class RecyclerClickListener implements RecyclerView.OnItemTouchListener {
                 }
                 return true;
             }
+
         });
     }
 

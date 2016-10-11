@@ -5,10 +5,9 @@
     android:padding="1dp"
     android:layout_height="wrap_content">
 
-
     <LinearLayout
-        android:background="@color/colorNoteBackground"
-        android:id="@+id/recycler_container_categories"
+        android:background="@color/colorHomeBackground"
+        android:id="@+id/container_notes"
         android:orientation="vertical"
         android:padding="25dp"
         android:layout_gravity="center"
@@ -16,34 +15,25 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:paddingBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:textColor="@color/colorWhite"
-                android:id="@+id/txt_note_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Title"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textSize="20sp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_toStartOf="@+id/txt_category_icon"
-                android:layout_toLeftOf="@+id/txt_category_icon" />
+                android:textSize="25sp"
+                android:id="@+id/txt_note_title" />
 
             <TextView
-                android:id="@+id/txt_note_created_on"
-                android:textColor="@color/colorWhite"
-                android:layout_marginStart="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:id="@+id/txt_note_createdon"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginLeft="20dp"
-                android:text="Created On" />
+                android:layout_alignParentEnd="true" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -52,28 +42,34 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/txt_note_content"
                 android:layout_width="wrap_content"
-                android:maxLines="2"
-                android:textColor="@color/colorWhite"
-                android:ellipsize="end"
                 android:layout_height="wrap_content"
-                android:text="Content"
-                android:layout_toLeftOf="@+id/txt_category_notes_count"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="15dp"
+                android:id="@+id/txt_note_content" />
 
             <TextView
-                android:id="@+id/txt_note_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
-                android:text="Category"
-                android:maxLines="1"
-                android:ellipsize="end"
+                android:textStyle="bold"
+                android:id="@+id/txt_note_reminder"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
         </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_note_category" />
+        </RelativeLayout>
+
     </LinearLayout>
+
 </LinearLayout>

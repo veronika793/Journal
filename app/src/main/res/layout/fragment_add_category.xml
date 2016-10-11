@@ -2,22 +2,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@color/colorHomeBackground"
+    android:paddingRight="50dp"
+    android:paddingLeft="50dp"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txt_view_add_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_category"
+        android:textSize="35sp"
+        android:gravity="center"
+        android:layout_marginTop="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/edit_txt_edit_cat_name"
+        android:layout_alignStart="@+id/edit_txt_edit_cat_name"
+        android:layout_alignRight="@+id/edit_txt_edit_cat_name"
+        android:layout_alignEnd="@+id/edit_txt_edit_cat_name" />
+
 
     <EditText
         android:id="@+id/edit_txt_edit_cat_name"
         android:layout_width="match_parent"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
         android:hint="@string/name"
         android:maxLength="40"
         android:maxLines="1"
+        android:layout_marginTop="20dp"
         android:inputType="textCapSentences"
         android:scrollbars="horizontal"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp" />
+        android:layout_below="@+id/txt_view_add_category"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/edit_txt_edit_cat_descr"
@@ -50,25 +65,10 @@
     <Button
         android:id="@+id/btn_create_category"
         android:layout_width="match_parent"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
         android:layout_height="wrap_content"
         android:text="@string/save"
         android:layout_below="@+id/mixer_edit_category"
         android:layout_marginTop="20dp" />
 
-    <TextView
-        android:id="@+id/txt_view_add_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_category"
-        android:textSize="35sp"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/edit_txt_edit_cat_name"
-        android:layout_alignStart="@+id/edit_txt_edit_cat_name"
-        android:layout_alignRight="@+id/edit_txt_edit_cat_name"
-        android:layout_alignEnd="@+id/edit_txt_edit_cat_name" />
 
 </RelativeLayout>

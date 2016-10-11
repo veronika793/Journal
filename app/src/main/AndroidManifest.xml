@@ -26,7 +26,7 @@
         android:theme="@style/AppTheme">
 
         <meta-data android:name="DATABASE" android:value="database_me_daily.db" />
-        <meta-data android:name="VERSION" android:value="1" />
+        <meta-data android:name="VERSION" android:value="3" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.veronica.medaily" />
 

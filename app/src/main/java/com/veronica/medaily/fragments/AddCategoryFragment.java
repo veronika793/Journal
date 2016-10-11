@@ -79,8 +79,6 @@ public class AddCategoryFragment extends BaseFragment implements ColorMixer.OnCo
                         notificationHandler.toastNeutralNotificationBottom("This category already exists");
                     }
 
-
-
                 } catch (InvalidPropertiesFormatException e) {
                     notificationHandler.toastWarningNotificationBottom(e.getMessage());
                 }
@@ -89,7 +87,6 @@ public class AddCategoryFragment extends BaseFragment implements ColorMixer.OnCo
             }else{
                 notificationHandler.toastNeutralNotificationBottom("You have reached you limit for categories");
             }
-
         }
     }
 

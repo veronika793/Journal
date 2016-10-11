@@ -113,10 +113,10 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constants.RESULT_OK && requestCode == Constants.PICK_NOTE_IMAGE_REQ_CODE) {
+            Log.d("DEBUG", "PHOTO PICKED");
             Uri selectedImage = data.getData();
             this.mPhotoUri = selectedImage.toString();
         }
-        //TODO: else if result code camera ..
 
     }
 
@@ -140,7 +140,6 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
 
                     Note note = new Note(category,mCurrentUser,title,content,dateAsString,mPhotoUri,null);
                     note.save();
-                    //TODO: set notifications remove blue themes
                     notificationHandler.toastSuccessNotificationBottom("Note added successfully");
 
                     if(pickedDate!=null){
@@ -166,10 +165,7 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
 
     private void setupAlarm(Note note) {
         Date pickedDateToDate  = pickedDate.getTime();
-
         note.setReminderDate(DateHelper.fromDateToString(pickedDateToDate));
-        note.save();
-
         Calendar reminderCalendar = Calendar.getInstance();
         reminderCalendar.setTime(pickedDateToDate);
 
