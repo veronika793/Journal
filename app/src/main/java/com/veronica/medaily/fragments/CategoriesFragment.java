@@ -17,7 +17,7 @@ import com.veronica.medaily.adapters.CategoriesAdapter;
 import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
-import com.veronica.medaily.dialogs.CategoriesDetailsDialog;
+import com.veronica.medaily.dialogs.CategoriesPreviewDialog;
 import com.veronica.medaily.dialogs.EditCategoryDialog;
 import com.veronica.medaily.helpers.NotificationHandler;
 import com.veronica.medaily.interfaces.ICategoryEditedListener;
@@ -81,7 +81,7 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
 
                     @Override
                     public void onDoubleTab(View view, int position) {
-                        CategoriesDetailsDialog detailsDialog = new CategoriesDetailsDialog(getContext(),userCategories.get(position));
+                        CategoriesPreviewDialog detailsDialog = new CategoriesPreviewDialog(getContext(),userCategories.get(position));
                         detailsDialog.show();
                     }
                 })
@@ -123,7 +123,7 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
                             Note.delete(notesToBeRemoved.get(i));
                         }
                         CategoriesAdapter categoriesAdapter = (CategoriesAdapter) mRecyclerView.getAdapter();
-                        categoriesAdapter.deleteCategory(categoryToBeRemoved);
+                        categoriesAdapter.deleteCategory(elementPosition);
                         Category.delete(categoryToBeRemoved);
                     }
                 }

@@ -31,7 +31,7 @@ public final class Constants {
     public static String PROFILE = "Profile";
     public static String CATEGORIES = "Categories";
     public static String NOTES = "Notes";
-    public static String SYNCHRONIZATION = "Synchronization";
+    public static String SYNCHRONIZATION = "Synchronize";
     public static String EXIT = "Exit";
 
     public static String NO_NOTES_MSG = "You have no notes yet";

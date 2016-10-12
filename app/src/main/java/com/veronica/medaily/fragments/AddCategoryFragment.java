@@ -42,10 +42,10 @@ public class AddCategoryFragment extends BaseFragment implements ColorMixer.OnCo
         View view = inflater.inflate(R.layout.fragment_add_category,container,false);
 
         mTextView = (TextView)view.findViewById(R.id.txt_view_add_category);
-        mEditTxtDescription = (EditText)view.findViewById(R.id.edit_txt_edit_cat_descr);
+        mEditTxtDescription = (EditText)view.findViewById(R.id.txt_note_content_prev);
         mColorMixer = (ColorMixer)view.findViewById(R.id.mixer_edit_category);
         mBtnAddCategory = (Button)view.findViewById(R.id.btn_create_category);
-        mEditTxtTitle = (EditText)view.findViewById(R.id.edit_txt_edit_cat_name);
+        mEditTxtTitle = (EditText)view.findViewById(R.id.txt_note_title_prev);
 
         super.setupTypefaceView(mTextView);
         super.setupUnderline(mTextView);

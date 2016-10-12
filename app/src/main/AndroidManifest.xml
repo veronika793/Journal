@@ -16,7 +16,7 @@
     <!--for alarm receiver - make sure the device does not go back to sleep-->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
+    <permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" android:protectionLevel="signature"/>
     <application
         android:name="com.veronica.medaily.MainApplication"
         android:allowBackup="true"

@@ -13,6 +13,7 @@ import android.widget.SearchView;
 
 import com.veronica.medaily.R;
 import com.veronica.medaily.RecyclerClickListener;
+import com.veronica.medaily.adapters.CategoriesAdapter;
 import com.veronica.medaily.adapters.NotesAdapter;
 import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.dbmodels.Note;
@@ -78,7 +79,9 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
                         Bundle bundle1 = new Bundle();
                         bundle1.putString("note_id", String.valueOf(userNotes.get(position).getId()));
                         noteDetailsFragment.setArguments(bundle1);
-                        placeFragment(R.id.content_frame,noteDetailsFragment,"note_details,fragment");
+                        if(noteDetailsFragment!=null) {
+                            placeFragment(R.id.content_frame, noteDetailsFragment, "note_details,fragment");
+                        }
                     }
 
                     @Override public void onLongItemClick(View view, int position) {
@@ -115,9 +118,9 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
                         if(noteToBeRemoved.getNoteReminders().size()>0) {
                             NoteReminder.delete(noteToBeRemoved.getNoteReminders().get(0));
                         }
+                        NotesAdapter notesAdapter = (NotesAdapter) mRecyclerView.getAdapter();
+                        notesAdapter.deleteNote(elementPosition);
                         Note.delete(noteToBeRemoved);
-                        userNotes.remove(elementPosition);
-                        mRecyclerView.getAdapter().notifyItemRemoved(elementPosition);
                     }
 
                 });

@@ -33,17 +33,19 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         public View noteContainer;
         public TextView noteTitle;
         public TextView noteCreatedOn;
-        public TextView noteContent;
         public TextView noteReminder;
-        public TextView noteInfoIcon;
+        public TextView notePhoto;
+        public TextView noteCategory;
         public ViewHolder(View v) {
             super(v);
             noteContainer = v.findViewById(R.id.container_notes);
+            Typeface typeface = Typeface.createFromAsset(v.getContext().getAssets(), Constants.FONT_ONE);
             noteTitle = (TextView) v.findViewById(R.id.txt_note_title);
+            noteTitle.setTypeface(typeface);
             noteCreatedOn = (TextView) v.findViewById(R.id.txt_note_createdon);
-            noteContent = (TextView) v.findViewById(R.id.txt_note_content);
-            noteReminder = (TextView) v.findViewById(R.id.txt_note_reminder);
-            noteInfoIcon = (TextView) v.findViewById(R.id.txt_icon_info);
+            noteReminder = (TextView) v.findViewById(R.id.txt_note_reminder_icon);
+            notePhoto = (TextView)v.findViewById(R.id.txt_note_photo_icon);
+            noteCategory = (TextView)v.findViewById(R.id.txt_note_category);
         }
     }
 
@@ -67,16 +69,19 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         String hexColor = String.format("#%06X", (0xFFFFFF & mNotes.get(position).getCategory().getColor()));
         holder.noteContainer.setBackgroundColor(Color.parseColor(hexColor));
         holder.noteTitle.setText(mNotes.get(position).getTitle());
-        holder.noteContent.setText(mNotes.get(position).getContent());
-        if(!(mNotesCopy.get(position).getReminderDate() == null)){
-            holder.noteReminder.setVisibility(View.VISIBLE);
-            String reminderDate =  mNotes.get(position).getReminderDate().replace(" ","\n");
-            holder.noteCreatedOn.setText(reminderDate);
+        holder.noteCategory.setText(mNotes.get(position).getCategory().getName());
+        holder.noteCreatedOn.setText(mNotes.get(position).getCreatedOnDate());
+        if(mNotes.get(position).getPhotoUri()==null){
+            holder.notePhoto.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_no_photo,0);
         }else{
-            String reminderDate =  mNotes.get(position).getCreatedOnDate().replace(" ","\n");
-            holder.noteCreatedOn.setText(reminderDate);
-            holder.noteInfoIcon.setVisibility(View.VISIBLE);
+            holder.notePhoto.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_add_photo,0);
         }
+        if(mNotes.get(position).getReminderDate()==null){
+            holder.noteReminder.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_no_reminder,0);
+        }else{
+            holder.noteReminder.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_add_reminder,0);
+        }
+
 
     }
 
@@ -109,9 +114,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    public void deleteNote(Note note){
-        this.mNotes.remove(note);
-        this.mNotesCopy.remove(note);
+    public void deleteNote(int position){
+        this.mNotes.remove(position);
+        this.mNotesCopy.remove(position);
         notifyDataSetChanged();
     }
 

@@ -46,13 +46,13 @@ public class EditCategoryDialog extends Dialog implements View.OnClickListener,C
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_edit_category);
 
-        mEditTxtCategoryName = (EditText) findViewById(R.id.edit_txt_edit_cat_name);
-        mEditTxtCategoryDescription = (EditText)findViewById(R.id.edit_txt_edit_cat_descr);
+        mEditTxtCategoryName = (EditText) findViewById(R.id.txt_note_title_prev);
+        mEditTxtCategoryDescription = (EditText)findViewById(R.id.txt_note_content_prev);
         mColorMixer = (ColorMixer)findViewById(R.id.mixer_edit_category);
 
         mEditTxtCategoryName.setText(mCategory.getName());
         mEditTxtCategoryDescription.setText(mCategory.getDescription());
-        mColorMixer.setColor(ContextCompat.getColor(getContext(),R.color.colorDefaultCategoryColor));
+        mColorMixer.setColor(mCategory.getColor());
         mColorMixer.setOnColorChangedListener(this);
 
         mBtnEditCategory = (Button)findViewById(R.id.btn_edit_category);

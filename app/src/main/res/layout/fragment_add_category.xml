@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true" />
 
     <EditText
-        android:id="@+id/edit_txt_edit_cat_name"
+        android:id="@+id/txt_note_title_prev"
         android:layout_width="match_parent"
         android:hint="@string/name"
         android:maxLength="40"
@@ -30,7 +30,7 @@
         android:layout_centerHorizontal="true" />
 
     <EditText
-        android:id="@+id/edit_txt_edit_cat_descr"
+        android:id="@+id/txt_note_content_prev"
         android:layout_width="match_parent"
         android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
@@ -39,13 +39,13 @@
         android:inputType="textCapSentences"
         android:hint="@string/category_description"
         android:scrollbars="horizontal"
-        android:layout_below="@+id/edit_txt_edit_cat_name" />
+        android:layout_below="@+id/txt_note_title_prev" />
 
     <com.commonsware.cwac.colormixer.ColorMixer
         android:id="@+id/mixer_edit_category"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_below="@+id/edit_txt_edit_cat_descr"
+        android:layout_below="@+id/txt_note_content_prev"
         android:layout_marginTop="20dp" />
 
     <Button
