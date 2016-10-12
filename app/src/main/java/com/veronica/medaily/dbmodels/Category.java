@@ -98,4 +98,6 @@ public class Category extends SugarRecord implements Parcelable {
             return new Category[size];
         }
     };
+
+
 }

@@ -24,8 +24,8 @@ public final class Constants {
     public static int CATEGORIES_LIMIT_COUNT = 20;
 
     public static String START_ALARM_ACTION = "START_ALARM";
-    public static String RESHEDULE_ALARMS_ACTION = "RESHEDULE_ALARMS";
     public static String ACTION_BOOT_COMPLETED = "android.intent.action.BOOT_COMPLETED";
+    public static String ACTION_KINVEY_RESTORE = "com.veronica.medaily.KINVEY_RESTORE";
 
     public static String HOME = "Home";
     public static String PROFILE = "Profile";

@@ -33,7 +33,7 @@ public class RecallAlarmsService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(intent.getAction().equals(Constants.ACTION_BOOT_COMPLETED)){
+        if(intent.getAction().equals(Constants.ACTION_BOOT_COMPLETED) || intent.getAction().equals(Constants.ACTION_KINVEY_RESTORE) ){
 
             List<NoteReminder> reminders = getAllReminders();
 

@@ -44,6 +44,7 @@
         </receiver>
 
         <activity
+            android:label="@string/app_name"
             android:name="com.veronica.medaily.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>

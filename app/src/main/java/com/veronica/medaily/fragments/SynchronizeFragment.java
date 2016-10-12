@@ -31,6 +31,7 @@ public class SynchronizeFragment extends BaseFragment implements View.OnClickLis
         super.onCreate(savedInstanceState);
         notificationHandler = new NotificationHandler(getContext());
         connector = KinveyConnector.getInstance();
+        connector.setupCurrentUser(mCurrentUser);
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,13 +62,13 @@ public class SynchronizeFragment extends BaseFragment implements View.OnClickLis
     public void onClick(View v) {
         if(v.getId()==R.id.btn_import){
             if(isNetworkAvailable()){
-
+                connector.importData();
             }else{
                 notificationHandler.toastNeutralNotificationBottom("No network connection");
             }
         }else if(v.getId()==R.id.btn_export){
             if(isNetworkAvailable()){
-
+                connector.exportData();
             }else{
                 notificationHandler.toastNeutralNotificationBottom("No network connection");
             }
