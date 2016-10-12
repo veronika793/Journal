@@ -1,6 +1,7 @@
 package com.veronica.medaily.adapters;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.veronica.medaily.Constants;
 import com.veronica.medaily.R;
 import com.veronica.medaily.dbmodels.Category;
 
@@ -32,7 +34,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
             super(v);
             categoryContainer = v.findViewById(R.id.container_categories);
             mCategoryName = (TextView) v.findViewById(R.id.txt_category_name);
-            mCategoryDescription = (TextView) v.findViewById(R.id.txt_category_description);
+            Typeface typeface = Typeface.createFromAsset(v.getContext().getAssets(), Constants.FONT_ONE);
+            mCategoryName.setTypeface(typeface);
+//            mCategoryDescription = (TextView) v.findViewById(R.id.txt_category_description);
             mTotalNotes = (TextView)v.findViewById(R.id.txt_category_notes_count);
 
         }
@@ -60,7 +64,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         String hexColor = String.format("#%06X", (0xFFFFFF & mCategories.get(position).getColor()));
         holder.categoryContainer.setBackgroundColor(Color.parseColor(hexColor));
         holder.mCategoryName.setText(mCategories.get(position).getName());
-        holder.mCategoryDescription.setText(mCategories.get(position).getDescription());
+//        holder.mCategoryDescription.setText(mCategories.get(position).getDescription());
         holder.mTotalNotes.setText(String.valueOf(notesCount));
 
     }

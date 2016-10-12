@@ -35,7 +35,6 @@ public class KinveyConnector implements KinveyUserCallback{
     private Client myKinveyClient;
     private User mCurrentUser;
 
-
     public static void setupContext(Context context){
         if(mContext==null){
             mContext = context;
@@ -75,11 +74,9 @@ public class KinveyConnector implements KinveyUserCallback{
 
         importCategories();
         importNotes();
-
-
     }
 
-    public void importNotes(){
+    private void importNotes(){
         Query q = myKinveyClient.query();
         q.equals("authorEmail",mCurrentUser.getEmail());
         AsyncAppData<NoteEntitiy> myNotes = myKinveyClient.appData("notesCollection", NoteEntitiy.class);
@@ -115,7 +112,7 @@ public class KinveyConnector implements KinveyUserCallback{
         });
     }
 
-    public void importCategories(){
+    private void importCategories(){
         Query q = myKinveyClient.query();
         q.equals("authorEmail",mCurrentUser.getEmail());
         AsyncAppData<CategoryEntity> myCategories = myKinveyClient.appData("categoriesCollection", CategoryEntity.class);
@@ -147,7 +144,7 @@ public class KinveyConnector implements KinveyUserCallback{
 
     }
 
-    public void exportNotes(){
+    private void exportNotes(){
 
         deletePreviousNotes();
         List<Note> notes = mCurrentUser.getNotes();
@@ -180,7 +177,7 @@ public class KinveyConnector implements KinveyUserCallback{
         }
     }
 
-    public void exportCategories(){
+    private void exportCategories(){
         deletePreviousCategories();
 
         List<Category> userCategories = mCurrentUser.getCategories();
@@ -209,7 +206,7 @@ public class KinveyConnector implements KinveyUserCallback{
 
     }
 
-    public void createUser(){
+    private void createUser(){
         myKinveyClient.user().create(mCurrentUser.getEmail(), mCurrentUser.getPassword(), new KinveyUserCallback() {
             @Override
             public void onSuccess(com.kinvey.java.User user) {
@@ -227,7 +224,7 @@ public class KinveyConnector implements KinveyUserCallback{
         myKinveyClient.user().put("user_name", mCurrentUser.getName());
     }
 
-    public void loginUser(){
+    private void loginUser(){
         myKinveyClient.user().login(mCurrentUser.getEmail(),mCurrentUser.getPassword(), new KinveyUserCallback() {
             @Override
             public void onSuccess(com.kinvey.java.User user) {

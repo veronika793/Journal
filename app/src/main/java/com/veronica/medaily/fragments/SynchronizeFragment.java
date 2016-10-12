@@ -21,7 +21,6 @@ public class SynchronizeFragment extends BaseFragment implements View.OnClickLis
 
     private Button mBtnExport;
     private Button mBtnImport;
-    private TextView mTxtProgressRemoteData;
 
     private KinveyConnector connector;
     private NotificationHandler notificationHandler;
@@ -39,7 +38,6 @@ public class SynchronizeFragment extends BaseFragment implements View.OnClickLis
 
         mBtnExport = (Button) view.findViewById(R.id.btn_export);
         mBtnImport = (Button) view.findViewById(R.id.btn_import);
-        mTxtProgressRemoteData = (TextView) view.findViewById(R.id.txt_progress_remote_data);
 
         if(mBtnExport!=null){
             mBtnExport.setOnClickListener(this);
