@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:paddingLeft="5dp"
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp"
+    android:paddingRight="5dp"
+    android:background="@color/colorBlack"
     android:layout_height="match_parent">
 
 
-    <SearchView
+    <RelativeLayout
+        android:background="@color/colorBlack"
+        android:id="@+id/search_btn_notes_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/search_view_notes" />
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:layout_height="wrap_content">
+        <SearchView
+            style="@style/searchBtnStyle"
+            android:background="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:queryHint="Search for note.."
+            android:layout_height="wrap_content"
+            android:id="@+id/search_view_notes" />
+    </RelativeLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
+        android:background="@color/colorLightGrey1"
         android:layout_height="match_parent"
         android:id="@+id/recycler_view_notes"
-        android:layout_below="@+id/search_view_notes"/>
+        android:layout_below="@+id/search_btn_notes_container"/>
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"

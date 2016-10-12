@@ -40,6 +40,8 @@
     <string name="cancel">Cancel</string>
     <string name="edit_note">Edit Note</string>
     <string name="select_new_photo">Select new photo</string>
+    <string name="search_for_note">Search for note..</string>
+    <string name="search_for_category">Search for category..</string>
 
 
 </resources>

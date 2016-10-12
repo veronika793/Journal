@@ -61,6 +61,7 @@ public class HomeActivity extends AppCompatActivity{
         //drawer
         initializeDrawerItems();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerList.setAdapter(new DrawerItemCustomAdapter(this,R.layout.drawer_item_row,mDrawerItems));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());

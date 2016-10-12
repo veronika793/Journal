@@ -9,11 +9,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:id="@+id/container_notes"
-        android:padding="15dp"
+        android:padding="25dp"
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_weight="3"
             android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -22,15 +24,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Text"
+                android:ellipsize="end"
+                android:paddingBottom="5dp"
+                android:textSize="25sp"
                 android:maxLines="1"
-
                 android:id="@+id/txt_note_title" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Text"
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:id="@+id/txt_note_content" />
@@ -38,32 +40,43 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
-            android:layout_weight="4"
+            android:layout_weight="8"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:visibility="gone"
+
+                    android:gravity="center"
+                    android:drawableEnd="@drawable/icon_add_reminder"
+                    android:id="@+id/txt_note_reminder"
+                    android:drawableRight="@drawable/icon_add_reminder"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:drawableEnd="@drawable/icon_info"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:id="@+id/txt_icon_info"
+                    android:drawableRight="@drawable/icon_info" />
+            </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Text"
+                android:textColor="@color/colorWhite"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:id="@+id/txt_note_category" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Text"
-                android:ellipsize="end"
-                android:maxLines="1"
                 android:id="@+id/txt_note_createdon" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:id="@+id/txt_note_reminder" />
         </LinearLayout>
     </LinearLayout>
 

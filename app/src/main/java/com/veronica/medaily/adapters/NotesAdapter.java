@@ -1,6 +1,8 @@
 package com.veronica.medaily.adapters;
 
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.api.client.repackaged.org.apache.commons.codec.binary.StringUtils;
+import com.veronica.medaily.Constants;
 import com.veronica.medaily.R;
 import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.dbmodels.Note;
@@ -31,8 +35,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         public TextView noteCreatedOn;
         public TextView noteContent;
         public TextView noteReminder;
-        public TextView noteCategory;
-
+        public TextView noteInfoIcon;
         public ViewHolder(View v) {
             super(v);
             noteContainer = v.findViewById(R.id.container_notes);
@@ -40,7 +43,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             noteCreatedOn = (TextView) v.findViewById(R.id.txt_note_createdon);
             noteContent = (TextView) v.findViewById(R.id.txt_note_content);
             noteReminder = (TextView) v.findViewById(R.id.txt_note_reminder);
-            noteCategory = (TextView) v.findViewById(R.id.txt_note_category);
+            noteInfoIcon = (TextView) v.findViewById(R.id.txt_icon_info);
         }
     }
 
@@ -55,7 +58,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recycler_item_notes, parent, false);
         ViewHolder vh = new ViewHolder(v);
-
         return vh;
     }
 
@@ -64,13 +66,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
         String hexColor = String.format("#%06X", (0xFFFFFF & mNotes.get(position).getCategory().getColor()));
         holder.noteContainer.setBackgroundColor(Color.parseColor(hexColor));
-        holder.noteTitle.setText("Title: "+mNotes.get(position).getTitle());
-        holder.noteContent.setText("Content: "+mNotes.get(position).getContent());
-        holder.noteCategory.setText("Category: "+mNotes.get(position).getCategory().getName());
-        holder.noteCreatedOn.setText("Created on: "+mNotes.get(position).getCreatedOnDate());
+        holder.noteTitle.setText(mNotes.get(position).getTitle());
+        holder.noteContent.setText(mNotes.get(position).getContent());
         if(!(mNotesCopy.get(position).getReminderDate() == null)){
-            holder.noteReminder.setText("Reminder:"+mNotes.get(position).getReminderDate());
-
+            holder.noteReminder.setVisibility(View.VISIBLE);
+            String reminderDate =  mNotes.get(position).getReminderDate().replace(" ","\n");
+            holder.noteCreatedOn.setText(reminderDate);
+        }else{
+            holder.noteInfoIcon.setVisibility(View.VISIBLE);
         }
 
     }
