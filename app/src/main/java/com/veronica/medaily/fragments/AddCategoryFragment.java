@@ -47,16 +47,16 @@ public class AddCategoryFragment extends BaseFragment implements ColorMixer.OnCo
         mBtnAddCategory = (Button)view.findViewById(R.id.btn_create_category);
         mEditTxtTitle = (EditText)view.findViewById(R.id.edit_txt_edit_cat_name);
 
-//        super.setupUnderline(mTextView);
         super.setupTypefaceView(mTextView);
         super.setupUnderline(mTextView);
 
         if(mBtnAddCategory!=null) {
             mBtnAddCategory.setOnClickListener(this);
         }
-        mColorMixer.setColor(ContextCompat.getColor(getContext(),R.color.colorDefaultCategoryColor));
-        mColorMixer.setOnColorChangedListener(this);
-
+        if(mColorMixer!=null) {
+            mColorMixer.setColor(ContextCompat.getColor(getContext(), R.color.colorDefaultCategoryColor));
+            mColorMixer.setOnColorChangedListener(this);
+        }
         return view;
     }
 

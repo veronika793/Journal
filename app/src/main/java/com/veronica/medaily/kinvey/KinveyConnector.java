@@ -48,11 +48,9 @@ public class KinveyConnector implements KinveyUserCallback{
 
     }
 
-    public void createUser(User user){
+    public void exportData(User currentUser){
 
-        logoutUser();
-
-        myKinveyClient.user().create(user.getEmail(), user.getPassword(), new KinveyUserCallback() {
+        myKinveyClient.user().create(currentUser.getEmail(), currentUser.getPassword(), new KinveyUserCallback() {
             @Override
             public void onSuccess(com.kinvey.java.User user) {
                 Log.d("DEBUG", "success");
@@ -63,16 +61,16 @@ public class KinveyConnector implements KinveyUserCallback{
                 Log.d("DEBUG", throwable.getMessage());
             }
         });
-        myKinveyClient.user().put("user_id", user.getId());
-        myKinveyClient.user().put("user_password", user.getPassword());
-        myKinveyClient.user().put("user_pic", user.getPhotoUri());
-        myKinveyClient.user().put("user_name", user.getName());
+        myKinveyClient.user().put("user_id", currentUser.getId());
+        myKinveyClient.user().put("user_password", currentUser.getPassword());
+        myKinveyClient.user().put("user_pic", currentUser.getPhotoUri());
+        myKinveyClient.user().put("user_name", currentUser.getName());
 
         logoutUser();
     }
 
-    public void loginUser(User user){
-        myKinveyClient.user().login(user.getEmail(), user.getPassword(),this);
+    public void importData(User currentUser){
+        myKinveyClient.user().login(currentUser.getEmail(), currentUser.getPassword(),this);
     }
 
     public void logoutUser(){

@@ -7,12 +7,15 @@
     android:padding="10dp" >
 
     <ImageView
+        android:contentDescription="@string/profile_picture"
         android:id="@+id/imageViewIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:paddingRight="10dp" />
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:id="@+id/textViewName"
@@ -21,6 +24,7 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/imageViewIcon"
         android:paddingRight="10dp"
+        android:paddingEnd="10dp"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textColor="#ffffff" />
 

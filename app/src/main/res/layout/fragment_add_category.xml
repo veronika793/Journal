@@ -14,12 +14,7 @@
         android:textSize="35sp"
         android:gravity="center"
         android:layout_marginTop="35dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/edit_txt_edit_cat_name"
-        android:layout_alignStart="@+id/edit_txt_edit_cat_name"
-        android:layout_alignRight="@+id/edit_txt_edit_cat_name"
-        android:layout_alignEnd="@+id/edit_txt_edit_cat_name" />
-
+        android:layout_alignParentTop="true" />
 
     <EditText
         android:id="@+id/edit_txt_edit_cat_name"
@@ -36,7 +31,7 @@
 
     <EditText
         android:id="@+id/edit_txt_edit_cat_descr"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
         android:maxLength="95"
@@ -44,23 +39,14 @@
         android:inputType="textCapSentences"
         android:hint="@string/category_description"
         android:scrollbars="horizontal"
-        android:layout_below="@+id/edit_txt_edit_cat_name"
-        android:layout_alignLeft="@+id/edit_txt_edit_cat_name"
-        android:layout_alignStart="@+id/edit_txt_edit_cat_name"
-        android:layout_alignRight="@+id/edit_txt_edit_cat_name"
-        android:layout_alignEnd="@+id/edit_txt_edit_cat_name" />
-
+        android:layout_below="@+id/edit_txt_edit_cat_name" />
 
     <com.commonsware.cwac.colormixer.ColorMixer
         android:id="@+id/mixer_edit_category"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_below="@+id/edit_txt_edit_cat_descr"
-        android:layout_alignLeft="@+id/edit_txt_edit_cat_descr"
-        android:layout_alignStart="@+id/edit_txt_edit_cat_descr"
-        android:layout_alignRight="@+id/edit_txt_edit_cat_descr"
-        android:layout_marginTop="20dp"
-        android:layout_alignEnd="@+id/edit_txt_edit_cat_descr" />
+        android:layout_marginTop="20dp" />
 
     <Button
         android:id="@+id/btn_create_category"

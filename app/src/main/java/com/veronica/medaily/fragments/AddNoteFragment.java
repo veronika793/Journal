@@ -52,12 +52,9 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
 
     private String mPhotoUri;
     private List<String> categories;
-    private long mSpinnerSelectedPosition = 0;
 
     ReminderDatePicker datePicker;
     Calendar pickedDate;
-
-    private Note mNote;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,9 +81,15 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
         mBtnAddReminder = (Button) view.findViewById(R.id.btn_note_add_reminder);
         mBtnSave = (Button) view.findViewById(R.id.btn_create_note);
 
-        mBtnAddPhoto.setOnClickListener(this);
-        mBtnAddReminder.setOnClickListener(this);
-        mBtnSave.setOnClickListener(this);
+        if(mBtnAddPhoto!=null){
+            mBtnAddPhoto.setOnClickListener(this);
+        }
+        if(mBtnAddReminder!=null){
+            mBtnAddReminder.setOnClickListener(this);
+        }
+        if(mBtnSave!=null){
+            mBtnSave.setOnClickListener(this);
+        }
 
         ArrayAdapter<String> categoriesAdapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item_layout,categories);
         categoriesAdapter.setDropDownViewResource(R.layout.spinner_item_dropdown_layout);
@@ -178,12 +181,12 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
 
     }
 
-    // used for spinner - updates position
+    // used for spinner - position update
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         mCategoriesSpinner.setSelection(position);
     }
-    // used for spinner - updates position
+    // used for spinner - position update
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         mCategoriesSpinner.setSelection(0);

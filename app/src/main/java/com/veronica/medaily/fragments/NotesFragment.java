@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +13,17 @@ import android.widget.SearchView;
 
 import com.veronica.medaily.R;
 import com.veronica.medaily.RecyclerClickListener;
-import com.veronica.medaily.adapters.CategoriesAdapter;
 import com.veronica.medaily.adapters.NotesAdapter;
 import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
-import com.veronica.medaily.dialogs.CategoriesDetailsDialog;
-import com.veronica.medaily.dialogs.EditCategoryDialog;
 import com.veronica.medaily.dialogs.EditNoteDialog;
-import com.veronica.medaily.interfaces.INoteEditListener;
-import com.veronica.medaily.loaders.CategoriesLoader;
+import com.veronica.medaily.interfaces.INoteEditedListener;
 import com.veronica.medaily.loaders.NotesLoader;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-public class NotesFragment extends BaseFragment implements android.widget.SearchView.OnQueryTextListener,INoteEditListener {
+public class NotesFragment extends BaseFragment implements android.widget.SearchView.OnQueryTextListener,INoteEditedListener {
 
     private NotesAdapter mNotesAdapter;
     private SearchView mSearchViewNotes;
@@ -60,7 +54,7 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
 
         final Bundle bundle = this.getArguments();
 
-        if(bundle.containsKey("category_id")){
+        if(bundle!=null && bundle.containsKey("category_id")){
             long categoryId = bundle.getLong("category_id");
             Category category = Category.findById(Category.class,categoryId);
             this.userNotes = category.getNotes();
@@ -71,12 +65,9 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
 
             try {
                 this.userNotes = new NotesLoader(progressBar,mCurrentUser,mRecyclerView).execute().get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
 
         mRecyclerView.addOnItemTouchListener(

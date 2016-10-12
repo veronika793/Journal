@@ -154,11 +154,6 @@ public class HomeActivity extends AppCompatActivity{
             fragmentToLoad = new ProfileFragment();
         }
         if(fragmentToLoad!=null) {
-
-            Bundle data = new Bundle();//create bundle instance
-            data.putParcelable("current_user", mCurrentUser);
-            fragmentToLoad.setArguments(data);
-
             placeFragment(R.id.content_frame, fragmentToLoad, fragmentToLoad.getClass().getSimpleName());
         }
     }
@@ -191,9 +186,15 @@ public class HomeActivity extends AppCompatActivity{
                 }
                 break;
             case R.id.ad_new_note_toolbar:
+                if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mDrawerLayout.closeDrawers();
+                }
                 placeFragment(R.id.content_frame,new AddNoteFragment(),"add_note_fragment");
                 break;
             case R.id.ad_new_category_toolbar:
+                if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mDrawerLayout.closeDrawers();
+                }
                 placeFragment(R.id.content_frame,new AddCategoryFragment(),"add_category_fragment");
         }
         return super.onOptionsItemSelected(item);

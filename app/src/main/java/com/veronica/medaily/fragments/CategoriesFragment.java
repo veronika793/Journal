@@ -1,12 +1,10 @@
 package com.veronica.medaily.fragments;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,15 +20,14 @@ import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.dialogs.CategoriesDetailsDialog;
 import com.veronica.medaily.dialogs.EditCategoryDialog;
 import com.veronica.medaily.helpers.NotificationHandler;
-import com.veronica.medaily.interfaces.ICategoryEditListener;
+import com.veronica.medaily.interfaces.ICategoryEditedListener;
 import com.veronica.medaily.loaders.CategoriesLoader;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
-public class CategoriesFragment extends BaseFragment implements android.widget.SearchView.OnQueryTextListener,ICategoryEditListener {
+public class CategoriesFragment extends BaseFragment implements android.widget.SearchView.OnQueryTextListener,ICategoryEditedListener {
 
     private SearchView mSearchViewCategories;
     private RecyclerView mRecyclerView;

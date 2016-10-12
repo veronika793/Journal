@@ -5,6 +5,6 @@ import com.veronica.medaily.dbmodels.Category;
 /**
  * Created by Veronica on 10/11/2016.
  */
-public interface ICategoryEditListener {
+public interface ICategoryEditedListener {
     void categoryEdited(Category category,int position);
 }

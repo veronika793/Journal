@@ -18,38 +18,38 @@
         android:layout_marginEnd="50dp"
         android:layout_weight="1.29"
         android:layout_width="match_parent"
-        android:layout_height="47dp">
+        android:layout_height="0dp">
 
 
         <EditText
+            android:id="@+id/edit_txt_hours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:digits="0123456789"
-            android:hint="HH"
+            android:hint="@string/hh"
             android:gravity="center"
             android:ems="10"
             android:maxLength="2"
-            android:id="@+id/edit_txt_hours"
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/textView4"
             android:layout_width="10dp"
             android:layout_height="wrap_content"
-            android:text=":"
-            android:id="@+id/textView4" />
+            android:text=":" />
 
         <EditText
+            android:id="@+id/edit_txt_minutes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:digits="0123456789"
-            android:hint="MM"
+            android:hint="@string/mm"
             android:maxLength="2"
             android:gravity="center"
             android:layout_weight="1"
-            android:ems="10"
-            android:id="@+id/edit_txt_minutes" />
+            android:ems="10" />
 
     </LinearLayout>
 
@@ -63,16 +63,15 @@
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ok"
+            android:text="@string/ok"
             android:id="@+id/btn_date_picker" />
 
         <Button
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:id="@+id/btn_date_picker_cancel" />
     </LinearLayout>
-
 
 </LinearLayout>

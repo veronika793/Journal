@@ -53,8 +53,12 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         mBtnSaveChanges = (Button)view.findViewById(R.id.btn_save_new_profile);
         mBtnSelectPhoto = (Button)view.findViewById(R.id.btn_select_photo_edit);
 
-        mBtnSelectPhoto.setOnClickListener(this);
-        mBtnSaveChanges.setOnClickListener(this);
+        if(mBtnSelectPhoto!=null) {
+            mBtnSelectPhoto.setOnClickListener(this);
+        }
+        if(mBtnSaveChanges!=null) {
+            mBtnSaveChanges.setOnClickListener(this);
+        }
         return view;
     }
 
@@ -63,6 +67,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         boolean isPasswordEdited = false;
         boolean isNameEdited = false;
         boolean isPhotoEdited = false;
+
         if(v.getId()==R.id.btn_save_new_profile){
             String name = mUserName.getText().toString().trim();
             String password = mUserPassword.getText().toString();
@@ -89,6 +94,8 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             if(isNameEdited || isPasswordEdited || isPhotoEdited) {
                 mCurrentUser.save();
                 notificationManager.toastNeutralNotificationBottom("Profile edited successfully");
+            }else{
+                notificationManager.toastNeutralNotificationBottom("Invalid input fields");
             }
 
         }else if(v.getId()==R.id.btn_select_photo_edit){
@@ -104,14 +111,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         }else{
             intent = new Intent(Intent.ACTION_GET_CONTENT);
         }
-        // Filter to only show results that can be "opened", such as a
-        // file (as opposed to a list of contacts or timezones)
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-        // Filter to show only images, using the image MIME data type.
-        // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
-        // To search for all documents available via installed storage providers,
-        // it would be "*/*".
         intent.setType("image/*");
         startActivityForResult(intent, Constants.PICK_PROFILE_IMAGE_REQ_CODE);
     }

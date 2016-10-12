@@ -2,7 +2,6 @@ package com.veronica.medaily.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -13,7 +12,7 @@ import android.widget.EditText;
 import com.commonsware.cwac.colormixer.ColorMixer;
 import com.veronica.medaily.R;
 import com.veronica.medaily.dbmodels.Category;
-import com.veronica.medaily.interfaces.ICategoryEditListener;
+import com.veronica.medaily.interfaces.ICategoryEditedListener;
 import com.veronica.medaily.validationmodels.CategoryValidationModel;
 
 import java.util.InvalidPropertiesFormatException;
@@ -24,7 +23,7 @@ import java.util.InvalidPropertiesFormatException;
 public class EditCategoryDialog extends Dialog implements View.OnClickListener,ColorMixer.OnColorChangedListener {
     private Context mContext;
     private Category mCategory;
-    private ICategoryEditListener listener;
+    private ICategoryEditedListener listener;
     private int position;
 
     private EditText mEditTxtCategoryName;
@@ -33,7 +32,7 @@ public class EditCategoryDialog extends Dialog implements View.OnClickListener,C
     private Button mBtnClose;
     private ColorMixer mColorMixer;
 
-    public EditCategoryDialog(Context context, Category category,ICategoryEditListener listener,int position) {
+    public EditCategoryDialog(Context context, Category category, ICategoryEditedListener listener, int position) {
         super(context);
         this.mContext = context;
         this.mCategory = category;

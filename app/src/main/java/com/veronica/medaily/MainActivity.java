@@ -11,16 +11,16 @@ import com.veronica.medaily.activities.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MainApplication appJournal;
+    private MainApplication mainApp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.appJournal = (MainApplication) this.getApplication();
-        this.appJournal.setAuthManager();
+        this.mainApp = (MainApplication) this.getApplication();
+        this.mainApp.setAuthManager();
 
-        if(!appJournal.getAuthManager().isLoggedIn()){
+        if(!mainApp.getAuthManager().isLoggedIn()){
             openRegisterForm();
         }else{
             goToHomeActivity();

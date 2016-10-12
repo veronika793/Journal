@@ -4,15 +4,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.veronica.medaily.R;
 import com.veronica.medaily.dbmodels.Note;
-import com.veronica.medaily.interfaces.INoteEditListener;
-import com.veronica.medaily.validationmodels.CategoryValidationModel;
+import com.veronica.medaily.interfaces.INoteEditedListener;
 import com.veronica.medaily.validationmodels.NoteValidationModel;
 
 import java.util.InvalidPropertiesFormatException;
@@ -22,7 +20,7 @@ import java.util.InvalidPropertiesFormatException;
  */
 public class EditNoteDialog extends Dialog implements View.OnClickListener{
     private Note mNote;
-    private INoteEditListener mListener;
+    private INoteEditedListener mListener;
 
     private EditText mEditTxtNoteTitle;
     private EditText mEditTxtNoteContent;
@@ -32,7 +30,7 @@ public class EditNoteDialog extends Dialog implements View.OnClickListener{
     private Button mBtnEdit;
     private Button mBtnCancel;
 
-    public EditNoteDialog(Context context, Note note,int position, INoteEditListener listener) {
+    public EditNoteDialog(Context context, Note note,int position, INoteEditedListener listener) {
         super(context);
         this.mNote = note;
         this.mListener = listener;
@@ -42,6 +40,7 @@ public class EditNoteDialog extends Dialog implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_edit_note);
 
         mEditTxtNoteTitle = (EditText) findViewById(R.id.edit_txt_note_edit);

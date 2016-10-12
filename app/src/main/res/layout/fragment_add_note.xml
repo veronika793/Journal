@@ -23,42 +23,30 @@
 
     <EditText
         android:id="@+id/edit_txt_note_edit"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/title"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/txt_view_add_note"
-        android:layout_alignLeft="@+id/txt_view_add_note"
-        android:layout_alignStart="@+id/txt_view_add_note"
-        android:layout_alignRight="@+id/txt_view_add_note"
-        android:layout_alignEnd="@+id/txt_view_add_note" />
+        android:layout_below="@+id/txt_view_add_note" />
 
 
     <EditText
         android:id="@+id/edit_txt_note_content_edit"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginTop="20dp"
         android:maxLines="4"
         android:hint="@string/content"
         android:scrollbars="vertical"
         android:layout_below="@+id/edit_txt_note_edit"
-        android:layout_alignLeft="@+id/edit_txt_note_edit"
-        android:layout_alignStart="@+id/edit_txt_note_edit"
-        android:layout_alignRight="@+id/edit_txt_note_edit"
-        android:layout_alignEnd="@+id/edit_txt_note_edit"
         android:layout_height="wrap_content" />
 
     <Spinner
         android:id="@+id/categories_spinner_edit"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginTop="20dp"
         android:padding="5dp"
         android:hint="@string/category"
         android:layout_below="@+id/edit_txt_note_content_edit"
-        android:layout_alignLeft="@+id/edit_txt_note_content_edit"
-        android:layout_alignStart="@+id/edit_txt_note_content_edit"
-        android:layout_alignRight="@+id/edit_txt_note_content_edit"
-        android:layout_alignEnd="@+id/edit_txt_note_content_edit"
         android:layout_height="wrap_content"
         tools:targetApi="lollipop" />
 
@@ -70,10 +58,6 @@
         android:weightSum="2"
         android:layout_marginTop="30dp"
         android:layout_below="@+id/categories_spinner_edit"
-        android:layout_alignLeft="@+id/categories_spinner_edit"
-        android:layout_alignStart="@+id/categories_spinner_edit"
-        android:layout_alignRight="@+id/categories_spinner_edit"
-        android:layout_alignEnd="@+id/categories_spinner_edit"
         android:id="@+id/linearLayout">
 
         <Button
@@ -93,14 +77,10 @@
 
     <Button
         android:id="@+id/btn_create_note"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="@string/save"
         android:layout_below="@+id/linearLayout"
-        android:layout_alignLeft="@+id/linearLayout"
-        android:layout_alignStart="@+id/linearLayout"
-        android:layout_marginTop="20dp"
-        android:layout_alignRight="@+id/linearLayout"
-        android:layout_alignEnd="@+id/linearLayout" />
+        android:layout_marginTop="20dp" />
 
 </RelativeLayout>

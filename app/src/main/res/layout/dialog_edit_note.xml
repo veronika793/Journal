@@ -46,17 +46,19 @@
         android:layout_height="wrap_content">
 
         <Button
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="13sp"
-            android:text="Save"
+            android:text="@string/save"
             android:id="@+id/btn_edit_note" />
 
         <Button
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:textSize="13sp"
             android:layout_weight="1"
             android:id="@+id/btn_cancel_edit_note" />

@@ -73,6 +73,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             String reminderDate =  mNotes.get(position).getReminderDate().replace(" ","\n");
             holder.noteCreatedOn.setText(reminderDate);
         }else{
+            String reminderDate =  mNotes.get(position).getCreatedOnDate().replace(" ","\n");
+            holder.noteCreatedOn.setText(reminderDate);
             holder.noteInfoIcon.setVisibility(View.VISIBLE);
         }
 

@@ -25,7 +25,7 @@
         style="@style/EditTxtFormsStyles"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:maxLength="24"
+        android:maxLength="16"
         android:maxLines="1"
         android:singleLine="true"
         android:id="@+id/edit_txt_reg_password"
