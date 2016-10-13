@@ -29,6 +29,7 @@ import com.veronica.medaily.fragments.AddNoteFragment;
 import com.veronica.medaily.fragments.BaseFragment;
 import com.veronica.medaily.fragments.CategoriesFragment;
 import com.veronica.medaily.fragments.HomeFragment;
+import com.veronica.medaily.fragments.NotesByCategory;
 import com.veronica.medaily.fragments.NotesFragment;
 import com.veronica.medaily.fragments.ProfileFragment;
 import com.veronica.medaily.fragments.SynchronizeFragment;
@@ -87,7 +88,7 @@ public class HomeActivity extends AppCompatActivity{
                     mDrawerList.setItemChecked(0,true);
                 }else if(currentStackName.equals(ProfileFragment.class.getName())){
                     mDrawerList.setItemChecked(1,true);
-                }else if(currentStackName.equals(NotesFragment.class.getName())){
+                }else if(currentStackName.equals(NotesFragment.class.getName()) || currentStackName.equals(NotesByCategory.class.getName()) ){
                     mDrawerList.setItemChecked(2,true);
                 }else if(currentStackName.equals(CategoriesFragment.class.getName())){
                     mDrawerList.setItemChecked(3,true);

@@ -18,4 +18,9 @@
         <item name="android:background">@drawable/shape_search_btn</item>
     </style>
 
+    <style name="MyTheme" parent="AppTheme" >
+        <item name="android:colorBackground">@color/abc_tint_edittext</item>
+        <item name="android:textColorPrimaryInverse">@color/abc_search_url_text</item>
+    </style>
+
 </resources>

@@ -1,10 +1,11 @@
 package com.veronica.medaily.fragments;
 
+/**
+ * Created by Veronica on 10/13/2016.
+ */
+
 import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,18 +18,17 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.veronica.medaily.R;
-import com.veronica.medaily.listeners.RecyclerClickListener;
 import com.veronica.medaily.adapters.NotesAdapter;
 import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.dialogs.EditNoteDialog;
 import com.veronica.medaily.listeners.INoteEditedListener;
-import com.veronica.medaily.loaders.NotesLoader;
+import com.veronica.medaily.listeners.RecyclerClickListener;
 
 import java.util.List;
 
-public class NotesFragment extends BaseFragment implements android.widget.SearchView.OnQueryTextListener,INoteEditedListener {
+public class NotesByCategory extends BaseFragment implements SearchView.OnQueryTextListener,INoteEditedListener {
 
     private DrawerLayout drawerLayout;
 
@@ -40,11 +40,22 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
     private ItemTouchHelper itemTouchHelper;
     private NoteDetailsFragment noteDetailsFragment;
     private List<Note> userNotes;
-    private NotesFragment notesFragment;
+    private NotesByCategory notesFragment;
+    private Category category;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if(bundle!=null){
+            long categoryId = bundle.getLong("category_id");
+            category = Category.findById(Category.class,categoryId);
+        }
         initializeItemTouchHelper();
         drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
         notesFragment = this;
@@ -53,27 +64,26 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_notes,container,false);
+
         mSearchViewNotes = (SearchView) view.findViewById(R.id.search_view_notes);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_notes);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar_notes);
-        mLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false);
         mSearchViewNotes.setOnQueryTextListener(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        try {
-            this.userNotes = new NotesLoader(progressBar,mCurrentUser,mRecyclerView).execute().get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.userNotes = category.getNotes();
+        this.mNotesAdapter = new NotesAdapter(userNotes);
+        mRecyclerView.setAdapter(mNotesAdapter);
+        progressBar.setVisibility(View.GONE);
 
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerClickListener(getContext(), mRecyclerView ,new RecyclerClickListener.OnItemClickListener() {
 
                     @Override public void onItemClick(View view, int position) {
-                        NoteDetailsFragment noteDetailsFragment = new NoteDetailsFragment();
+                        noteDetailsFragment = new NoteDetailsFragment();
                         Bundle bundle1 = new Bundle();
                         bundle1.putString("note_id", String.valueOf(userNotes.get(position).getId()));
-                        //crashed once here so made this overall useless check
                         noteDetailsFragment.setArguments(bundle1);
                         placeFragment(noteDetailsFragment);
                     }
@@ -95,6 +105,8 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
                 })
         );
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
+
+
         return view;
     }
 

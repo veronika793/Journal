@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:weightSum="7"
+    android:layout_margin="10dp"
     android:paddingRight="30dp"
     android:paddingLeft="30dp"
-    android:background="@color/colorHomeBackground"
+    android:background="@color/colorWhite"
     android:layout_height="match_parent">
 
 

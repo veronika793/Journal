@@ -48,16 +48,19 @@ public class BaseFragment extends Fragment {
         String backStateName =  fragment.getClass().getName();
         String fragmentTag = backStateName;
 
-        FragmentManager manager = getActivity().getSupportFragmentManager();
-        boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
+        if(getActivity()!=null){
+            FragmentManager manager = getActivity().getSupportFragmentManager();
+            boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
 
-        if (!fragmentPopped && manager.findFragmentByTag(fragmentTag) == null){ //fragment not in back stack, create it.
-            FragmentTransaction ft = manager.beginTransaction();
-            ft.replace(R.id.content_frame, fragment, fragmentTag);
+            if (!fragmentPopped && manager.findFragmentByTag(fragmentTag) == null){ //fragment not in back stack, create it.
+                FragmentTransaction ft = manager.beginTransaction();
+                ft.replace(R.id.content_frame, fragment, fragmentTag);
 //            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.addToBackStack(backStateName);
-            ft.commit();
+                ft.addToBackStack(backStateName);
+                ft.commit();
+            }
         }
+
     }
 
     protected void setupTypefaceView(TextView view){

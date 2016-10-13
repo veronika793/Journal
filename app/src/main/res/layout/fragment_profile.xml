@@ -19,7 +19,6 @@
             android:maxHeight="220dp"
             android:minHeight="180dp"
             android:contentDescription="@string/image_preview"
-            android:background="@color/colorLightGrey2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/img_user_photo_preview"
@@ -41,6 +40,7 @@
             android:hint="@string/password"
             android:maxLength="16"
             android:maxLines="1"
+            android:layout_marginTop="5dp"
             android:inputType="textPassword"
             android:scrollbars="vertical"
             android:id="@+id/edit_txt_password_new"
@@ -50,13 +50,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
             android:text="@string/select_new_photo"
             android:id="@+id/btn_select_photo_edit"
             android:layout_gravity="center_horizontal" />
 
         <Button
+            android:textColor="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_marginTop="15dp"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:text="@string/save"
             android:id="@+id/btn_save_new_profile" />

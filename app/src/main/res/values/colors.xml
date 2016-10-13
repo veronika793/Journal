@@ -2,16 +2,17 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff4081</color>
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorToast">#f3398bde</color>
     <color name="colorToastWarning">#f3e45c75</color>
     <color name="colorToastNeutral">#f3433e3f</color>
-    <color name="colorHomeBackground">#ECE7D4</color>
+    <color name="colorHomeBackground">#f2f2f2</color>
     <color name="colorCategoryDefault">#ffd123</color>
     <color name="colorDefaultCategoryColor">#EDDEA5</color>
     <color name="colorLightGrey1">#d6d4d4</color>
-    <color name="colorLightGrey2">#fafafa</color>
+    <color name="colorDarkGrey1">#979595</color>
     <color name="colorNoteBackground">#f4c768</color>
+    <color name="colorPaper">#f8eed2</color>
 </resources>

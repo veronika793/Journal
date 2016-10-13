@@ -3,30 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@color/colorHomeBackground"
-    android:paddingStart="50dp"
-    android:paddingEnd="50dp"
-    android:paddingRight="50dp"
+    android:paddingStart="40dp"
+    android:paddingEnd="40dp"
+    android:paddingRight="40dp"
     android:layout_height="match_parent"
     android:paddingLeft="50dp">
 
-
     <TextView
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/colorDarkGrey1"
+        android:textColor="@color/colorWhite"
+        android:rotation="10"
         android:id="@+id/txt_view_add_note"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
         android:text="@string/add_note"
         android:textSize="35sp"
         android:gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="45dp"
         android:layout_alignParentTop="true" />
 
     <EditText
         android:id="@+id/edit_txt_note_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:maxLength="30"
+        android:scrollbars="vertical"
         android:hint="@string/title"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:layout_below="@+id/txt_view_add_note" />
 
 
@@ -34,7 +42,8 @@
         android:id="@+id/edit_txt_note_content_edit"
         android:layout_width="match_parent"
         android:layout_marginTop="20dp"
-        android:maxLines="4"
+        android:maxLength="1000"
+        android:maxLines="3"
         android:hint="@string/content"
         android:scrollbars="vertical"
         android:layout_below="@+id/edit_txt_note_edit"
@@ -61,25 +70,39 @@
         android:id="@+id/linearLayout">
 
         <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:drawableStart="@drawable/icon_add_photo"
+            android:textColor="@color/colorWhite"
             android:id="@+id/btn_note_add_img"
             android:layout_width="wrap_content"
             android:layout_weight="1"
+            android:text="Image"
+            android:layout_marginRight="5dp"
             android:layout_height="wrap_content"
-            android:text="Img"/>
+            android:drawableLeft="@drawable/icon_add_photo" />
 
         <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:drawableStart="@drawable/icon_add_reminder"
+            android:textColor="@color/colorWhite"
             android:id="@+id/btn_note_add_reminder"
             android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Remin" />
+            android:text="alarm"
+            android:drawableLeft="@drawable/icon_add_reminder" />
     </LinearLayout>
 
     <Button
+        android:textColor="@color/colorWhite"
         android:id="@+id/btn_create_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/save"
+        android:textSize="17sp"
+        android:textStyle="bold"
         android:layout_below="@+id/linearLayout"
         android:layout_marginTop="20dp" />
 

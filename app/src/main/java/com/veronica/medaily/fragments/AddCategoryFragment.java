@@ -54,7 +54,7 @@ public class AddCategoryFragment extends BaseFragment implements ColorMixer.OnCo
             mBtnAddCategory.setOnClickListener(this);
         }
         if(mColorMixer!=null) {
-            mColorMixer.setColor(ContextCompat.getColor(getContext(), R.color.colorDefaultCategoryColor));
+            mColorMixer.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
             mColorMixer.setOnColorChangedListener(this);
         }
         return view;

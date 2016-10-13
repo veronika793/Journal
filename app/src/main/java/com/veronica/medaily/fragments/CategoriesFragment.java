@@ -68,7 +68,7 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
                     @Override public void onItemClick(View view, int position) {
 
                         if(userCategories.get(position).getNotes().size()>0) {
-                            NotesFragment notesFragment = new NotesFragment();
+                            NotesByCategory notesFragment = new NotesByCategory();
                             Bundle bundle = new Bundle();
                             bundle.putLong("category_id", userCategories.get(position).getId());
                             notesFragment.setArguments(bundle);
