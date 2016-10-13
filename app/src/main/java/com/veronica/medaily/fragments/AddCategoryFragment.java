@@ -64,29 +64,23 @@ public class AddCategoryFragment extends BaseFragment implements ColorMixer.OnCo
     public void onClick(View v) {
         if(v.getId()==R.id.btn_create_category){
 
-            long categoriesCount = Category.count(Category.class," user = ? ", new String[]{String.valueOf(mCurrentUser.getId())});
-            if( categoriesCount < Constants.CATEGORIES_LIMIT_COUNT){
-                String title = mEditTxtTitle.getText().toString().trim();
-                String description = mEditTxtDescription.getText().toString().trim();
-                try {
-                    CategoryValidationModel categoryBindingModel = new CategoryValidationModel(title,description);
-                    Category category = new Category(super.mCurrentUser,title,description,mColorMixer.getColor());
-                    //check if this category exists for the current user if not creates
-                    if(Category.find(Category.class," name = ? and user = ?",new String[]{title,String.valueOf(mCurrentUser.getId())}).isEmpty()) {
-                        category.save();
-                        notificationHandler.toastSuccessNotificationBottom("Category added");
-                    }else{
-                        notificationHandler.toastNeutralNotificationBottom("This category already exists");
-                    }
-
-                } catch (InvalidPropertiesFormatException e) {
-                    notificationHandler.toastWarningNotificationBottom(e.getMessage());
+            String title = mEditTxtTitle.getText().toString().trim();
+            String description = mEditTxtDescription.getText().toString().trim();
+            try {
+                CategoryValidationModel categoryBindingModel = new CategoryValidationModel(title,description);
+                Category category = new Category(super.mCurrentUser,title,description,mColorMixer.getColor());
+                //check if this category exists for the current user if not creates
+                if(Category.find(Category.class," name = ? and user = ?",new String[]{title,String.valueOf(mCurrentUser.getId())}).isEmpty()) {
+                    category.save();
+                    notificationHandler.toastNeutralNotificationBottom("Category added");
+                }else{
+                    notificationHandler.toastNeutralNotificationBottom("This category already exists");
                 }
 
-
-            }else{
-                notificationHandler.toastNeutralNotificationBottom("You have reached you limit for categories");
+            } catch (InvalidPropertiesFormatException e) {
+                notificationHandler.toastWarningNotificationBottom(e.getMessage());
             }
+
         }
     }
 

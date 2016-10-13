@@ -61,10 +61,10 @@ public class HomeActivity extends AppCompatActivity{
         //drawer
         initializeDrawerItems();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        //mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mDrawerList.setAdapter(new DrawerItemCustomAdapter(this,R.layout.drawer_item_row,mDrawerItems));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerList.setAdapter(new DrawerItemCustomAdapter(this,R.layout.drawer_item_row,mDrawerItems));
 
         //toolbar
         mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -78,40 +78,16 @@ public class HomeActivity extends AppCompatActivity{
 
 
         HomeFragment homeFragment = new HomeFragment();
-        Bundle data = new Bundle();//create bundle instance
-        data.putParcelable("current_user", mCurrentUser);
-        homeFragment.setArguments(data);
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_frame, homeFragment,"container_fragment")
+                .replace(R.id.content_frame, homeFragment,"home_fragment")
                 .disallowAddToBackStack()
                 .commit();
     }
 
     private void goToLoginActivity() {
         startActivity(new Intent(HomeActivity.this,LoginActivity.class));
-    }
-
-    private void setCurrentUser() {
-        String userIdAsStr = mainApp.getAuthManager().getUser();
-        if(userIdAsStr==null){
-            this.mainApp.getAuthManager().logoutUser();
-            this.goToLoginActivity();
-        }else{
-
-            List<User> users = User.find(User.class," id =? ",String.valueOf(userIdAsStr));
-            if(users.isEmpty()){
-                this.mainApp.getAuthManager().logoutUser();
-                this.goToLoginActivity();
-            }else{
-                this.mCurrentUser = users.get(0);
-            }
-            Log.d("DEBUG", "test");
-
-
-
-        }
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -122,7 +98,6 @@ public class HomeActivity extends AppCompatActivity{
     }
 
     private void selectItem(int position) {
-
 
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);
@@ -219,6 +194,23 @@ public class HomeActivity extends AppCompatActivity{
             moveTaskToBack(true);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    private void setCurrentUser() {
+        String userIdAsStr = mainApp.getAuthManager().getUser();
+        if(userIdAsStr==null){
+            this.mainApp.getAuthManager().logoutUser();
+            this.goToLoginActivity();
+        }else{
+
+            List<User> users = User.find(User.class," id =? ",String.valueOf(userIdAsStr));
+            if(users.isEmpty()){
+                this.mainApp.getAuthManager().logoutUser();
+                this.goToLoginActivity();
+            }else{
+                this.mCurrentUser = users.get(0);
+            }
         }
     }
 

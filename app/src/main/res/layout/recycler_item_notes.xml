@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:background="@color/colorWhite"
-    android:paddingBottom="1dp"
-    android:paddingRight="1dp"
-    android:paddingLeft="1dp"
+    android:paddingBottom="2dp"
+    android:paddingRight="2dp"
+    android:paddingLeft="2dp"
     android:layout_height="wrap_content"
     android:weightSum="1">
 
@@ -80,7 +80,7 @@
                 android:text="New Text"
                 android:paddingStart="2dp"
                 android:paddingLeft="2dp"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:ellipsize="end"
                 android:textColor="@color/colorWhite"
                 android:id="@+id/txt_note_createdon"

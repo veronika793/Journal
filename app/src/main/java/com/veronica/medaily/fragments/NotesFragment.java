@@ -2,9 +2,12 @@ package com.veronica.medaily.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +22,18 @@ import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.dialogs.EditNoteDialog;
+import com.veronica.medaily.helpers.DateHelper;
 import com.veronica.medaily.interfaces.INoteEditedListener;
 import com.veronica.medaily.loaders.NotesLoader;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class NotesFragment extends BaseFragment implements android.widget.SearchView.OnQueryTextListener,INoteEditedListener {
+
+    private DrawerLayout drawerLayout;
 
     private NotesAdapter mNotesAdapter;
     private SearchView mSearchViewNotes;
@@ -40,6 +49,7 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeItemTouchHelper();
+        drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
         notesFragment = this;
     }
 
@@ -59,7 +69,7 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
             long categoryId = bundle.getLong("category_id");
             Category category = Category.findById(Category.class,categoryId);
             this.userNotes = category.getNotes();
-            this.mNotesAdapter = new NotesAdapter(category.getNotes());
+            this.mNotesAdapter = new NotesAdapter(userNotes);
             mRecyclerView.setAdapter(mNotesAdapter);
             progressBar.setVisibility(View.GONE);
         }else{
@@ -78,6 +88,7 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
                         NoteDetailsFragment noteDetailsFragment = new NoteDetailsFragment();
                         Bundle bundle1 = new Bundle();
                         bundle1.putString("note_id", String.valueOf(userNotes.get(position).getId()));
+                        //crashed once here so made this overall useless check
                         noteDetailsFragment.setArguments(bundle1);
                         if(noteDetailsFragment!=null) {
                             placeFragment(R.id.content_frame, noteDetailsFragment, "note_details,fragment");
@@ -85,8 +96,13 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
                     }
 
                     @Override public void onLongItemClick(View view, int position) {
-                        EditNoteDialog editNoteDialog = new EditNoteDialog(getContext(),userNotes.get(position),position,notesFragment);
-                        editNoteDialog.show();
+                        //drawerLayout interacts some how with gesture detector and sometimes activate onLongPress
+                        //so added this check
+                        boolean isOpen = drawerLayout.isDrawerOpen(GravityCompat.START);
+                        if(!isOpen) {
+                            EditNoteDialog editNoteDialog = new EditNoteDialog(getContext(),userNotes.get(position),position,notesFragment);
+                            editNoteDialog.show();
+                        }
                     }
 
                     @Override

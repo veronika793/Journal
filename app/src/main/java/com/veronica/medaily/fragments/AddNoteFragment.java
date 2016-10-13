@@ -91,7 +91,7 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
             mBtnSave.setOnClickListener(this);
         }
 
-        ArrayAdapter<String> categoriesAdapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item_layout,categories);
+        ArrayAdapter<String> categoriesAdapter = new ArrayAdapter<>(getContext(),R.layout.spinner_item_layout,categories);
         categoriesAdapter.setDropDownViewResource(R.layout.spinner_item_dropdown_layout);
         mCategoriesSpinner.setAdapter(categoriesAdapter);
         mCategoriesSpinner.setOnItemSelectedListener(this);
@@ -143,7 +143,7 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
 
                     Note note = new Note(category,mCurrentUser,title,content,dateAsString,mPhotoUri,null);
                     note.save();
-                    notificationHandler.toastSuccessNotificationBottom("Note added successfully");
+                    notificationHandler.toastNeutralNotificationBottom("Note added successfully");
 
                     if(pickedDate!=null){
                         setupAlarm(note);

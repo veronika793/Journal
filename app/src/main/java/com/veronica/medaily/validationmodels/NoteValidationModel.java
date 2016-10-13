@@ -47,7 +47,7 @@ public class NoteValidationModel {
     }
 
     public void set_content(String _content) throws InvalidPropertiesFormatException {
-        if(!InputValidator.isMinLenghRestricted(Constants.NOTE_CONTENT_MIN_LENGTH,_title)){
+        if(!InputValidator.isMinLenghRestricted(Constants.NOTE_CONTENT_MIN_LENGTH,_content)){
             throw new InvalidPropertiesFormatException("Invalid content. Minimum "+Constants.NOTE_CONTENT_MIN_LENGTH + " characters");
         }
         this._content = _content;

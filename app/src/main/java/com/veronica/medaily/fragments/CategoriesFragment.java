@@ -2,6 +2,8 @@ package com.veronica.medaily.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -19,6 +21,7 @@ import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.dialogs.CategoriesPreviewDialog;
 import com.veronica.medaily.dialogs.EditCategoryDialog;
+import com.veronica.medaily.dialogs.EditNoteDialog;
 import com.veronica.medaily.helpers.NotificationHandler;
 import com.veronica.medaily.interfaces.ICategoryEditedListener;
 import com.veronica.medaily.loaders.CategoriesLoader;
@@ -29,6 +32,7 @@ import java.util.concurrent.ExecutionException;
 
 public class CategoriesFragment extends BaseFragment implements android.widget.SearchView.OnQueryTextListener,ICategoryEditedListener {
 
+    private DrawerLayout drawerLayout;
     private SearchView mSearchViewCategories;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -41,6 +45,7 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
         categoriesFragment = this;
         notificationHandler = new NotificationHandler(getContext());
         initializeItemTouchHelper();
@@ -75,8 +80,13 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
                     }
 
                     @Override public void onLongItemClick(View view, int position) {
-                        EditCategoryDialog editCategoryDialog = new EditCategoryDialog(getContext(),userCategories.get(position),categoriesFragment,position);
-                        editCategoryDialog.show();
+                        boolean isOpen = drawerLayout.isDrawerOpen(GravityCompat.START);
+
+                        if(!isOpen) {
+                            EditCategoryDialog editCategoryDialog = new EditCategoryDialog(getContext(),userCategories.get(position),categoriesFragment,position);
+                            editCategoryDialog.show();
+                        }
+
                     }
 
                     @Override
@@ -90,9 +100,7 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
         try {
             userCategories = new CategoriesLoader(progressBar,mCurrentUser,mRecyclerView).execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
         return view;

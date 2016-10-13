@@ -32,9 +32,9 @@ public class NotesLoader extends AsyncTask<Void,Integer,List<Note>> {
         notes = user.getNotes();
         Collections.sort(notes, new Comparator<Note>() {
             @Override
-            public int compare(Note lhs, Note rhs) {
-                Date first = DateHelper.fromStringToDate(lhs.getCreatedOnDate());
-                Date second = DateHelper.fromStringToDate(rhs.getCreatedOnDate());
+            public int compare(Note one, Note two) {
+                Date first = DateHelper.fromStringToDate(one.getCreatedOnDate());
+                Date second = DateHelper.fromStringToDate(two.getCreatedOnDate());
                 return second.compareTo(first);
             }
         });

@@ -16,12 +16,9 @@ public final class Constants {
     public static int NAME_MIN_LENGTH = 3;
 
     public static int CATEGORY_TITLE_MIN_LENGTH = 3;
-    public static int CATEGORY_CONTENT_MIN_LENGTH = 3;
 
-    public static int NOTE_TITLE_MIN_LENGTH = 3;
-    public static int NOTE_CONTENT_MIN_LENGTH = 3;
-
-    public static int CATEGORIES_LIMIT_COUNT = 20;
+    public static int NOTE_TITLE_MIN_LENGTH = 2;
+    public static int NOTE_CONTENT_MIN_LENGTH = 4;
 
     public static String START_ALARM_ACTION = "START_ALARM";
     public static String ACTION_BOOT_COMPLETED = "android.intent.action.BOOT_COMPLETED";
@@ -33,9 +30,6 @@ public final class Constants {
     public static String NOTES = "Notes";
     public static String SYNCHRONIZATION = "Synchronize";
     public static String EXIT = "Exit";
-
-    public static String NO_NOTES_MSG = "You have no notes yet";
-    public static String NO_CATEGORIES_MSG = "You have no categories yet";
 
     public static String FONT_ONE = "ArchitectsDaughter.ttf";
     public static String FONT_TWO = "ShadowsIntoLight.ttf";
