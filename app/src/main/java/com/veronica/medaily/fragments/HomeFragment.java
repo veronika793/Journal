@@ -23,9 +23,14 @@ public class HomeFragment extends BaseFragment {
     private ImageView mImgViewUserPhoto;
     private ProgressBar progressBar;
 
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home,container,false);
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.updateCurrentUser();
+        View view = inflater.inflate(R.layout.fragment_home,container,false);
         mTxtUser = (TextView)view.findViewById(R.id.txt_username);
 
         mTxtWellcomeMsg = (TextView)view.findViewById(R.id.text_wellcome_msg);
@@ -37,10 +42,10 @@ public class HomeFragment extends BaseFragment {
         super.setupTypefaceView(mTxtWellcomeMsg);
         //scrolling textview
         mTxtWellcomeMsg.setMovementMethod(new ScrollingMovementMethod());
-        mTxtUser.setText(getString(R.string.welcome_title,mCurrentUser.getName()));
+        mTxtUser.setText(getString(R.string.welcome_title,super.mCurrentUser.getName()));
 
         //parse profile image resize it make it circular and loads it asynchronously
-        new AvatarLoader(getActivity(),mImgViewUserPhoto,progressBar).execute(Uri.parse(mCurrentUser.getPhotoUri()));
+        new AvatarLoader(getActivity(),mImgViewUserPhoto,progressBar).execute(Uri.parse(super.mCurrentUser.getPhotoUri()));
         return view;
     }
 

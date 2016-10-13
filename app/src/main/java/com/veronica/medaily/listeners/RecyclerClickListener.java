@@ -1,4 +1,4 @@
-package com.veronica.medaily;
+package com.veronica.medaily.listeners;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

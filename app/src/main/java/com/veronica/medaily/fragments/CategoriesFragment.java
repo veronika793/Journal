@@ -14,16 +14,15 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.veronica.medaily.R;
-import com.veronica.medaily.RecyclerClickListener;
+import com.veronica.medaily.listeners.RecyclerClickListener;
 import com.veronica.medaily.adapters.CategoriesAdapter;
 import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.dialogs.CategoriesPreviewDialog;
 import com.veronica.medaily.dialogs.EditCategoryDialog;
-import com.veronica.medaily.dialogs.EditNoteDialog;
 import com.veronica.medaily.helpers.NotificationHandler;
-import com.veronica.medaily.interfaces.ICategoryEditedListener;
+import com.veronica.medaily.listeners.ICategoryEditedListener;
 import com.veronica.medaily.loaders.CategoriesLoader;
 
 import java.util.List;
@@ -73,7 +72,7 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
                             Bundle bundle = new Bundle();
                             bundle.putLong("category_id", userCategories.get(position).getId());
                             notesFragment.setArguments(bundle);
-                            placeFragment(R.id.content_frame, notesFragment, "notes_fragment");
+                            placeFragment(notesFragment);
                         }else{
                             notificationHandler.toastNeutralNotificationBottom("This category is empty");
                         }

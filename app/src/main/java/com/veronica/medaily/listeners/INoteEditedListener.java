@@ -1,4 +1,4 @@
-package com.veronica.medaily.interfaces;
+package com.veronica.medaily.listeners;
 import com.veronica.medaily.dbmodels.Note;
 
 /**

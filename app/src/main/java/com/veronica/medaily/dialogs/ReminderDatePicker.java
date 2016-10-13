@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import com.veronica.medaily.R;
 import com.veronica.medaily.helpers.NotificationHandler;
-import com.veronica.medaily.interfaces.IDatePicked;
+import com.veronica.medaily.listeners.IDatePicked;
 
 import java.util.Calendar;
 import java.util.Date;

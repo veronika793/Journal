@@ -32,6 +32,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
         public View noteContainer;
         public TextView noteTitle;
+        public TextView noteContent;
         public TextView noteCreatedOn;
         public TextView noteReminder;
         public TextView notePhoto;
@@ -41,11 +42,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             noteContainer = v.findViewById(R.id.container_notes);
             Typeface typeface = Typeface.createFromAsset(v.getContext().getAssets(), Constants.FONT_ONE);
             noteTitle = (TextView) v.findViewById(R.id.txt_note_title);
-            noteTitle.setTypeface(typeface);
             noteCreatedOn = (TextView) v.findViewById(R.id.txt_note_createdon);
             noteReminder = (TextView) v.findViewById(R.id.txt_note_reminder_icon);
+            noteContent = (TextView) v.findViewById(R.id.txt_note_shord_content);
             notePhoto = (TextView)v.findViewById(R.id.txt_note_photo_icon);
             noteCategory = (TextView)v.findViewById(R.id.txt_note_category);
+            noteTitle.setTypeface(typeface);
+            noteContent.setTypeface(typeface);
         }
     }
 
@@ -71,6 +74,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         holder.noteTitle.setText(mNotes.get(position).getTitle());
         holder.noteCategory.setText(mNotes.get(position).getCategory().getName());
         holder.noteCreatedOn.setText(mNotes.get(position).getCreatedOnDate());
+        holder.noteContent.setText(mNotes.get(position).getContent());
         if(mNotes.get(position).getPhotoUri()==null){
             holder.notePhoto.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_no_photo,0);
         }else{

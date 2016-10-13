@@ -26,7 +26,7 @@ import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.dialogs.ReminderDatePicker;
 import com.veronica.medaily.helpers.DateHelper;
 import com.veronica.medaily.helpers.NotificationHandler;
-import com.veronica.medaily.interfaces.IDatePicked;
+import com.veronica.medaily.listeners.IDatePicked;
 
 import java.util.ArrayList;
 import java.util.Calendar;

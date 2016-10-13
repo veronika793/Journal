@@ -7,6 +7,9 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 
 import com.veronica.medaily.Constants;
 import com.veronica.medaily.MainApplication;
+import com.veronica.medaily.R;
 import com.veronica.medaily.dbmodels.User;
 
 /**
@@ -31,19 +35,29 @@ public class BaseFragment extends Fragment {
         mainApp = (MainApplication)getActivity().getApplication();
         Long userId = Long.valueOf(mainApp.getAuthManager().getUser());
         mCurrentUser = User.findById(User.class, userId);
-        mainTypeFace =Typeface.createFromAsset(getActivity().getAssets(), Constants.FONT_ONE);
+        mainTypeFace = Typeface.createFromAsset(getActivity().getAssets(), Constants.FONT_ONE);
 
     }
 
-    protected void placeFragment( @IdRes int containerViewId,
-                                @NonNull Fragment fragment,
-                                @NonNull String fragmentTag) {
+    public void updateCurrentUser(){
+        Long userId = Long.valueOf(mainApp.getAuthManager().getUser());
+        mCurrentUser = User.findById(User.class,userId);
+    }
 
-        getFragmentManager()
-                .beginTransaction()
-                .replace(containerViewId, fragment, fragmentTag)
-                .addToBackStack(null)
-                .commit();
+    protected void placeFragment(@NonNull Fragment fragment) {
+        String backStateName =  fragment.getClass().getName();
+        String fragmentTag = backStateName;
+
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
+
+        if (!fragmentPopped && manager.findFragmentByTag(fragmentTag) == null){ //fragment not in back stack, create it.
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.replace(R.id.content_frame, fragment, fragmentTag);
+//            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.addToBackStack(backStateName);
+            ft.commit();
+        }
     }
 
     protected void setupTypefaceView(TextView view){

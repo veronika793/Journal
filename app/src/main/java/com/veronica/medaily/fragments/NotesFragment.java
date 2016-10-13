@@ -1,13 +1,15 @@
 package com.veronica.medaily.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +17,15 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.veronica.medaily.R;
-import com.veronica.medaily.RecyclerClickListener;
-import com.veronica.medaily.adapters.CategoriesAdapter;
+import com.veronica.medaily.listeners.RecyclerClickListener;
 import com.veronica.medaily.adapters.NotesAdapter;
 import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.dialogs.EditNoteDialog;
-import com.veronica.medaily.helpers.DateHelper;
-import com.veronica.medaily.interfaces.INoteEditedListener;
+import com.veronica.medaily.listeners.INoteEditedListener;
 import com.veronica.medaily.loaders.NotesLoader;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 public class NotesFragment extends BaseFragment implements android.widget.SearchView.OnQueryTextListener,INoteEditedListener {
@@ -41,7 +38,7 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
     private RecyclerView.LayoutManager mLayoutManager;
     private ProgressBar progressBar;
     private ItemTouchHelper itemTouchHelper;
-
+    private NoteDetailsFragment noteDetailsFragment;
     private List<Note> userNotes;
     private NotesFragment notesFragment;
 
@@ -85,14 +82,11 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
                 new RecyclerClickListener(getContext(), mRecyclerView ,new RecyclerClickListener.OnItemClickListener() {
 
                     @Override public void onItemClick(View view, int position) {
-                        NoteDetailsFragment noteDetailsFragment = new NoteDetailsFragment();
+                        noteDetailsFragment = new NoteDetailsFragment();
                         Bundle bundle1 = new Bundle();
                         bundle1.putString("note_id", String.valueOf(userNotes.get(position).getId()));
-                        //crashed once here so made this overall useless check
                         noteDetailsFragment.setArguments(bundle1);
-                        if(noteDetailsFragment!=null) {
-                            placeFragment(R.id.content_frame, noteDetailsFragment, "note_details,fragment");
-                        }
+                        placeFragment(noteDetailsFragment);
                     }
 
                     @Override public void onLongItemClick(View view, int position) {

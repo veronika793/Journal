@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import com.veronica.medaily.R;
 import com.veronica.medaily.dbmodels.Note;
-import com.veronica.medaily.interfaces.INoteEditedListener;
+import com.veronica.medaily.listeners.INoteEditedListener;
 import com.veronica.medaily.validationmodels.NoteValidationModel;
 
 import java.util.InvalidPropertiesFormatException;

@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +26,7 @@ import com.veronica.medaily.MainApplication;
 import com.veronica.medaily.dbmodels.User;
 import com.veronica.medaily.fragments.AddCategoryFragment;
 import com.veronica.medaily.fragments.AddNoteFragment;
+import com.veronica.medaily.fragments.BaseFragment;
 import com.veronica.medaily.fragments.CategoriesFragment;
 import com.veronica.medaily.fragments.HomeFragment;
 import com.veronica.medaily.fragments.NotesFragment;
@@ -43,8 +46,6 @@ public class HomeActivity extends AppCompatActivity{
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private Toolbar mToolbar;
-    private User mCurrentUser;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +56,11 @@ public class HomeActivity extends AppCompatActivity{
         if(!mainApp.getAuthManager().isLoggedIn()){
             goToLoginActivity();
         }
-
-        setCurrentUser();
+        validatesCurrentUser();
 
         //drawer
         initializeDrawerItems();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerList.setAdapter(new DrawerItemCustomAdapter(this,R.layout.drawer_item_row,mDrawerItems));
@@ -76,14 +75,30 @@ public class HomeActivity extends AppCompatActivity{
         mToolbar.setTitle(Constants.HOME);
         mToolbar.setNavigationIcon(R.drawable.icon_menu);
 
+        //updates drawer selected item on back press
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                FragmentManager fm = getSupportFragmentManager();
+                int stackCount = fm.getBackStackEntryCount();
+                String currentStackName = fm.getBackStackEntryAt(stackCount-1).getName();
+
+                if(currentStackName.equals(HomeFragment.class.getName())){
+                    mDrawerList.setItemChecked(0,true);
+                }else if(currentStackName.equals(ProfileFragment.class.getName())){
+                    mDrawerList.setItemChecked(1,true);
+                }else if(currentStackName.equals(NotesFragment.class.getName())){
+                    mDrawerList.setItemChecked(2,true);
+                }else if(currentStackName.equals(CategoriesFragment.class.getName())){
+                    mDrawerList.setItemChecked(3,true);
+                }else if(currentStackName.equals(SynchronizeFragment.class.getName())){
+                    mDrawerList.setItemChecked(4,true);
+                }
+            }
+        });
 
         HomeFragment homeFragment = new HomeFragment();
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.content_frame, homeFragment,"home_fragment")
-                .disallowAddToBackStack()
-                .commit();
+        placeFragment(homeFragment);
     }
 
     private void goToLoginActivity() {
@@ -97,6 +112,7 @@ public class HomeActivity extends AppCompatActivity{
         }
     }
 
+    // select item from drawer and loads the fragment
     private void selectItem(int position) {
 
         mDrawerList.setItemChecked(position, true);
@@ -111,7 +127,7 @@ public class HomeActivity extends AppCompatActivity{
             goToLoginActivity();
             finish();
         }
-        Fragment fragmentToLoad = null;
+        BaseFragment fragmentToLoad = null;
         if(itemName.equals(Constants.HOME)) {
             fragmentToLoad = new HomeFragment();
         }
@@ -129,7 +145,7 @@ public class HomeActivity extends AppCompatActivity{
             fragmentToLoad = new ProfileFragment();
         }
         if(fragmentToLoad!=null) {
-            placeFragment(R.id.content_frame, fragmentToLoad, fragmentToLoad.getClass().getSimpleName());
+            placeFragment(fragmentToLoad);
         }
     }
 
@@ -150,6 +166,7 @@ public class HomeActivity extends AppCompatActivity{
         return true;
     }
 
+    // top menu buttons action on click
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -164,40 +181,46 @@ public class HomeActivity extends AppCompatActivity{
                 if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
                     mDrawerLayout.closeDrawers();
                 }
-                placeFragment(R.id.content_frame,new AddNoteFragment(),"add_note_fragment");
+                placeFragment(new AddNoteFragment());
                 break;
             case R.id.ad_new_category_toolbar:
                 if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
                     mDrawerLayout.closeDrawers();
                 }
-                placeFragment(R.id.content_frame,new AddCategoryFragment(),"add_category_fragment");
+                placeFragment(new AddCategoryFragment());
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void placeFragment( @IdRes int containerViewId,
-                                @NonNull Fragment fragment,
-                                @NonNull String fragmentTag) {
+    protected void placeFragment(@NonNull Fragment fragment) {
+        String backStateName =  fragment.getClass().getName();
+        String fragmentTag = backStateName;
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(containerViewId, fragment, fragmentTag)
-                .addToBackStack(null)
-                .commit();
+        FragmentManager manager = getSupportFragmentManager();
+        boolean fragmentPopped = manager.popBackStackImmediate (backStateName, 0);
+
+        if (!fragmentPopped && manager.findFragmentByTag(fragmentTag) == null){ //fragment not in back stack, create it.
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.replace(R.id.content_frame, fragment, fragmentTag);
+//            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.addToBackStack(backStateName);
+            ft.commit();
+        }
     }
+
+    // popup last fragment while there is no left, if none move task to back
     //@Override
     public void onBackPressed() {
-
         // returns the previous fragments if any
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
-        if (backStackEntryCount == 0) {
+        if (backStackEntryCount == 1) {
             moveTaskToBack(true);
         } else {
             super.onBackPressed();
         }
     }
 
-    private void setCurrentUser() {
+    private void validatesCurrentUser() {
         String userIdAsStr = mainApp.getAuthManager().getUser();
         if(userIdAsStr==null){
             this.mainApp.getAuthManager().logoutUser();
@@ -208,8 +231,6 @@ public class HomeActivity extends AppCompatActivity{
             if(users.isEmpty()){
                 this.mainApp.getAuthManager().logoutUser();
                 this.goToLoginActivity();
-            }else{
-                this.mCurrentUser = users.get(0);
             }
         }
     }

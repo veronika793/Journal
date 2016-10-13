@@ -3,7 +3,6 @@ package com.veronica.medaily.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -12,7 +11,7 @@ import android.widget.EditText;
 import com.commonsware.cwac.colormixer.ColorMixer;
 import com.veronica.medaily.R;
 import com.veronica.medaily.dbmodels.Category;
-import com.veronica.medaily.interfaces.ICategoryEditedListener;
+import com.veronica.medaily.listeners.ICategoryEditedListener;
 import com.veronica.medaily.validationmodels.CategoryValidationModel;
 
 import java.util.InvalidPropertiesFormatException;
