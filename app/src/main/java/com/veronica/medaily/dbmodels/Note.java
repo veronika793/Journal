@@ -9,13 +9,13 @@ import java.util.List;
 
 public class Note extends SugarRecord implements Parcelable {
 
-    User user;
-    Category category;
-    String title;
-    String content;
-    String createdOnDate;
-    String photoUri;
-    String reminderDate;
+    private User user;
+    private Category category;
+    private String title;
+    private String content;
+    private String createdOnDate;
+    private String photoUri;
+    private String reminderDate;
 
     public Note(){
 

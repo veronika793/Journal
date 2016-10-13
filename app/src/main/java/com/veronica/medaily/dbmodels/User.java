@@ -12,10 +12,10 @@ import java.util.List;
 
 public class User extends SugarRecord implements Parcelable {
 
-    String email;
-    String password;
-    String name;
-    String photoUri;
+    private String email;
+    private String password;
+    private String name;
+    private String photoUri;
 
     public User() {
 

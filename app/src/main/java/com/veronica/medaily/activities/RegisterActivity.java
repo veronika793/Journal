@@ -21,8 +21,7 @@ import com.veronica.medaily.helpers.KeyGenerator;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
     private MainApplication mainApp;
-
-    NotificationHandler notificationHandler;
+    private NotificationHandler notificationHandler;
 
     private EditText mEditTxtEmail;
     private EditText mEditTxtPassword;

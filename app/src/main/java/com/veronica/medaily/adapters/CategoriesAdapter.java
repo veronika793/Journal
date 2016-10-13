@@ -28,7 +28,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 
         public View categoryContainer;
         public TextView mCategoryName;
-        public TextView mCategoryDescription;
+//        public TextView mCategoryDescription;
         public TextView mTotalNotes;
         public ViewHolder(View v) {
             super(v);

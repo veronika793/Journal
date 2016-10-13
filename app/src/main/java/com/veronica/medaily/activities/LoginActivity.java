@@ -22,7 +22,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private MainApplication mainApp;
     private NotificationHandler notificationHandler;
 
-    //users login props
     private EditText mEditTxtUserEmail;
     private EditText mEditTxtUserPassword;
     private Button mBtnOpenRegisterForm;

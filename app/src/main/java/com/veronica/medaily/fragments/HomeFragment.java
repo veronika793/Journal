@@ -21,7 +21,7 @@ public class HomeFragment extends BaseFragment {
     private TextView mTxtWellcomeMsg;
 
     private ImageView mImgViewUserPhoto;
-    ProgressBar progressBar;
+    private ProgressBar progressBar;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home,container,false);

@@ -18,7 +18,7 @@ import com.veronica.medaily.managers.AuthorizationManager;
  *
  */
 public class NotificationReceiver extends BroadcastReceiver {
-    AuthorizationManager authorizationManager;
+    private AuthorizationManager authorizationManager;
 
     @Override
     public void onReceive(Context context, Intent intent) {

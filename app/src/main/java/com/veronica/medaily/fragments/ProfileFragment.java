@@ -29,7 +29,7 @@ import com.veronica.medaily.validationmodels.UserValidationModel;
  */
 public class ProfileFragment extends BaseFragment implements View.OnClickListener{
 
-    NotificationHandler notificationManager;
+    private NotificationHandler notificationManager;
     private ImageView mUserPhotoPreview;
     private EditText mUserName;
     private EditText mUserPassword;
