@@ -81,9 +81,7 @@ public class NotesByCategory extends BaseFragment implements SearchView.OnQueryT
 
         try {
             this.userNotes = new NotesByCategoryLoader(category,mRecyclerView).execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
@@ -93,7 +91,7 @@ public class NotesByCategory extends BaseFragment implements SearchView.OnQueryT
                     @Override public void onItemClick(View view, int position) {
                         noteDetailsFragment = new NoteDetailsFragment();
                         Bundle bundle1 = new Bundle();
-                        bundle1.putString("note_id", String.valueOf(userNotes.get(position).getId()));
+                        bundle1.putLong("note_id",userNotes.get(position).getId());
                         noteDetailsFragment.setArguments(bundle1);
                         placeFragment(noteDetailsFragment);
                     }

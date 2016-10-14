@@ -50,9 +50,13 @@
     <string name="export_data">Export data</string>
     <string name="progress">Progress</string>
     <string name="welcome_title">Welcome %1$s</string>
+    <string name="note_categ_placehold">Category: %1$s</string>
+    <string name="note_creaded_on_placeh">Created on: %1$s</string>
+    <string name="note_remind_date_placeh">Reminder: %1$s</string>
     <string name="note_preview">Note Preview</string>
     <string name="note_title">Title</string>
     <string name="note_content">Content</string>
     <string name="note_category">Category</string>
+    <string name="no_image">No Image</string>
 
 </resources>

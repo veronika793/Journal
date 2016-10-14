@@ -1,15 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/colorAccent"
+    android:padding="5dp"
+    android:paddingBottom="10dp"
+    android:id="@+id/main_note_details_container"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Note Details"
-        android:id="@+id/textView7"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="227dp" />
+    <LinearLayout
+        android:padding="15dp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/top_note_container">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:text="New Text"
+                android:id="@+id/txt_note_details_created" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:text="New Text"
+                android:id="@+id/txt_note_details_remind" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:textSize="17sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:id="@+id/txt_note_details_categ" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/middle_note_container">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:background="@color/colorLightGrey1"
+                android:textColor="@color/colorWhite"
+                android:visibility="visible"
+                android:maxHeight="150dp"
+                android:minHeight="150dp"
+                android:height="150dp"
+                android:text="@string/no_image"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_image_replacer"
+                android:layout_gravity="center_horizontal" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:background="@color/colorLightGrey1"
+                android:visibility="gone"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:maxHeight="220dp"
+                android:minHeight="220dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_note_details_img"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/bottom_note_container">
+
+            <TextView
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:textSize="25sp"
+                android:textColor="@color/colorWhite"
+                android:id="@+id/txt_note_detaisl_title"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:minLines="12"
+                android:maxLines="12"
+                android:textSize="15sp"
+                android:scrollbars="vertical"
+                android:background="@drawable/shape_borders_white"
+                android:padding="5dp"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/txt_note_details_contnt" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>

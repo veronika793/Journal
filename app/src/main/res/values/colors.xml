@@ -13,7 +13,9 @@
     <color name="colorCategoryDefault">#ffd123</color>
     <color name="colorDefaultCategoryColor">#EDDEA5</color>
     <color name="colorLightGrey1">#d6d4d4</color>
+    <color name="colorLightGrey2">#eae8e8</color>
     <color name="colorDarkGrey1">#979595</color>
     <color name="colorNoteBackground">#f4c768</color>
     <color name="colorPaper">#f8eed2</color>
+    <color name="colorPaperDarker">#e7dab4</color>
 </resources>

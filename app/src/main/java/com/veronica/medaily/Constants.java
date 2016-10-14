@@ -11,6 +11,8 @@ public final class Constants {
     public static int RESULT_CANCELED = 0;
 
     public static int PICK_REQUIRED_SIZE = 170;
+    public static int PICK_WITH = 220;
+    public static int PICK_HEIGHT = 220;
     public static String PHOTO_SELECTED = "PHOTO SELECTED";
     public static int PASSWORD_MIN_LENGTH = 4;
     public static int NAME_MIN_LENGTH = 3;

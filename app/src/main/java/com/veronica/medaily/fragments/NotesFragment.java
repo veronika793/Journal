@@ -74,7 +74,7 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
                     @Override public void onItemClick(View view, int position) {
                         NoteDetailsFragment noteDetailsFragment = new NoteDetailsFragment();
                         Bundle bundle1 = new Bundle();
-                        bundle1.putString("note_id", String.valueOf(userNotes.get(position).getId()));
+                        bundle1.putLong("note_id",userNotes.get(position).getId());
                         noteDetailsFragment.setArguments(bundle1);
                         placeFragment(noteDetailsFragment);
                     }

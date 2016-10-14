@@ -39,9 +39,9 @@ public class NotificationReceiver extends BroadcastReceiver {
                         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                         android.support.v4.app.NotificationCompat.Builder mBuilder =
                                 new NotificationCompat.Builder(context)
-                                        .setSmallIcon(R.drawable.icon_add_note)
+                                        .setSmallIcon(R.drawable.icon_add_reminder)
                                         .setContentTitle(note.getTitle())
-                                        .setContentText(note.getTitle())
+                                        .setContentText(note.getContent())
                                         .setSound(alarmSound);
 
                         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
