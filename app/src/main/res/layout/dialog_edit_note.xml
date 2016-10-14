@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/title"
+        android:maxLength="30"
         android:textSize="13sp"
         android:maxLines="1"
         android:scrollbars="vertical"
@@ -33,6 +34,7 @@
         android:textSize="13sp"
         android:hint="@string/content"
         android:maxLines="1"
+        android:maxLength="1000"
         android:scrollbars="vertical"
         android:layout_below="@+id/edit_txt_note_edit"
         android:layout_height="wrap_content" />

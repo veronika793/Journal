@@ -1,4 +1,4 @@
-package com.veronica.medaily.loaders;
+package com.veronica.medaily.toberemoved;
 
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;

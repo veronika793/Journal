@@ -60,15 +60,16 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.notificationHandler = NotificationHandler.getInstance();
+
+    }
+
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_add_note, container, false);
         List<Category> fullCategories = mCurrentUser.getCategories();
         this.categories = new ArrayList<>();
         for (Category category : fullCategories) {
             categories.add(category.getName());
         }
-    }
-
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_note, container, false);
 
         mTxtViewAddNote = (TextView)view.findViewById(R.id.txt_view_add_note);
         super.setupTypefaceView(mTxtViewAddNote);
@@ -91,7 +92,7 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
             mBtnSave.setOnClickListener(this);
         }
 
-        ArrayAdapter<String> categoriesAdapter = new ArrayAdapter<>(getContext(),R.layout.spinner_item_layout,categories);
+        ArrayAdapter<String> categoriesAdapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item_layout,categories);
         categoriesAdapter.setDropDownViewResource(R.layout.spinner_item_dropdown_layout);
         mCategoriesSpinner.setAdapter(categoriesAdapter);
         mCategoriesSpinner.setOnItemSelectedListener(this);
@@ -178,7 +179,7 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
         Calendar reminderCalendar = Calendar.getInstance();
         reminderCalendar.setTime(pickedDateToDate);
 
-        NoteReminder reminder = new NoteReminder(mCurrentUser,note, DateHelper.fromDateToString(reminderCalendar.getTime()));
+        NoteReminder reminder = new NoteReminder(mCurrentUser,note,note.getCategory(), DateHelper.fromDateToString(reminderCalendar.getTime()));
         reminder.save();
 
         alarmsManager = new AlarmsManager(getContext());

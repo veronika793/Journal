@@ -32,7 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txt_note_title_prev"
-        android:text="asda"
         android:layout_below="@+id/textView6"
         android:textSize="15sp"
         android:maxLines="3"
@@ -62,7 +61,6 @@
         android:textSize="15sp"
         android:maxLines="3"
         android:ellipsize="end"
-        android:text="asdad"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -90,7 +88,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
         android:maxLines="3"
         android:ellipsize="end"
         android:id="@+id/txt_note_category_prev"
@@ -99,7 +96,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Created on"
+        android:text="@string/created_on"
         android:textStyle="bold"
         android:textSize="15sp"
         android:layout_marginTop="10dp"
@@ -111,7 +108,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reminder"
+        android:text="@string/reminder"
         android:id="@+id/textView11"
         android:layout_marginTop="10dp"
         android:textStyle="bold"
@@ -123,14 +120,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
         android:id="@+id/txt_note_created_prev"
         android:layout_below="@+id/textView10" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
         android:id="@+id/txt_note_remind_prev"
         android:layout_below="@+id/textView11"
         android:layout_alignParentLeft="true"

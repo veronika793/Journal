@@ -1,11 +1,10 @@
-package com.veronica.medaily.loaders;
+package com.veronica.medaily.toberemoved;
 
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ProgressBar;
 
 import com.veronica.medaily.adapters.NotesAdapter;
+import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.User;
 import com.veronica.medaily.helpers.DateHelper;
@@ -16,19 +15,18 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Veronica on 10/10/2016.
+ * Created by Veronica on 10/14/2016.
  */
-public class NotesLoader extends AsyncTask<Void,Integer,List<Note>> {
-
+public class NotesByCategoryLoader extends AsyncTask<Void,Integer,List<Note>> {
     private RecyclerView recyclerView;
     private NotesAdapter notesAdapter;
-    private User user;
     private List<Note> notes;
+    private Category category;
 
     @Override
     protected List<Note> doInBackground(Void... params) {
 
-        notes = user.getNotes();
+        this.notes = category.getNotes();
         Collections.sort(notes, new Comparator<Note>() {
             @Override
             public int compare(Note one, Note two) {
@@ -41,9 +39,9 @@ public class NotesLoader extends AsyncTask<Void,Integer,List<Note>> {
         return notes;
     }
 
-    public NotesLoader(User user, RecyclerView recyclerView) {
+    public NotesByCategoryLoader(Category category, RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
-        this.user = user;
+        this.category = category;
     }
 
     @Override
@@ -58,4 +56,3 @@ public class NotesLoader extends AsyncTask<Void,Integer,List<Note>> {
         recyclerView.setAdapter(notesAdapter);
     }
 }
-

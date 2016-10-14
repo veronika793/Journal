@@ -14,11 +14,8 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.SearchView;
 
-import com.orm.SugarRecord;
-import com.orm.SugarTransactionHelper;
 import com.veronica.medaily.R;
 import com.veronica.medaily.adapters.NotesAdapter;
 import com.veronica.medaily.dbmodels.Category;
@@ -28,10 +25,8 @@ import com.veronica.medaily.dialogs.EditNoteDialog;
 import com.veronica.medaily.dialogs.NotesPreviewDialog;
 import com.veronica.medaily.listeners.INoteEditedListener;
 import com.veronica.medaily.listeners.RecyclerClickListener;
-import com.veronica.medaily.loaders.NotesByCategoryLoader;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class NotesByCategory extends BaseFragment implements SearchView.OnQueryTextListener,INoteEditedListener {
 
@@ -75,15 +70,15 @@ public class NotesByCategory extends BaseFragment implements SearchView.OnQueryT
         mSearchViewNotes.setOnQueryTextListener(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-//        this.userNotes = category.getNotes();
-//        this.mNotesAdapter = new NotesAdapter(userNotes);
-//        mRecyclerView.setAdapter(mNotesAdapter);
+        this.userNotes = category.getNotes();
+        this.mNotesAdapter = new NotesAdapter(userNotes);
+        mRecyclerView.setAdapter(mNotesAdapter);
 
-        try {
-            this.userNotes = new NotesByCategoryLoader(category,mRecyclerView).execute().get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            this.userNotes = new NotesByCategoryLoader(category,mRecyclerView).execute().get();
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//        }
 
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerClickListener(getContext(), mRecyclerView ,new RecyclerClickListener.OnItemClickListener() {

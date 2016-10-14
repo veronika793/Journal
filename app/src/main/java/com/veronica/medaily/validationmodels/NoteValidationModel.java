@@ -37,7 +37,7 @@ public class NoteValidationModel {
 
     public void set_title(String _title) throws InvalidPropertiesFormatException {
         if(!InputValidator.isMinLenghRestricted(Constants.NOTE_TITLE_MIN_LENGTH,_title)){
-            throw new InvalidPropertiesFormatException("Invalid title. Minimum "+Constants.NOTE_TITLE_MIN_LENGTH + " characters");
+            throw new InvalidPropertiesFormatException("Invalid note title");
         }
         this._title = _title;
     }
@@ -48,7 +48,7 @@ public class NoteValidationModel {
 
     public void set_content(String _content) throws InvalidPropertiesFormatException {
         if(!InputValidator.isMinLenghRestricted(Constants.NOTE_CONTENT_MIN_LENGTH,_content)){
-            throw new InvalidPropertiesFormatException("Invalid content. Minimum "+Constants.NOTE_CONTENT_MIN_LENGTH + " characters");
+            throw new InvalidPropertiesFormatException("Invalid note content");
         }
         this._content = _content;
     }
@@ -59,7 +59,7 @@ public class NoteValidationModel {
 
     public void set_category(String _category) throws InvalidPropertiesFormatException {
         if(!InputValidator.isMinLenghRestricted(Constants.CATEGORY_TITLE_MIN_LENGTH,_title)){
-            throw new InvalidPropertiesFormatException("Invalid category title. Minimum "+Constants.CATEGORY_TITLE_MIN_LENGTH + " characters");
+            throw new InvalidPropertiesFormatException("Invalid category");
         }
         this._category = _category;
     }

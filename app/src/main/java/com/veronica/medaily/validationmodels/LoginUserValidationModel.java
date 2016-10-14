@@ -35,7 +35,7 @@ public class LoginUserValidationModel {
 
     public void set_password(String password) throws InvalidPropertiesFormatException {
         if(!InputValidator.isMinLenghRestricted(Constants.PASSWORD_MIN_LENGTH,password)){
-            throw  new InvalidPropertiesFormatException("Invalid password. Minimum "+Constants.PASSWORD_MIN_LENGTH + " characters");
+            throw  new InvalidPropertiesFormatException("Invalid password");
         }
         this._password = password;
     }

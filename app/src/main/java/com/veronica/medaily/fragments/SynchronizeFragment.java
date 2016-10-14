@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.veronica.medaily.Constants;
-import com.veronica.medaily.MainApplication;
 import com.veronica.medaily.R;
 import com.veronica.medaily.helpers.NotificationHandler;
 import com.veronica.medaily.kinvey.KinveyConnector;
@@ -22,6 +20,7 @@ public class SynchronizeFragment extends BaseFragment implements View.OnClickLis
 
     private Button mBtnExport;
     private Button mBtnImport;
+    private TextView mTxtViewStatus;
 
     private KinveyConnector connector;
     private NotificationHandler notificationHandler;
@@ -36,9 +35,9 @@ public class SynchronizeFragment extends BaseFragment implements View.OnClickLis
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_synchronize,container,false);
-
         mBtnExport = (Button) view.findViewById(R.id.btn_export);
         mBtnImport = (Button) view.findViewById(R.id.btn_import);
+        mTxtViewStatus = (TextView) view.findViewById(R.id.txt_progress_remote_data);
 
         if(mBtnExport!=null){
             mBtnExport.setOnClickListener(this);
@@ -61,13 +60,19 @@ public class SynchronizeFragment extends BaseFragment implements View.OnClickLis
     public void onClick(View v) {
         if(v.getId()==R.id.btn_import){
             if(isNetworkAvailable()){
+
+//                KinveyImportLoader importLoader = new KinveyImportLoader(mTxtViewStatus,connector);
+//                importLoader.execute();
                 connector.importData();
             }else{
                 notificationHandler.toastWarningNotification(Constants.NO_NETWORK);
             }
         }else if(v.getId()==R.id.btn_export){
             if(isNetworkAvailable()){
+//                KinveyExportLoader exportLoader = new KinveyExportLoader(mTxtViewStatus,connector);
+//                exportLoader.execute();
                 connector.exportData();
+
             }else{
                 notificationHandler.toastWarningNotification(Constants.NO_NETWORK);
             }

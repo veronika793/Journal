@@ -14,13 +14,13 @@ public final class Constants {
     public static int PICK_WITH = 220;
     public static int PICK_HEIGHT = 220;
     public static String PHOTO_SELECTED = "PHOTO SELECTED";
+
+
     public static int PASSWORD_MIN_LENGTH = 4;
-    public static int NAME_MIN_LENGTH = 3;
-
-    public static int CATEGORY_TITLE_MIN_LENGTH = 3;
-
-    public static int NOTE_TITLE_MIN_LENGTH = 2;
-    public static int NOTE_CONTENT_MIN_LENGTH = 4;
+    public static int NAME_MIN_LENGTH = 1;
+    public static int CATEGORY_TITLE_MIN_LENGTH = 1;
+    public static int NOTE_TITLE_MIN_LENGTH = 1;
+    public static int NOTE_CONTENT_MIN_LENGTH = 1;
 
     public static String START_ALARM_ACTION = "START_ALARM";
     public static String ACTION_BOOT_COMPLETED = "android.intent.action.BOOT_COMPLETED";
@@ -34,7 +34,5 @@ public final class Constants {
     public static String EXIT = "Exit";
 
     public static String FONT_ONE = "ArchitectsDaughter.ttf";
-    public static String FONT_TWO = "ShadowsIntoLight.ttf";
-
     public static String NO_NETWORK = "No network connection";
 }

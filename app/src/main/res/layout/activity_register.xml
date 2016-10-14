@@ -34,7 +34,7 @@
     <EditText
         style="@style/EditTxtFormsStyles"
         android:hint="@string/name"
-        android:maxLength="10"
+        android:maxLength="12"
         android:maxLines="1"
         android:inputType="textCapSentences"
         android:singleLine="true"

@@ -43,7 +43,7 @@
     <string name="search_for_note">Search for note..</string>
     <string name="search_for_category">Search for category..</string>
     <string name="image_preview">Image Preview</string>
-    <string name="note_empty_fields_will_note_be_changed">Note: empty fields will note be changed</string>
+    <string name="note_empty_fields_will_note_be_changed">Note: empty fields will not be changed</string>
     <string name="hh">HH</string>
     <string name="mm">MM</string>
     <string name="import_data">Import data</string>
@@ -58,5 +58,9 @@
     <string name="note_content">Content</string>
     <string name="note_category">Category</string>
     <string name="no_image">No Image</string>
+    <string name="note_this_section_is_note_completely_finished">Note: this section is note completely finished</string>
+    <string name="reminder">Reminder</string>
+    <string name="created_on">Created on</string>
+    <string name="description">Description</string>
 
 </resources>

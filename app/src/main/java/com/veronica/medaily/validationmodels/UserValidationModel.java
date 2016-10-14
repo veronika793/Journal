@@ -29,7 +29,7 @@ public class UserValidationModel {
 
     public void set_password(String password) throws InvalidPropertiesFormatException {
         if(!InputValidator.isMinLenghRestricted(Constants.PASSWORD_MIN_LENGTH,password)){
-            throw  new InvalidPropertiesFormatException("Invalid password. Minimum "+Constants.PASSWORD_MIN_LENGTH + " characters");
+            throw  new InvalidPropertiesFormatException("Invalid password");
 
         }
         this._password = password;
@@ -37,7 +37,7 @@ public class UserValidationModel {
 
     public void set_name(String name) throws InvalidPropertiesFormatException {
         if(!InputValidator.isMinLenghRestricted(Constants.NAME_MIN_LENGTH,name)){
-            throw  new InvalidPropertiesFormatException("Invalid name. Minimum "+Constants.NAME_MIN_LENGTH + " characters");
+            throw  new InvalidPropertiesFormatException("Invalid name");
         }
         this._name = name;
     }

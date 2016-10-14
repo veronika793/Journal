@@ -24,20 +24,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="17sp"
-                android:text="New Text"
                 android:id="@+id/txt_note_details_created" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="17sp"
-                android:text="New Text"
                 android:id="@+id/txt_note_details_remind" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Text"
                 android:textSize="17sp"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -46,7 +43,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,9 +54,9 @@
                 android:background="@color/colorLightGrey1"
                 android:textColor="@color/colorWhite"
                 android:visibility="visible"
-                android:maxHeight="150dp"
-                android:minHeight="150dp"
-                android:height="150dp"
+                android:maxHeight="130dp"
+                android:minHeight="130dp"
+                android:height="130dp"
                 android:text="@string/no_image"
                 android:textSize="20sp"
                 android:gravity="center"

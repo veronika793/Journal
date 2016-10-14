@@ -1,10 +1,7 @@
 package com.veronica.medaily.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,20 +10,16 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.veronica.medaily.R;
-import com.veronica.medaily.dialogs.CategoriesPreviewDialog;
 import com.veronica.medaily.dialogs.NotesPreviewDialog;
 import com.veronica.medaily.listeners.RecyclerClickListener;
 import com.veronica.medaily.adapters.NotesAdapter;
-import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.dialogs.EditNoteDialog;
 import com.veronica.medaily.listeners.INoteEditedListener;
-import com.veronica.medaily.loaders.NotesLoader;
 
 import java.util.List;
 
@@ -59,14 +52,14 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
         mSearchViewNotes.setOnQueryTextListener(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-//        this.userNotes = mCurrentUser.getNotes();
-//        mNotesAdapter = new NotesAdapter(userNotes);
-//        mRecyclerView.setAdapter(mNotesAdapter);
-        try {
-            this.userNotes = new NotesLoader(mCurrentUser,mRecyclerView).execute().get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.userNotes = mCurrentUser.getNotes();
+        mNotesAdapter = new NotesAdapter(userNotes);
+        mRecyclerView.setAdapter(mNotesAdapter);
+//        try {
+//            this.userNotes = new NotesLoader(mCurrentUser,mRecyclerView).execute().get();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerClickListener(getContext(), mRecyclerView ,new RecyclerClickListener.OnItemClickListener() {

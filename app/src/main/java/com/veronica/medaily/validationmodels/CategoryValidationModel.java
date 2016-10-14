@@ -24,7 +24,7 @@ public class CategoryValidationModel {
 
     public void set_title(String _title) throws InvalidPropertiesFormatException {
         if(!InputValidator.isMinLenghRestricted(Constants.CATEGORY_TITLE_MIN_LENGTH,_title)){
-            throw new InvalidPropertiesFormatException("Invalid name. Minimum "+Constants.CATEGORY_TITLE_MIN_LENGTH+" characters");
+            throw new InvalidPropertiesFormatException("Invalid category name");
         }
         this._title = _title;
     }

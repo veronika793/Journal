@@ -9,9 +9,10 @@
     <EditText
         android:id="@+id/txt_note_title_prev"
         android:layout_width="match_parent"
-        android:maxLength="40"
+        android:maxLength="20"
         android:textSize="13sp"
         android:maxLines="1"
+        android:hint="@string/name"
         android:scrollbars="vertical"
         android:inputType="textCapSentences"
         android:layout_height="wrap_content"
@@ -25,9 +26,10 @@
         android:layout_marginTop="20dp"
         android:textSize="13sp"
         android:maxLines="1"
+        android:hint="@string/description"
         android:scrollbars="vertical"
         android:layout_height="wrap_content"
-        android:maxLength="95"
+        android:maxLength="40"
         android:inputType="textCapSentences"
         android:layout_below="@+id/txt_note_title_prev" />
 

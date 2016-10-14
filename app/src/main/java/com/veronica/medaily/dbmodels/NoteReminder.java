@@ -12,13 +12,15 @@ public class NoteReminder extends SugarRecord implements Parcelable {
 
     private User user;
     private Note note;
+    private Category category;
     private String startTime;
 
     public NoteReminder() {
     }
 
-    public NoteReminder(User user,Note note, String startTime) {
+    public NoteReminder(User user,Note note,Category category, String startTime) {
         this.user = user;
+        this.category = category;
         this.note = note;
         this.startTime = startTime;
     }
@@ -47,10 +49,18 @@ public class NoteReminder extends SugarRecord implements Parcelable {
         this.startTime = startTime;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     protected NoteReminder(Parcel in) {
         user = (User) in.readValue(User.class.getClassLoader());
         note = (Note) in.readValue(Note.class.getClassLoader());
+        category = (Category) in.readValue(Category.class.getClassLoader());
         startTime = in.readString();
     }
 
@@ -63,6 +73,7 @@ public class NoteReminder extends SugarRecord implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(user);
         dest.writeValue(note);
+        dest.writeValue(category);
         dest.writeString(startTime);
     }
 

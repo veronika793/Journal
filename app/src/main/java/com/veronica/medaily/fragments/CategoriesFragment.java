@@ -10,7 +10,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.veronica.medaily.R;
@@ -23,14 +22,13 @@ import com.veronica.medaily.dialogs.CategoriesPreviewDialog;
 import com.veronica.medaily.dialogs.EditCategoryDialog;
 import com.veronica.medaily.helpers.NotificationHandler;
 import com.veronica.medaily.listeners.ICategoryEditedListener;
-import com.veronica.medaily.loaders.CategoriesLoader;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 
 public class CategoriesFragment extends BaseFragment implements android.widget.SearchView.OnQueryTextListener,ICategoryEditedListener {
 
+    private CategoriesAdapter mCategoriesAdapter;
     private DrawerLayout drawerLayout;
     private SearchView mSearchViewCategories;
     private RecyclerView mRecyclerView;
@@ -95,11 +93,15 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
         );
         //note item touch helper after gesture detector ! ..
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
-        try {
-            userCategories = new CategoriesLoader(mCurrentUser,mRecyclerView).execute().get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+
+        userCategories = mCurrentUser.getCategories();
+        mCategoriesAdapter = new CategoriesAdapter(userCategories);
+        mRecyclerView.setAdapter(mCategoriesAdapter);
+//        try {
+//            userCategories = new CategoriesLoader(mCurrentUser,mRecyclerView).execute().get();
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//        }
         return view;
     }
 
@@ -118,15 +120,8 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                         int elementPosition = viewHolder.getAdapterPosition();
                         Category categoryToBeRemoved = userCategories.get(elementPosition);
-                        List<Note> notesToBeRemoved = categoryToBeRemoved.getNotes();
-                        int count = notesToBeRemoved.size();
-                        for (int i = 0; i < count; i++) {
-                            //if there are any reminders set for the note delete them also
-                            if(!notesToBeRemoved.get(i).getNoteReminders().isEmpty()){
-                                NoteReminder.delete(notesToBeRemoved.get(i).getNoteReminders().get(0));
-                            }
-                            Note.delete(notesToBeRemoved.get(i));
-                        }
+                        NoteReminder.deleteAll(NoteReminder.class, "category=? ", String.valueOf(categoryToBeRemoved.getId()));
+                        Note.deleteAll(Note.class," category=? ", String.valueOf(categoryToBeRemoved.getId()));
                         CategoriesAdapter categoriesAdapter = (CategoriesAdapter) mRecyclerView.getAdapter();
                         categoriesAdapter.deleteCategory(elementPosition);
                         Category.delete(categoryToBeRemoved);

@@ -52,10 +52,10 @@ public class KinveyConnector implements KinveyUserCallback{
         final Client client = new Client.Builder(APP_KEY_KINVEY, APP_SECRET_KINVEY,mContext).build();
         client.ping(new KinveyPingCallback() {
             public void onFailure(Throwable t) {
-                Log.d("DEBG", "Kinvey Ping Failed");
+
             }
             public void onSuccess(Boolean b) {
-                Log.d("DEBUG", "Kinvey Ping Success");
+
             }
         });
 
@@ -71,7 +71,6 @@ public class KinveyConnector implements KinveyUserCallback{
         logoutUser();
         createUser();
         loginUser();
-
         importCategories();
         importNotes();
     }
@@ -95,7 +94,7 @@ public class KinveyConnector implements KinveyUserCallback{
                         note.save();
                         if(fetchedNote.getReminderDate()!=null){
 
-                            NoteReminder reminder = new NoteReminder(mCurrentUser,note,fetchedNote.getReminderDate());
+                            NoteReminder reminder = new NoteReminder(mCurrentUser,note,note.getCategory(),fetchedNote.getReminderDate());
                             reminder.save();
                         }
                     }
@@ -165,12 +164,12 @@ public class KinveyConnector implements KinveyUserCallback{
             myNotes.save(noteEntitiy, new KinveyClientCallback<NoteEntitiy>() {
                 @Override
                 public void onSuccess(NoteEntitiy noteEntitiy) {
-                    Log.d("TAG", "saved data for entity "+ noteEntitiy.getTitle());
+
                 }
 
                 @Override
                 public void onFailure(Throwable e) {
-                    Log.e("TAG", "failed to save event data", e);
+
                 }
 
             });
@@ -210,12 +209,10 @@ public class KinveyConnector implements KinveyUserCallback{
         myKinveyClient.user().create(mCurrentUser.getEmail(), mCurrentUser.getPassword(), new KinveyUserCallback() {
             @Override
             public void onSuccess(com.kinvey.java.User user) {
-                Log.d("DEBUG", "success register");
             }
 
             @Override
             public void onFailure(Throwable throwable) {
-                Log.d("DEBUG", throwable.getMessage());
             }
         });
         myKinveyClient.user().put("user_id", mCurrentUser.getId());
@@ -228,24 +225,21 @@ public class KinveyConnector implements KinveyUserCallback{
         myKinveyClient.user().login(mCurrentUser.getEmail(),mCurrentUser.getPassword(), new KinveyUserCallback() {
             @Override
             public void onSuccess(com.kinvey.java.User user) {
-                Log.d("DEBUG", "success login");
             }
             @Override
-            public void onFailure(Throwable t) {
-
-            }
+            public void onFailure(Throwable t) {}
 
         });
     }
 
     @Override
     public void onSuccess(com.kinvey.java.User user) {
-        Log.d("DEBUG", "success");
+
     }
 
     @Override
     public void onFailure(Throwable throwable) {
-        Log.d("DEBUG", throwable.getMessage());
+
     }
 
     private void deletePreviousNotes() {
@@ -255,12 +249,10 @@ public class KinveyConnector implements KinveyUserCallback{
         myevents.delete(q, new KinveyDeleteCallback() {
             @Override
             public void onSuccess(KinveyDeleteResponse kinveyDeleteResponse) {
-                Log.d("DEBUG", "deleted");
             }
 
             @Override
             public void onFailure(Throwable throwable) {
-
             }
         });
     }
@@ -272,7 +264,6 @@ public class KinveyConnector implements KinveyUserCallback{
         categoryEntity.delete(q, new KinveyDeleteCallback() {
             @Override
             public void onSuccess(KinveyDeleteResponse kinveyDeleteResponse) {
-                Log.d("DEBUG", "deleted");
             }
 
             @Override
