@@ -40,7 +40,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        notificationManager = new NotificationHandler(getContext());
+        notificationManager = NotificationHandler.getInstance();
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -93,9 +93,9 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             }
             if(isNameEdited || isPasswordEdited || isPhotoEdited) {
                 mCurrentUser.save();
-                notificationManager.toastNeutralNotificationBottom("Profile edited successfully");
+                notificationManager.toastSuccessNotification("Profile edited successfully");
             }else{
-                notificationManager.toastNeutralNotificationBottom("Invalid input fields");
+                notificationManager.toastWarningNotification("Invalid input fields");
             }
 
         }else if(v.getId()==R.id.btn_select_photo_edit){

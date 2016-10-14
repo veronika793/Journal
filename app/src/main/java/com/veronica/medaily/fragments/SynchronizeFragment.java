@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.veronica.medaily.Constants;
 import com.veronica.medaily.MainApplication;
 import com.veronica.medaily.R;
 import com.veronica.medaily.helpers.NotificationHandler;
@@ -28,7 +29,7 @@ public class SynchronizeFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        notificationHandler = new NotificationHandler(getContext());
+        notificationHandler = NotificationHandler.getInstance();
         connector = KinveyConnector.getInstance();
         connector.setupCurrentUser(mCurrentUser);
     }
@@ -62,13 +63,13 @@ public class SynchronizeFragment extends BaseFragment implements View.OnClickLis
             if(isNetworkAvailable()){
                 connector.importData();
             }else{
-                notificationHandler.toastNeutralNotificationBottom("No network connection");
+                notificationHandler.toastWarningNotification(Constants.NO_NETWORK);
             }
         }else if(v.getId()==R.id.btn_export){
             if(isNetworkAvailable()){
                 connector.exportData();
             }else{
-                notificationHandler.toastNeutralNotificationBottom("No network connection");
+                notificationHandler.toastWarningNotification(Constants.NO_NETWORK);
             }
         }
     }

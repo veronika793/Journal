@@ -26,7 +26,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText mEditTxtEmail;
     private EditText mEditTxtPassword;
     private EditText mEditTxtName;
-    private String imageUrl;
 
     private Button mBtnSelectPhoto;
     private Button mBtnRegister;
@@ -44,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
         setContentView(R.layout.activity_register);
 
-        notificationHandler = new NotificationHandler(this);
+        notificationHandler = NotificationHandler.getInstance();
 
         mEditTxtEmail = (EditText) findViewById(R.id.edit_txt_reg_email);
         mEditTxtPassword = (EditText) findViewById(R.id.edit_txt_reg_password);
@@ -77,9 +76,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         intent.addCategory(Intent.CATEGORY_OPENABLE);
 
         // Filter to show only images, using the image MIME data type.
-        // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
-        // To search for all documents available via installed storage providers,
-        // it would be "*/*".
         intent.setType("image/*");
         startActivityForResult(intent, Constants.PICK_PROFILE_IMAGE_REQ_CODE);
 
@@ -119,7 +115,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     userBindingModel.set_password(passwordEncrypt);
 
                     if(!User.find(User.class,"email = ?",email).isEmpty()){
-                        notificationHandler.toastWarningNotificationTop("User already exists");
+                        notificationHandler.toastWarningNotification("User already exists");
                     }else{
                         User newUser = new User(email,passwordEncrypt,name,selectedImageUri);
                         newUser.save();
@@ -127,7 +123,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     }
 
                 } catch (Exception e) {
-                    notificationHandler.toastWarningNotificationTop(e.getMessage());
+                    notificationHandler.toastWarningNotification(e.getMessage());
                 }
                 if(mainApp.getAuthManager().isLoggedIn()){
                     goToJournalActivity();

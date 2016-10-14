@@ -35,7 +35,6 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
     private SearchView mSearchViewCategories;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ProgressBar progressBar;
     private CategoriesFragment categoriesFragment;
     private ItemTouchHelper itemTouchHelper;
     private NotificationHandler notificationHandler;
@@ -46,13 +45,12 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
         super.onCreate(savedInstanceState);
         drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
         categoriesFragment = this;
-        notificationHandler = new NotificationHandler(getContext());
+        notificationHandler = NotificationHandler.getInstance();
         initializeItemTouchHelper();
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_categories,container,false);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressbar_categories);
         mSearchViewCategories = (SearchView) view.findViewById(R.id.search_view_categories);
         mSearchViewCategories.setOnQueryTextListener(this);
         mSearchViewCategories.setIconified(true);
@@ -74,7 +72,7 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
                             notesFragment.setArguments(bundle);
                             placeFragment(notesFragment);
                         }else{
-                            notificationHandler.toastNeutralNotificationBottom("This category is empty");
+                            notificationHandler.toastSuccessNotification("This category is empty");
                         }
                     }
 
@@ -98,7 +96,7 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
         //note item touch helper after gesture detector ! ..
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
         try {
-            userCategories = new CategoriesLoader(progressBar,mCurrentUser,mRecyclerView).execute().get();
+            userCategories = new CategoriesLoader(mCurrentUser,mRecyclerView).execute().get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

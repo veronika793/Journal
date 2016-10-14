@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         setContentView(R.layout.activity_login);
 
-        notificationHandler = new NotificationHandler(this);
+        notificationHandler= NotificationHandler.getInstance();
 
         mEditTxtUserEmail = (EditText) findViewById(R.id.edit_txt_login_email);
         mEditTxtUserPassword = (EditText) findViewById(R.id.edit_txt_login_password);
@@ -70,13 +70,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     List<User> userList = User.find(User.class,"email = ? and password = ?",new String[]{userEmail,encryptedPass});
                     if(userList.isEmpty()){
-                        notificationHandler.toastWarningNotificationTop("Invalid username or password");
+                        notificationHandler.toastWarningNotification("Invalid username or password");
                     }else{
                         mainApp.getAuthManager().loginUser(String.valueOf(userList.get(0).getId()));
                     }
 
                 } catch (Exception e) {
-                    notificationHandler.toastWarningNotificationTop(e.getMessage());
+                    notificationHandler.toastWarningNotification(e.getMessage());
                 }
 
                 if(mainApp.getAuthManager().isLoggedIn()){

@@ -59,7 +59,7 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.notificationHandler = new NotificationHandler(getContext());
+        this.notificationHandler = NotificationHandler.getInstance();
         List<Category> fullCategories = mCurrentUser.getCategories();
         this.categories = new ArrayList<>();
         for (Category category : fullCategories) {
@@ -143,18 +143,18 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
 
                     Note note = new Note(category,mCurrentUser,title,content,dateAsString,mPhotoUri,null);
                     note.save();
-                    notificationHandler.toastNeutralNotificationBottom("Note added successfully");
+                    notificationHandler.toastSuccessNotification("Note added successfully");
 
                     if(pickedDate!=null){
                         setupAlarm(note);
                     }
 
                 } catch (InvalidPropertiesFormatException e) {
-                    notificationHandler.toastWarningNotificationBottom(e.getMessage());
+                    notificationHandler.toastWarningNotification(e.getMessage());
                 }
 
             } else  {
-                notificationHandler.toastNeutralNotificationBottom("Please create category first");
+                notificationHandler.toastWarningNotification("Please create category first");
             }
 
 

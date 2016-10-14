@@ -39,7 +39,7 @@ public class ReminderDatePicker extends Dialog implements View.OnClickListener{
     public ReminderDatePicker(Context context,IDatePicked datePickedListener) {
         super(context);
         this.mListener = datePickedListener;
-        notificationHandler = new NotificationHandler(context);
+        notificationHandler = NotificationHandler.getInstance();
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ReminderDatePicker extends Dialog implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.btn_date_picker_cancel){
-            notificationHandler.toastNeutralNotificationBottom("No date has been picked");
+            notificationHandler.toastSuccessNotification("No date has been picked");
             this.mListener.pick(null);
             this.dismiss();
         }else if(v.getId()== R.id.btn_date_picker){
@@ -83,18 +83,18 @@ public class ReminderDatePicker extends Dialog implements View.OnClickListener{
                     //check if the selected date is passed already
                     if (dateToReturn.getTime().before(new Date())) {
                         this.mListener.pick(null);
-                        notificationHandler.toastNeutralNotificationBottom("Selected date is already passed");
+                        notificationHandler.toastSuccessNotification("Selected date is already passed");
                     }else{
-                        notificationHandler.toastNeutralNotificationBottom("Date picked");
+                        notificationHandler.toastSuccessNotification("Date picked");
                         this.mListener.pick(dateToReturn);
                         this.dismiss();
                     }
 
                 }else{
-                    notificationHandler.toastNeutralNotificationBottom("Please enter valid hours/minute values");
+                    notificationHandler.toastSuccessNotification("Please enter valid hours/minute values");
                 }
             }else{
-                notificationHandler.toastNeutralNotificationBottom("Please enter valid hours/minute values");
+                notificationHandler.toastSuccessNotification("Please enter valid hours/minute values");
             }
 
         }

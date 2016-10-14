@@ -35,7 +35,7 @@ public class AddCategoryFragment extends BaseFragment implements ColorMixer.OnCo
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.notificationHandler = new NotificationHandler(getContext());
+        this.notificationHandler = NotificationHandler.getInstance();
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,13 +72,13 @@ public class AddCategoryFragment extends BaseFragment implements ColorMixer.OnCo
                 //check if this category exists for the current user if not creates
                 if(Category.find(Category.class," name = ? and user = ?",new String[]{title,String.valueOf(mCurrentUser.getId())}).isEmpty()) {
                     category.save();
-                    notificationHandler.toastNeutralNotificationBottom("Category added");
+                    notificationHandler.toastSuccessNotification("Category added");
                 }else{
-                    notificationHandler.toastNeutralNotificationBottom("This category already exists");
+                    notificationHandler.toastWarningNotification("This category already exists");
                 }
 
             } catch (InvalidPropertiesFormatException e) {
-                notificationHandler.toastWarningNotificationBottom(e.getMessage());
+                notificationHandler.toastWarningNotification(e.getMessage());
             }
 
         }

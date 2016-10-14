@@ -9,6 +9,7 @@ import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.dbmodels.User;
+import com.veronica.medaily.helpers.NotificationHandler;
 import com.veronica.medaily.kinvey.KinveyConnector;
 import com.veronica.medaily.managers.AuthorizationManager;
 
@@ -65,6 +66,7 @@ public class MainApplication extends SugarApp {
 
         KinveyConnector.setupContext(getApplicationContext());
         KinveyConnector.getInstance();
+
     }
 
     @Override

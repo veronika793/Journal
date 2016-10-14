@@ -33,4 +33,6 @@ public final class Constants {
 
     public static String FONT_ONE = "ArchitectsDaughter.ttf";
     public static String FONT_TWO = "ShadowsIntoLight.ttf";
+
+    public static String NO_NETWORK = "No network connection";
 }

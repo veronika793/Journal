@@ -2,6 +2,7 @@ package com.veronica.medaily.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -33,6 +34,7 @@ import com.veronica.medaily.fragments.NotesByCategory;
 import com.veronica.medaily.fragments.NotesFragment;
 import com.veronica.medaily.fragments.ProfileFragment;
 import com.veronica.medaily.fragments.SynchronizeFragment;
+import com.veronica.medaily.helpers.NotificationHandler;
 import com.veronica.medaily.models.ObjectDrawerItem;
 import com.veronica.medaily.R;
 import com.veronica.medaily.adapters.DrawerItemCustomAdapter;
@@ -47,6 +49,7 @@ public class HomeActivity extends AppCompatActivity{
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private Toolbar mToolbar;
+    private BaseFragment nextFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +62,20 @@ public class HomeActivity extends AppCompatActivity{
         }
         validatesCurrentUser();
 
-        //drawer
+        //drawer settings
         initializeDrawerItems();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // catches the state of drawer - in case it's closed place next fragment
+        mDrawerLayout.addDrawerListener(new DrawerListener());
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        //sets the next fragment to be placed
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerList.setAdapter(new DrawerItemCustomAdapter(this,R.layout.drawer_item_row,mDrawerItems));
 
-        //toolbar
+        //updates drawer selected item on back press
+        getSupportFragmentManager().addOnBackStackChangedListener(new BackStackListener());
+
+        //toolbar settings
         mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(mToolbar);
         if(getSupportActionBar()!=null) {
@@ -76,28 +85,6 @@ public class HomeActivity extends AppCompatActivity{
         mToolbar.setTitle(Constants.HOME);
         mToolbar.setNavigationIcon(R.drawable.icon_menu);
 
-        //updates drawer selected item on back press
-        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-            @Override
-            public void onBackStackChanged() {
-                FragmentManager fm = getSupportFragmentManager();
-                int stackCount = fm.getBackStackEntryCount();
-                String currentStackName = fm.getBackStackEntryAt(stackCount-1).getName();
-
-                if(currentStackName.equals(HomeFragment.class.getName())){
-                    mDrawerList.setItemChecked(0,true);
-                }else if(currentStackName.equals(ProfileFragment.class.getName())){
-                    mDrawerList.setItemChecked(1,true);
-                }else if(currentStackName.equals(NotesFragment.class.getName()) || currentStackName.equals(NotesByCategory.class.getName()) ){
-                    mDrawerList.setItemChecked(2,true);
-                }else if(currentStackName.equals(CategoriesFragment.class.getName())){
-                    mDrawerList.setItemChecked(3,true);
-                }else if(currentStackName.equals(SynchronizeFragment.class.getName())){
-                    mDrawerList.setItemChecked(4,true);
-                }
-            }
-        });
-
         HomeFragment homeFragment = new HomeFragment();
         placeFragment(homeFragment);
     }
@@ -106,48 +93,77 @@ public class HomeActivity extends AppCompatActivity{
         startActivity(new Intent(HomeActivity.this,LoginActivity.class));
     }
 
+    //listens for clicked item in drawer
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
+        public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+            setNextFragment(position);
         }
     }
 
-    // select item from drawer and loads the fragment
-    private void selectItem(int position) {
+    //sets drawer selected item on back press
+    private class BackStackListener implements FragmentManager.OnBackStackChangedListener{
+
+        @Override
+        public void onBackStackChanged() {
+            FragmentManager fm = getSupportFragmentManager();
+            int stackCount = fm.getBackStackEntryCount();
+            String currentStackName = fm.getBackStackEntryAt(stackCount-1).getName();
+
+            if(currentStackName.equals(HomeFragment.class.getName())){
+                mDrawerList.setItemChecked(0,true);
+            }else if(currentStackName.equals(ProfileFragment.class.getName())){
+                mDrawerList.setItemChecked(1,true);
+            }else if(currentStackName.equals(NotesFragment.class.getName()) || currentStackName.equals(NotesByCategory.class.getName()) ){
+                mDrawerList.setItemChecked(2,true);
+            }else if(currentStackName.equals(CategoriesFragment.class.getName())){
+                mDrawerList.setItemChecked(3,true);
+            }else if(currentStackName.equals(SynchronizeFragment.class.getName())){
+                mDrawerList.setItemChecked(4,true);
+            }
+        }
+    }
+
+    // listen for changes in drawer state - place next fragment after drawer is being closed in order to avoid any lag
+    private class DrawerListener implements android.support.v4.widget.DrawerLayout.DrawerListener {
+        @Override
+        public void onDrawerSlide(View drawerView, float slideOffset) {}
+        @Override
+        public void onDrawerOpened(View drawerView) {}
+        @Override
+        public void onDrawerStateChanged(int newState) {}
+        @Override
+        public void onDrawerClosed(View view) {
+            if (nextFragment!=null) {
+                placeFragment(nextFragment);
+            }
+            nextFragment = null;
+        }
+    }
+
+    // sets the next fragment to be open by clicked position in drawer
+    private void setNextFragment(int position) {
 
         mDrawerList.setItemChecked(position, true);
+
+        switch (position){
+            case 0:nextFragment = new HomeFragment();
+                break;
+            case 1:nextFragment = new ProfileFragment();
+                break;
+            case 2:nextFragment = new NotesFragment();
+                break;
+            case 3:nextFragment = new CategoriesFragment();
+                break;
+            case 4:nextFragment = new SynchronizeFragment();
+                break;
+            case 5: mainApp.getAuthManager().logoutUser();
+                goToLoginActivity();
+                finish();
+                break;
+        }
         mDrawerLayout.closeDrawer(mDrawerList);
 
-        ObjectDrawerItem itemClicked = mDrawerItems[position];
-
-        String itemName = itemClicked.name;
-
-        if (itemName.equals(Constants.EXIT)) {
-            mainApp.getAuthManager().logoutUser();
-            goToLoginActivity();
-            finish();
-        }
-        BaseFragment fragmentToLoad = null;
-        if(itemName.equals(Constants.HOME)) {
-            fragmentToLoad = new HomeFragment();
-        }
-
-        else if (itemName.equals(Constants.NOTES)) {
-            fragmentToLoad = new NotesFragment();
-        }
-        else if(itemName.equals(Constants.SYNCHRONIZATION)){
-            fragmentToLoad = new SynchronizeFragment();
-        }
-        else if(itemName.equals(Constants.CATEGORIES)){
-            fragmentToLoad = new CategoriesFragment();
-        }
-        else if(itemName.equals(Constants.PROFILE)){
-            fragmentToLoad = new ProfileFragment();
-        }
-        if(fragmentToLoad!=null) {
-            placeFragment(fragmentToLoad);
-        }
     }
 
     private void initializeDrawerItems() {
@@ -160,14 +176,13 @@ public class HomeActivity extends AppCompatActivity{
         mDrawerItems[5] = new ObjectDrawerItem(R.drawable.icon_exit, Constants.EXIT);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
-    // top menu buttons action on click
+    // main menu buttons action on click
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -203,16 +218,15 @@ public class HomeActivity extends AppCompatActivity{
         if (!fragmentPopped && manager.findFragmentByTag(fragmentTag) == null){ //fragment not in back stack, create it.
             FragmentTransaction ft = manager.beginTransaction();
             ft.replace(R.id.content_frame, fragment, fragmentTag);
-//            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.addToBackStack(backStateName);
             ft.commit();
         }
     }
 
-    // popup last fragment while there is no left, if none move task to back
+    // returns the previous fragments from stack if none close the activity
     //@Override
     public void onBackPressed() {
-        // returns the previous fragments if any
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
         if (backStackEntryCount == 1) {
             moveTaskToBack(true);

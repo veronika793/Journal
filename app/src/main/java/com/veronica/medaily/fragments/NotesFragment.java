@@ -36,9 +36,7 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
     private SearchView mSearchViewNotes;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ProgressBar progressBar;
     private ItemTouchHelper itemTouchHelper;
-    private NoteDetailsFragment noteDetailsFragment;
     private List<Note> userNotes;
     private NotesFragment notesFragment;
 
@@ -55,13 +53,15 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
         View view = inflater.inflate(R.layout.fragment_notes,container,false);
         mSearchViewNotes = (SearchView) view.findViewById(R.id.search_view_notes);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_notes);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressbar_notes);
         mLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         mSearchViewNotes.setOnQueryTextListener(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+//        this.userNotes = mCurrentUser.getNotes();
+//        mNotesAdapter = new NotesAdapter(userNotes);
+//        mRecyclerView.setAdapter(mNotesAdapter);
         try {
-            this.userNotes = new NotesLoader(progressBar,mCurrentUser,mRecyclerView).execute().get();
+            this.userNotes = new NotesLoader(mCurrentUser,mRecyclerView).execute().get();
         } catch (Exception e) {
             e.printStackTrace();
         }

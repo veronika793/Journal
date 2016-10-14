@@ -21,7 +21,6 @@ public class CategoriesLoader extends AsyncTask<Void,Integer,List<Category>> {
     private RecyclerView recyclerView;
     private CategoriesAdapter categoriesAdapter;
     private User user;
-    private ProgressBar progressBar;
     private List<Category> categories;
 
     @Override
@@ -38,16 +37,15 @@ public class CategoriesLoader extends AsyncTask<Void,Integer,List<Category>> {
         return categories;
     }
 
-    public CategoriesLoader(ProgressBar progressBar,User user, RecyclerView recyclerView) {
+    public CategoriesLoader(User user, RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
         this.user = user;
-        this.progressBar = progressBar;
     }
 
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
-        progressBar.setProgress(values[0]);
+//        progressBar.setProgress(values[0]);
     }
 
     @Override
@@ -55,6 +53,6 @@ public class CategoriesLoader extends AsyncTask<Void,Integer,List<Category>> {
         super.onPostExecute(cat);
         categoriesAdapter = new CategoriesAdapter(categories);
         recyclerView.setAdapter(categoriesAdapter);
-        progressBar.setVisibility(View.GONE);
+//        progressBar.setVisibility(View.GONE);
     }
 }

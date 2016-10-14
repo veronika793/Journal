@@ -43,12 +43,12 @@ public class KinveyConnector implements KinveyUserCallback{
 
     public synchronized static KinveyConnector getInstance(){
         if(mInstance==null){
-            mInstance = new KinveyConnector(mContext);
+            mInstance = new KinveyConnector();
         }
         return mInstance;
     }
 
-    private KinveyConnector(Context context){
+    private KinveyConnector(){
         final Client client = new Client.Builder(APP_KEY_KINVEY, APP_SECRET_KINVEY,mContext).build();
         client.ping(new KinveyPingCallback() {
             public void onFailure(Throwable t) {

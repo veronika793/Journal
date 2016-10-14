@@ -3,6 +3,7 @@ package com.veronica.medaily.fragments;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -60,7 +61,6 @@ public class BaseFragment extends Fragment {
                 ft.commit();
             }
         }
-
     }
 
     protected void setupTypefaceView(TextView view){
