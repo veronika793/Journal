@@ -25,6 +25,7 @@ import com.veronica.medaily.dbmodels.Category;
 import com.veronica.medaily.dbmodels.Note;
 import com.veronica.medaily.dbmodels.NoteReminder;
 import com.veronica.medaily.dialogs.EditNoteDialog;
+import com.veronica.medaily.dialogs.NotesPreviewDialog;
 import com.veronica.medaily.listeners.INoteEditedListener;
 import com.veronica.medaily.listeners.RecyclerClickListener;
 import com.veronica.medaily.loaders.NotesByCategoryLoader;
@@ -109,7 +110,8 @@ public class NotesByCategory extends BaseFragment implements SearchView.OnQueryT
 
                     @Override
                     public void onDoubleTab(View view, int position) {
-
+                        NotesPreviewDialog detailsDialog = new NotesPreviewDialog(getContext(),userNotes.get(position));
+                        detailsDialog.show();
                     }
                 })
         );

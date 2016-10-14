@@ -34,8 +34,8 @@ public class CategoriesPreviewDialog extends Dialog implements View.OnClickListe
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_category_preview);
 
-        txtCategoryTitle = (TextView) findViewById(R.id.txt_note_title_prev);
-        txtCategoryDescription = (TextView) findViewById(R.id.txt_note_content_prev);
+        txtCategoryTitle = (TextView) findViewById(R.id.txt_cat_title_prev);
+        txtCategoryDescription = (TextView) findViewById(R.id.txt_cat_content_prev);
         btnClose = (Button) findViewById(R.id.dialog_btn_cat_close);
 
         txtCategoryTitle.setText(category.getName());

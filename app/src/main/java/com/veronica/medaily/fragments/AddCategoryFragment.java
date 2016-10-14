@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.commonsware.cwac.colormixer.ColorMixer;
-import com.veronica.medaily.Constants;
 import com.veronica.medaily.R;
 import com.veronica.medaily.validationmodels.CategoryValidationModel;
 import com.veronica.medaily.dbmodels.Category;

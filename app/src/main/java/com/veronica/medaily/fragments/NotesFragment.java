@@ -17,6 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.veronica.medaily.R;
+import com.veronica.medaily.dialogs.CategoriesPreviewDialog;
+import com.veronica.medaily.dialogs.NotesPreviewDialog;
 import com.veronica.medaily.listeners.RecyclerClickListener;
 import com.veronica.medaily.adapters.NotesAdapter;
 import com.veronica.medaily.dbmodels.Category;
@@ -90,7 +92,8 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
 
                     @Override
                     public void onDoubleTab(View view, int position) {
-
+                        NotesPreviewDialog detailsDialog = new NotesPreviewDialog(getContext(),userNotes.get(position));
+                        detailsDialog.show();
                     }
                 })
         );

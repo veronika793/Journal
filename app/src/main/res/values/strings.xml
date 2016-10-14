@@ -34,8 +34,8 @@
     <string name="content">Content..</string>
     <string name="close">close</string>
     <string name="category_details">Category Preview</string>
-    <string name="category_name_2">Category Name</string>
-    <string name="category_description_2">Category Description</string>
+    <string name="category_name_2">Name</string>
+    <string name="category_description_2">Description</string>
     <string name="edit_category">Edit Category</string>
     <string name="cancel">Cancel</string>
     <string name="edit_note">Edit Note</string>
@@ -51,7 +51,8 @@
     <string name="progress">Progress</string>
     <string name="welcome_title">Welcome %1$s</string>
     <string name="note_preview">Note Preview</string>
-    <string name="note_title">Note title:</string>
-    <string name="note_content">Note content</string>
+    <string name="note_title">Title</string>
+    <string name="note_content">Content</string>
+    <string name="note_category">Category</string>
 
 </resources>
