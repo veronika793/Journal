@@ -78,11 +78,11 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
 
                     @Override public void onLongItemClick(View view, int position) {
                         boolean isOpen = drawerLayout.isDrawerOpen(GravityCompat.START);
-
                         if(!isOpen) {
                             EditCategoryDialog editCategoryDialog = new EditCategoryDialog(getContext(),userCategories.get(position),categoriesFragment,position);
                             editCategoryDialog.show();
                         }
+
 
                     }
 

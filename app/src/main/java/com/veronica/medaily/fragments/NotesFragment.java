@@ -75,7 +75,6 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
                         NoteDetailsFragment noteDetailsFragment = new NoteDetailsFragment();
                         Bundle bundle1 = new Bundle();
                         bundle1.putString("note_id", String.valueOf(userNotes.get(position).getId()));
-                        //crashed once here so made this overall useless check
                         noteDetailsFragment.setArguments(bundle1);
                         placeFragment(noteDetailsFragment);
                     }
@@ -88,6 +87,7 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
                             EditNoteDialog editNoteDialog = new EditNoteDialog(getContext(),userNotes.get(position),position,notesFragment);
                             editNoteDialog.show();
                         }
+
                     }
 
                     @Override

@@ -141,13 +141,18 @@ public class AddNoteFragment extends BaseFragment implements View.OnClickListene
 
                     NoteValidationModel noteBindingModel = new NoteValidationModel(title,content,selectedCategory,dateAsString,mPhotoUri);
 
-                    Note note = new Note(category,mCurrentUser,title,content,dateAsString,mPhotoUri,null);
-                    note.save();
-                    notificationHandler.toastSuccessNotification("Note added successfully");
+                    if(Note.find(Note.class," title = ? and user = ?",new String[]{title,String.valueOf(mCurrentUser.getId())}).isEmpty()) {
+                        Note note = new Note(category,mCurrentUser,title,content,dateAsString,mPhotoUri,null);
+                        note.save();
+                        notificationHandler.toastSuccessNotification("Note added successfully");
 
-                    if(pickedDate!=null){
-                        setupAlarm(note);
+                        if(pickedDate!=null){
+                            setupAlarm(note);
+                        }
+                    }else{
+                        notificationHandler.toastWarningNotification("Note with same title already exists");
                     }
+
 
                 } catch (InvalidPropertiesFormatException e) {
                     notificationHandler.toastWarningNotification(e.getMessage());
