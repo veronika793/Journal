@@ -3,10 +3,20 @@ app for android course
 
 # Project Functionalities
 
-  This is private organizer 
-  You can add categories, notes, reminders and personal photos by choice
+How to use 
+   1. Create category according to your needs
+   2. Add note in the specific category 
+		Optional:
+         -  add description
+         -  add photo from gallery
+         -  add reminder for each note
+   3. View all notes with search options
+   4. View all categories with search options
+   5. View notes in specific category
+   6. Edit/Preview all notes/categories 
+       
   
-# Project Activities
+# Activities 
 	- Register
 	- Login 
 	- Home
@@ -33,7 +43,9 @@ app for android course
 	- Swipe right  for deleting notes/categories
 	- Long press for preview notes/categories
 	- Double click for editing notes/categories
-	
+
+# Data validation  and notifications
+	- for input fields 
 	
   
         
