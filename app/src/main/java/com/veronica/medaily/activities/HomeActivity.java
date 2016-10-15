@@ -49,7 +49,7 @@ public class HomeActivity extends AppCompatActivity{
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private Toolbar mToolbar;
-    private BaseFragment nextFragment = null;
+    private Fragment nextFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

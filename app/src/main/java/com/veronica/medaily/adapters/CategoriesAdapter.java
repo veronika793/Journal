@@ -96,9 +96,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         notifyDataSetChanged();
     }
 
-    public void deleteCategory(int position){
-        this.mCategories.remove(position);
-        mCategoriesCopy.remove(position);
+    public void deleteCategory(Category category){
+        mCategories.remove(category);
+        mCategoriesCopy.remove(category);
         notifyDataSetChanged();
     }
 

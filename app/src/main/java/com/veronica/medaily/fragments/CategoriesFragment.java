@@ -118,12 +118,13 @@ public class CategoriesFragment extends BaseFragment implements android.widget.S
 
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
                         int elementPosition = viewHolder.getAdapterPosition();
                         Category categoryToBeRemoved = userCategories.get(elementPosition);
                         NoteReminder.deleteAll(NoteReminder.class, "category=? ", String.valueOf(categoryToBeRemoved.getId()));
                         Note.deleteAll(Note.class," category=? ", String.valueOf(categoryToBeRemoved.getId()));
                         CategoriesAdapter categoriesAdapter = (CategoriesAdapter) mRecyclerView.getAdapter();
-                        categoriesAdapter.deleteCategory(elementPosition);
+                        categoriesAdapter.deleteCategory(categoryToBeRemoved);
                         Category.delete(categoryToBeRemoved);
                     }
                 }

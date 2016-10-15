@@ -114,7 +114,7 @@ public class NotesFragment extends BaseFragment implements android.widget.Search
                             NoteReminder.delete(noteToBeRemoved.getNoteReminders().get(0));
                         }
                         NotesAdapter notesAdapter = (NotesAdapter) mRecyclerView.getAdapter();
-                        notesAdapter.deleteNote(elementPosition);
+                        notesAdapter.deleteNote(noteToBeRemoved);
                         Note.delete(noteToBeRemoved);
                     }
 

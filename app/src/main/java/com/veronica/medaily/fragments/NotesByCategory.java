@@ -134,7 +134,7 @@ public class NotesByCategory extends BaseFragment implements SearchView.OnQueryT
                             NoteReminder.delete(noteToBeRemoved.getNoteReminders().get(0));
                         }
                         NotesAdapter notesAdapter = (NotesAdapter) mRecyclerView.getAdapter();
-                        notesAdapter.deleteNote(elementPosition);
+                        notesAdapter.deleteNote(noteToBeRemoved);
                         Note.delete(noteToBeRemoved);
                     }
 

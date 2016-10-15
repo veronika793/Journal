@@ -118,9 +118,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    public void deleteNote(int position){
-        this.mNotes.remove(position);
-        this.mNotesCopy.remove(position);
+    public void deleteNote(Note note){
+        this.mNotes.remove(note);
+        this.mNotesCopy.remove(note);
         notifyDataSetChanged();
     }
 

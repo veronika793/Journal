@@ -58,7 +58,7 @@
     <string name="note_content">Content</string>
     <string name="note_category">Category</string>
     <string name="no_image">No Image</string>
-    <string name="note_this_section_is_note_completely_finished">Note: this section is note completely finished</string>
+    <string name="note_this_section_is_note_completely_finished">Note: this section is not completely finished</string>
     <string name="reminder">Reminder</string>
     <string name="created_on">Created on</string>
     <string name="description">Description</string>
