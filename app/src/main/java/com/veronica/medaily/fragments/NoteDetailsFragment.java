@@ -35,7 +35,6 @@ public class NoteDetailsFragment extends BaseFragment {
     private ImageView mNotePhoto;
     private TextView mNoteCreatedOn;
     private TextView mNoteReminderDate;
-    private TextView mNoteTxtPhotoReplacer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +57,6 @@ public class NoteDetailsFragment extends BaseFragment {
         mNotePhoto = (ImageView) view.findViewById(R.id.txt_note_details_img);
         mNoteCreatedOn = (TextView) view.findViewById(R.id.txt_note_details_created);
         mNoteReminderDate = (TextView) view.findViewById(R.id.txt_note_details_remind);
-        mNoteTxtPhotoReplacer = (TextView) view.findViewById(R.id.txt_image_replacer);
         mContainer = view.findViewById(R.id.main_note_details_container);
         mTextContainer = view.findViewById(R.id.bottom_note_container);
 
@@ -71,9 +69,8 @@ public class NoteDetailsFragment extends BaseFragment {
             mNoteCategory.setText(getString(R.string.note_categ_placehold,note.getCategory().getName()));
             mNoteCreatedOn.setText(getString(R.string.note_creaded_on_placeh,note.getCreatedOnDate()));
             if(note.getPhotoUri()!=null){
-                mNoteTxtPhotoReplacer.setVisibility(View.GONE);
                 mNotePhoto.setVisibility(View.VISIBLE);
-                new NoteImgLoader(getActivity(),mNotePhoto,mNoteTxtPhotoReplacer).execute(Uri.parse(note.getPhotoUri()));
+                new NoteImgLoader(getActivity(),mNotePhoto).execute(Uri.parse(note.getPhotoUri()));
             }
             if(note.getReminderDate()==null){
                 mNoteReminderDate.setText(getString(R.string.note_remind_date_placeh,"No reminder"));

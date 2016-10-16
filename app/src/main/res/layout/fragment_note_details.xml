@@ -49,20 +49,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/middle_note_container">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:background="@color/colorLightGrey1"
-                android:textColor="@color/colorWhite"
-                android:visibility="visible"
-                android:maxHeight="130dp"
-                android:minHeight="130dp"
-                android:height="130dp"
-                android:text="@string/no_image"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_image_replacer"
-                android:layout_gravity="center_horizontal" />
+
 
             <ImageView
                 android:layout_width="match_parent"
@@ -70,8 +57,8 @@
                 android:visibility="gone"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:maxHeight="220dp"
-                android:minHeight="220dp"
+                android:maxHeight="180dp"
+                android:minHeight="180dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/txt_note_details_img"
                 android:layout_gravity="center_horizontal" />
@@ -82,8 +69,8 @@
             android:background="@color/colorAccent"
             android:layout_width="match_parent"
             android:padding="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_height="match_parent"
             android:id="@+id/bottom_note_container">
 
             <TextView
@@ -100,13 +87,11 @@
             <TextView
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:minLines="12"
-                android:maxLines="12"
                 android:textSize="15sp"
                 android:scrollbars="vertical"
                 android:background="@drawable/shape_borders_white"
                 android:padding="5dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="New Text"
                 android:id="@+id/txt_note_details_contnt" />
         </LinearLayout>

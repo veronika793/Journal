@@ -19,12 +19,10 @@ public class NoteImgLoader extends AsyncTask<Uri,Integer,Void>{
     Activity activity;
     ImageView imageView;
     Bitmap result;
-    TextView mask;
 
-    public NoteImgLoader(Activity activity, ImageView view,TextView mask) {
+    public NoteImgLoader(Activity activity, ImageView view) {
         this.activity = activity;
         this.imageView = view;
-        this.mask = mask;
     }
 
     @Override

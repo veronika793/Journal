@@ -11,8 +11,8 @@ public final class Constants {
     public static int RESULT_CANCELED = 0;
 
     public static int PICK_REQUIRED_SIZE = 170;
-    public static int PICK_WITH = 220;
-    public static int PICK_HEIGHT = 220;
+    public static int PICK_WITH = 180;
+    public static int PICK_HEIGHT = 180;
     public static String PHOTO_SELECTED = "PHOTO SELECTED";
 
 
@@ -20,7 +20,7 @@ public final class Constants {
     public static int NAME_MIN_LENGTH = 1;
     public static int CATEGORY_TITLE_MIN_LENGTH = 1;
     public static int NOTE_TITLE_MIN_LENGTH = 1;
-    public static int NOTE_CONTENT_MIN_LENGTH = 1;
+    public static int NOTE_CONTENT_MIN_LENGTH = 0;
 
     public static String START_ALARM_ACTION = "START_ALARM";
     public static String ACTION_BOOT_COMPLETED = "android.intent.action.BOOT_COMPLETED";
