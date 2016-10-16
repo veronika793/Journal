@@ -1,15 +1,11 @@
 # MeDaily
-MeDaily is a your personal organizer, add notes, reminders or photo and save them in the category you need. You can edit, preview or delete them when you need to. Optionally you can synchronize your data in order to avoid any data los
+MeDaily is a your personal organizer, add notes, reminders or photos and save them in the category you need. You can edit, preview or delete them when you need to. Optionally you can synchronize your data in order to avoid any data los
 
 # Project Functionalities
 
 How to use 
-   1. Create category according to your needs
-   2. Add note in the specific category 
-	Optional:
-         - add description
-         - add photo from gallery
-         - add reminder for each note
+   1. Create category according to your need / name, description (optional)
+   2. Add note in the specific category / title, description, reminder (optional), photo from gallery (optional)	
    3. View all notes with search options
    4. View all categories with search options
    5. View notes in specific category
