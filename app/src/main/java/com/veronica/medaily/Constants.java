@@ -12,7 +12,7 @@ public final class Constants {
 
     public static int PICK_REQUIRED_SIZE = 170;
     public static int PICK_WITH = 180;
-    public static int PICK_HEIGHT = 180;
+    public static int PICK_HEIGHT = 200;
     public static String PHOTO_SELECTED = "PHOTO SELECTED";
 
 
