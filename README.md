@@ -12,7 +12,7 @@ MeDaily is personal organizer.Add notes, reminders or photos and save them in th
    7. Edit notes and categories with gestures - long press gesture 
    8. Preview notes and categories with gestures - double click gesture
    9. Delete notes and categories with gestures - swipe right gesture
-  10. Synchronize your data - export/import options
+   10. Synchronize your data - export/import options
        
 # Screenshots
 <img src="https://github.com/veronika793/projects-additional/blob/master/android-app-me-daily/Screenshot_2016-10-24-17-52-38.png" width='180px'/>
@@ -42,8 +42,7 @@ MeDaily is personal organizer.Add notes, reminders or photos and save them in th
 	- service for rescheduling all alarms on restart 
 	- broadcast for starting rescheduling alarm service triggered on restart 
 	- broadcast to notify user when it's triggered 
-	
-# RecyclerView adapters for listing notes and categories
+
 # Databases 
 	- Local SqlLite for storing users, notes, categories, reminders
 	- Remote storage using Kinvey for synchronization user data
