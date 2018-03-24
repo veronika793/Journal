@@ -14,15 +14,7 @@ MeDaily is personal organizer.Add notes, reminders or photos and save them in th
    9. Delete notes and categories with gestures - swipe right gesture
    10. Synchronize your data - export/import options
        
-# Screenshots
-<img src="https://github.com/veronika793/projects-additional/blob/master/android-app-me-daily/Screenshot_2016-10-24-17-52-38.png" width='180px'/>
-<img src="https://github.com/veronika793/projects-additional/blob/master/android-app-me-daily/Screenshot_2016-10-24-17-52-23.png" width='180px'/>
-<img src="https://github.com/veronika793/projects-additional/blob/master/android-app-me-daily/Screenshot_2016-10-24-17-53-44.png" width='180px'/>
-<img src="https://github.com/veronika793/projects-additional/blob/master/android-app-me-daily/Screenshot_2016-10-24-17-53-50.png" width='180px'/>
-<img src="https://github.com/veronika793/projects-additional/blob/master/android-app-me-daily/Screenshot_2016-10-24-17-54-31.png" width='180px'/>
-<img src="https://github.com/veronika793/projects-additional/blob/master/android-app-me-daily/Screenshot_2016-10-24-17-57-15.png" width='180px'/>
-<img src="https://github.com/veronika793/projects-additional/blob/master/android-app-me-daily/Screenshot_2016-10-24-17-58-37.png" width='180px'/>
-<img src="https://github.com/veronika793/projects-additional/blob/master/android-app-me-daily/Screenshot_2016-10-24-17-58-45.png" width='180px'/>
+
   
 # Activities 
 	- Register
